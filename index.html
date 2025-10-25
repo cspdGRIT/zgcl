@@ -1,0 +1,363 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Zenith Gully Cricket</title>
+  <style>
+    :root{--accent:#0b6efd;--bg:#0f1724;--card:#0b1220;--muted:#9aa7bf}
+    *{box-sizing:border-box;font-family:Inter,Segoe UI,Arial,Helvetica,sans-serif}
+    body{margin:0;background:linear-gradient(180deg,#071428 0%, #0b1220 100%);color:#e6eef8}
+    header{padding:16px 20px;display:flex;align-items:center;gap:16px}
+    .logo{display:flex;align-items:center;gap:12px}
+    .logo h1{margin:0;font-size:20px;letter-spacing:0.6px}
+    .hero{height:160px;border-radius:8px;overflow:hidden;margin:0 20px 16px;background:#031021;position:relative}
+    .hero img{width:100%;height:100%;object-fit:cover;filter:brightness(0.55)}
+    .hero .overlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:space-between;padding:12px}
+    .hero .title{font-size:22px;font-weight:700}
+    .container{display:grid;grid-template-columns:360px 1fr 320px;gap:16px;padding:0 20px 40px}
+    .card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));padding:12px;border-radius:8px;border:1px solid rgba(255,255,255,0.03)}
+    h2{margin:0 0 8px 0;font-size:16px}
+    .small{color:var(--muted);font-size:13px}
+    label{display:block;font-size:13px;margin-top:8px}
+    input,select,button,textarea{width:100%;padding:8px;border-radius:6px;border:1px solid rgba(255,255,255,0.06);background:transparent;color:inherit}
+    button{cursor:pointer;background:var(--accent);border:none;color:#fff;padding:10px;border-radius:6px}
+    .teams-list{display:flex;flex-direction:column;gap:8px}
+    .team-item{display:flex;align-items:center;justify-content:space-between;padding:8px;background:rgba(255,255,255,0.02);border-radius:6px}
+    .team-item strong{font-size:14px}
+    .match-area{display:grid;grid-template-rows:auto auto 1fr;gap:12px}
+    .scoreboard{display:flex;gap:12px;align-items:center}
+    .scorebox{flex:1;padding:12px;border-radius:8px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));text-align:center}
+    .big{font-size:36px;font-weight:800}
+    .controls{display:flex;gap:8px;flex-wrap:wrap}
+    .controls button{flex:1}
+    .players{display:flex;gap:8px;flex-wrap:wrap}
+    .player{padding:6px 8px;background:rgba(255,255,255,0.02);border-radius:6px}
+    table{width:100%;border-collapse:collapse;font-size:14px}
+    th,td{padding:8px;text-align:left;border-bottom:1px dashed rgba(255,255,255,0.03)}
+    .muted{color:var(--muted)}
+    footer{padding:12px 20px;color:var(--muted)}
+    @media (max-width:1000px){.container{grid-template-columns:1fr;}.hero{height:120px}}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">
+      <svg width="40" height="40" viewBox="0 0 24 24" fill="none"><rect width="24" height="24" rx="6" fill="#07203a"/><path d="M6 15L10 9L14 15H6Z" fill="#0b6efd"/></svg>
+      <div>
+        <h1>Zenith Gully Cricket</h1>
+        <div class="small">Simple scoring, teams, rules & points — umpire-friendly</div>
+      </div>
+    </div>
+  </header>
+
+  <div class="hero card">
+    <img id="heroImg" src="https://upload.wikimedia.org/wikipedia/commons/1/1b/Sachin_Tendulkar.jpg" alt="Indian Hero"/>
+    <div class="overlay">
+      <div class="title">Play Gully Cricket — Fast, Fair & Fun</div>
+      <div class="small">Backgrounds feature Indian cricket heroes</div>
+    </div>
+  </div>
+
+  <div class="container">
+    <!-- Left column: Rules, Add Teams -->
+    <div>
+      <div class="card">
+        <h2>Match Rules</h2>
+        <ol class="small">
+          <li>No leg umpire required. Umpires to call LBW only if clear.</li>
+          <li>Above shoulder is a no ball; free hit next ball.</li>
+          <li>Foot on or before the crease while bowling = legal.</li>
+          <li>Batsman may ground bat behind crease to save run out if part of bat over crease.</li>
+          <li>Each match fixed overs: recommend 6, 8 or 10 overs per side.</li>
+          <li>Super over rules / tie-breaker: 2 balls each.</li>
+        </ol>
+      </div>
+
+      <div class="card" style="margin-top:12px">
+        <h2>Add Team / Players</h2>
+        <label>Team name</label>
+        <input id="teamName" placeholder="e.g., Zenith Warriors" />
+        <label>Players (comma separated)</label>
+        <textarea id="players" rows="3" placeholder="Amit, Ravi, Sunil..."></textarea>
+        <div style="display:flex;gap:8px;margin-top:8px">
+          <button id="addTeamBtn">Add Team</button>
+          <button id="clearStorage" style="background:#444">Clear All</button>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:12px">
+        <h2>Teams</h2>
+        <div id="teamsList" class="teams-list small"></div>
+      </div>
+
+    </div>
+
+    <!-- Middle column: Match area -->
+    <div>
+      <div class="card match-area">
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <h2>Current Match</h2>
+          <div class="small">Umpire mode: quick scoring</div>
+        </div>
+
+        <div style="display:flex;gap:12px">
+          <select id="selectTeamA"></select>
+          <select id="selectTeamB"></select>
+          <select id="oversSelect"><option>6</option><option>8</option><option>10</option></select>
+          <button id="startMatch">Start Match</button>
+        </div>
+
+        <div class="scoreboard">
+          <div class="scorebox">
+            <div class="muted">Batting</div>
+            <div id="battingTeam" class="big">-</div>
+            <div class="small" id="currentOver">Overs: 0.0</div>
+          </div>
+          <div class="scorebox">
+            <div class="muted">Score</div>
+            <div id="scoreDisplay" class="big">0/0</div>
+            <div class="small" id="runRate">RR: -</div>
+          </div>
+          <div class="scorebox">
+            <div class="muted">Target / Opp</div>
+            <div id="oppScore" class="big">-</div>
+            <div class="small">Status: <span id="matchStatus">Idle</span></div>
+          </div>
+        </div>
+
+        <div style="margin-top:8px">
+          <div class="controls">
+            <button data-run="1">+1</button>
+            <button data-run="2">+2</button>
+            <button data-run="3">+3</button>
+            <button data-run="4">+4</button>
+            <button data-run="6">+6</button>
+            <button data-run="0">Dot</button>
+            <button data-run="W">W</button>
+            <button data-run="NB">NB</button>
+            <button data-run="LB">LB</button>
+            <button id="nextBall" style="background:#444">Next Ball</button>
+          </div>
+        </div>
+
+        <div style="margin-top:12px">
+          <div class="small">On-field players (click to mark out/on):</div>
+          <div id="onFieldPlayers" class="players"></div>
+        </div>
+
+        <div style="margin-top:12px">
+          <h2>Score Log</h2>
+          <div id="scoreLog" class="small" style="max-height:160px;overflow:auto;background:rgba(255,255,255,0.01);padding:8px;border-radius:6px"></div>
+        </div>
+
+      </div>
+
+      <div style="margin-top:12px" class="card">
+        <h2>Points Table</h2>
+        <table id="pointsTable"><thead><tr><th>Team</th><th>Played</th><th>Won</th><th>Lost</th><th>Pts</th></tr></thead><tbody></tbody></table>
+      </div>
+
+    </div>
+
+    <!-- Right column: Match Controls, Rules quick -->
+    <div>
+      <div class="card">
+        <h2>Quick Controls</h2>
+        <div style="display:flex;gap:8px;margin-top:8px">
+          <button id="pauseMatch" style="background:#ff6b6b">Pause</button>
+          <button id="endMatch" style="background:#17a2b8">End</button>
+          <button id="swapBat" style="background:#6f42c1">Switch Innings</button>
+        </div>
+        <div style="margin-top:12px">
+          <label>Change background hero</label>
+          <select id="heroSelect"></select>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:12px">
+        <h2>Live Summary</h2>
+        <div class="small" id="liveSummary">No match running</div>
+      </div>
+
+    </div>
+  </div>
+
+  <footer>
+    Zenith Gully Cricket — Simple scoring for gully matches. Built for communities.
+  </footer>
+
+<script>
+// --- Simple client-side app with localStorage persistence ---
+const heroes = [
+  {name:'Sachin Tendulkar',src:'https://upload.wikimedia.org/wikipedia/commons/1/1b/Sachin_Tendulkar.jpg'},
+  {name:'MS Dhoni',src:'https://upload.wikimedia.org/wikipedia/commons/5/5b/MS_Dhoni_2010.jpg'},
+  {name:'Virat Kohli',src:'https://upload.wikimedia.org/wikipedia/commons/1/1f/Virat_Kohli_at_the_World_Cup.jpg'},
+  {name:'Rohit Sharma',src:'https://upload.wikimedia.org/wikipedia/commons/0/0e/Rohit_Sharma_%281%29.jpg'}
+];
+
+const state = {
+  teams: JSON.parse(localStorage.getItem('zg_teams')||'[]'),
+  matches: JSON.parse(localStorage.getItem('zg_matches')||'[]'),
+  current: JSON.parse(localStorage.getItem('zg_current')||'null')
+};
+
+// init hero select
+const heroSelect = document.getElementById('heroSelect');
+heroes.forEach((h,i)=>{
+  const o=document.createElement('option');o.value=i;o.textContent=h.name;heroSelect.appendChild(o);
+});
+heroSelect.addEventListener('change',e=>{document.getElementById('heroImg').src=heroes[e.target.value].src});
+
+// init inputs
+const teamName = document.getElementById('teamName');
+const playersInput = document.getElementById('players');
+const addTeamBtn = document.getElementById('addTeamBtn');
+const teamsList = document.getElementById('teamsList');
+const selectA = document.getElementById('selectTeamA');
+const selectB = document.getElementById('selectTeamB');
+const startMatchBtn = document.getElementById('startMatch');
+const scoreDisplay = document.getElementById('scoreDisplay');
+const battingTeamEl = document.getElementById('battingTeam');
+const oppScoreEl = document.getElementById('oppScore');
+const scoreLogEl = document.getElementById('scoreLog');
+const currentOverEl = document.getElementById('currentOver');
+const runRateEl = document.getElementById('runRate');
+const matchStatusEl = document.getElementById('matchStatus');
+const onFieldPlayersEl = document.getElementById('onFieldPlayers');
+const scoreButtons = document.querySelectorAll('[data-run]');
+const nextBallBtn = document.getElementById('nextBall');
+const pauseBtn = document.getElementById('pauseMatch');
+const endBtn = document.getElementById('endMatch');
+const swapBtn = document.getElementById('swapBat');
+const pointsTableBody = document.querySelector('#pointsTable tbody');
+const liveSummary = document.getElementById('liveSummary');
+const clearBtn = document.getElementById('clearStorage');
+
+function save(){
+  localStorage.setItem('zg_teams', JSON.stringify(state.teams));
+  localStorage.setItem('zg_matches', JSON.stringify(state.matches));
+  localStorage.setItem('zg_current', JSON.stringify(state.current));
+}
+
+function renderTeams(){
+  teamsList.innerHTML=''; selectA.innerHTML=''; selectB.innerHTML='';
+  state.teams.forEach((t,idx)=>{
+    const div=document.createElement('div');div.className='team-item';
+    div.innerHTML=`<div><strong>${t.name}</strong><div class='small'>Players: ${t.players.join(', ')}</div></div>
+      <div style='display:flex;gap:6px'><button data-idx='${idx}' class='startAsA' style='padding:6px'>Use A</button><button data-idx='${idx}' class='startAsB' style='padding:6px;background:#444'>Use B</button></div>`
+    teamsList.appendChild(div);
+    const o1=document.createElement('option');o1.value=idx;o1.textContent=t.name;selectA.appendChild(o1);
+    const o2=document.createElement('option');o2.value=idx;o2.textContent=t.name;selectB.appendChild(o2);
+  });
+}
+
+addTeamBtn.addEventListener('click',()=>{
+  const name=teamName.value.trim();
+  const players=playersInput.value.split(',').map(s=>s.trim()).filter(Boolean);
+  if(!name||players.length===0){alert('Enter team name and at least 1 player');return}
+  state.teams.push({name,players,stats:{played:0,won:0,lost:0,pts:0}});
+  teamName.value='';playersInput.value='';save();renderTeams();renderPoints();
+});
+
+teamsList.addEventListener('click',e=>{if(e.target.matches('.startAsA')){selectA.value=e.target.dataset.idx} if(e.target.matches('.startAsB')){selectB.value=e.target.dataset.idx}})
+
+startMatchBtn.addEventListener('click',()=>{
+  const a = selectA.value; const b = selectB.value; const overs = parseInt(document.getElementById('oversSelect').value,10);
+  if(a===b){alert('Select two different teams');return}
+  const match = {
+    id:Date.now(),teamA:state.teams[a].name,teamAid:a,teamB:state.teams[b].name,teamBid:b,overs,inning:1,batting:state.teams[a].name,battingId:a,balls:0,score:0,wkts:0,completed:false,log:[]
+  };
+  state.current = match; save(); renderCurrent();
+});
+
+function renderCurrent(){
+  const m = state.current; if(!m){battingTeamEl.textContent='-';scoreDisplay.textContent='0/0';matchStatusEl.textContent='Idle';liveSummary.textContent='No match running';return}
+  battingTeamEl.textContent = m.batting + ' (Inn ' + m.inning + ')';
+  scoreDisplay.textContent = `${m.score}/${m.wkts}`;
+  const oversFull = Math.floor(m.balls/6); const ballsIn = m.balls%6; currentOverEl.textContent = `Overs: ${oversFull}.${ballsIn} / ${m.overs}`;
+  runRateEl.textContent = `RR: ${m.balls?((m.score/(m.balls/6)).toFixed(2)):'-'}`;
+  matchStatusEl.textContent = m.completed?'Finished':'Live';
+  scoreLogEl.innerHTML = m.log.map(it=>`<div>${it}</div>`).join('');
+  onFieldPlayersEl.innerHTML = state.teams[m.battingId].players.map((p,pi)=>`<div class='player' data-player='${pi}'>${p}</div>`).join('');
+  liveSummary.textContent = `${m.batting} ${m.score}/${m.wkts} in ${Math.floor(m.balls/6)}.${m.balls%6} overs`;
+}
+
+// scoring handlers
+scoreButtons.forEach(btn=>btn.addEventListener('click',e=>{
+  const val = e.target.dataset.run; if(!state.current){alert('Start a match');return}
+  const m = state.current;
+  if(val==='W'){
+    m.wkts += 1; m.balls +=1; m.log.push(`Wicket! Ball ${Math.floor(m.balls/6)}.${m.balls%6} -> now ${m.score}/${m.wkts}`);
+  } else if(val==='NB'){
+    m.score +=1; m.log.push(`No Ball (+1) -> ${m.score}/${m.wkts}`);
+  } else if(val==='LB'){
+    m.balls +=1; m.log.push(`Leg Bye ball ${Math.floor(m.balls/6)}.${m.balls%6}`);
+  } else {
+    const runs = parseInt(val,10);
+    if(!isNaN(runs)){
+      m.score += runs; m.balls +=1; m.log.push(`+${runs} runs -> ${m.score}/${m.wkts}`);
+    }
+  }
+  // check over completion
+  if(m.balls >= m.overs*6){
+    m.completed = true; m.log.push(`Innings complete: ${m.score}/${m.wkts}`);
+    // for simplicity we end match here
+    // update points etc.
+    concludeInnings();
+  }
+  save(); renderCurrent(); renderPoints();
+}))
+
+nextBallBtn.addEventListener('click',()=>{if(!state.current){alert('Start match')} else {state.current.balls +=1; state.current.log.push(`Dot ball ${Math.floor(state.current.balls/6)}.${state.current.balls%6}`); save();renderCurrent()}})
+
+function concludeInnings(){
+  const m=state.current; if(!m) return;
+  // if inning 1, swap and start second
+  if(m.inning===1){
+    // store score as target
+    m.firstScore = m.score; m.firstWkts = m.wkts;
+    m.inning=2; m.batting = state.teams[m.teamBid].name; m.battingId = m.teamBid; m.balls=0; m.score=0; m.wkts=0; m.log.push('--- Second innings begins ---');
+  } else {
+    // match finished: decide result
+    m.completed = true;
+    // simple winner logic based on score
+    const teamA = m.teamAid, teamB = m.teamBid;
+    const aScore = m.firstScore; const bScore = m.score;
+    let winner=null;
+    if(bScore> aScore) winner = teamB; else if(bScore< aScore) winner = teamA; else winner = 'Tie';
+    m.winner = winner;
+    m.log.push('Match finished. Winner: '+winner);
+    // update team stats
+    if(winner!=='Tie'){
+      state.teams[winner].stats.played +=1; state.teams[winner].stats.won +=1; state.teams[winner].stats.pts +=2;
+      const loser = (winner==teamA?teamB:teamA); state.teams[loser].stats.played +=1; state.teams[loser].stats.lost +=1;
+    } else {
+      state.teams[teamA].stats.played +=1; state.teams[teamB].stats.played +=1; state.teams[teamA].stats.pts +=1; state.teams[teamB].stats.pts +=1;
+    }
+    state.matches.push(m);
+    state.current = null;
+  }
+  save(); renderCurrent(); renderPoints();
+}
+
+swapBtn.addEventListener('click',()=>{if(!state.current){alert('No match')} else {const m=state.current; if(m.inning===1){concludeInnings()} else {alert('Already in 2nd innings')}}})
+
+pauseBtn.addEventListener('click',()=>{matchStatusEl.textContent='Paused';alert('Match paused. Use resume by changing any scoring button to continue.')})
+endBtn.addEventListener('click',()=>{if(!state.current){alert('No match')} else {if(confirm('End match now?')){state.current.completed=true; state.matches.push(state.current); state.current=null; save(); renderCurrent(); renderPoints();}}})
+
+// points table
+function renderPoints(){
+  pointsTableBody.innerHTML=''; state.teams.forEach(t=>{
+    const tr=document.createElement('tr'); tr.innerHTML=`<td>${t.name}</td><td>${t.stats.played||0}</td><td>${t.stats.won||0}</td><td>${t.stats.lost||0}</td><td>${t.stats.pts||0}</td>`; pointsTableBody.appendChild(tr);
+  })
+}
+
+clearBtn.addEventListener('click',()=>{if(confirm('Clear all teams and matches?')){localStorage.clear();state.teams=[];state.matches=[];state.current=null;save();renderTeams();renderPoints();renderCurrent();}})
+
+// initial render
+renderTeams();renderPoints();renderCurrent();
+
+</script>
+</body>
+</html>
