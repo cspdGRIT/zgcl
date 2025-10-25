@@ -45,7 +45,7 @@
       z-index: 20;
       box-shadow: 0 2px 8px var(--shadow);
     }
-    header > div.logo {
+    .logo {
       width: 48px;
       height: 48px;
       border-radius: 10px;
@@ -138,7 +138,7 @@
       background-color: #0b2c60;
       box-shadow: 0 2px 8px var(--accent);
     }
-    .logo {
+    .logo-team {
       min-width: 44px;
       height: 44px;
       border-radius: 10px;
@@ -268,7 +268,6 @@
       user-select:none;
       border-top: 1px solid rgba(255, 255, 255, 0.07);
     }
-    /* Compact typography fixes */
     h2,
     h3 {
       margin: 0 0 8px 0;
@@ -292,11 +291,9 @@
     strong {
       color: #aec8ff;
     }
-    /* Specific smaller text styling */
     .card.small strong {
       color: #c4d7ff;
     }
-    /* Scrollbar styling for Chrome and Firefox */
     .score-log::-webkit-scrollbar,
     .small::-webkit-scrollbar {
       width: 8px;
@@ -310,7 +307,6 @@
     .small::-webkit-scrollbar-track {
       background: transparent;
     }
-    /* Disabled button alternate color */
     #nextBallLive {
       background-color: #444;
       box-shadow: none;
@@ -329,16 +325,16 @@
       <div class="small">Version 2.0 — Player stats, Super Over, PDF scorecard, share links</div>
     </div>
 
-    <nav class="tabs" aria-label="Main Navigation Tabs">
+    <nav class="tabs" role="tablist" aria-label="Main Navigation Tabs">
       <div class="tab active" data-tab="overview" role="tab" tabindex="0" aria-selected="true" aria-controls="overviewTab">Overview</div>
-      <div class="tab" data-tab="rules" role="tab" tabindex="-1" aria-controls="rulesTabContent">Rules</div>
-      <div class="tab" data-tab="tournament" role="tab" tabindex="-1" aria-controls="tournamentTab">Tournament</div>
-      <div class="tab" data-tab="live" role="tab" tabindex="-1" aria-controls="liveTab">Live Score</div>
+      <div class="tab" data-tab="rules" role="tab" tabindex="-1" aria-selected="false" aria-controls="rulesTabContent">Rules</div>
+      <div class="tab" data-tab="tournament" role="tab" tabindex="-1" aria-selected="false" aria-controls="tournamentTab">Tournament</div>
+      <div class="tab" data-tab="live" role="tab" tabindex="-1" aria-selected="false" aria-controls="liveTab">Live Score</div>
     </nav>
   </header>
 
   <main>
-    <!-- Left column: Teams & leaderboard -->
+    <!-- Left column -->
     <section class="col" aria-label="Teams and leaderboard area">
       <article class="card" id="teamsCard" aria-labelledby="teamsTitle">
         <h2 id="teamsTitle">Teams</h2>
@@ -372,9 +368,9 @@
       </article>
     </section>
 
-    <!-- Middle: Match/Tournament area -->
+    <!-- Middle column -->
     <section class="col" aria-label="Match and tournament actions">
-      <article class="card" id="overviewTab" role="tabpanel" aria-hidden="false">
+      <article class="card" id="overviewTab" role="tabpanel" aria-hidden="false" style="display:block;">
         <h2>Zenith Gully Cricket — Tournament Overview</h2>
         <p class="small">
           GULLY CRICKET TOURNAMENT RULEBOOK 2025 — additions initiated by Sandeep, Surya
@@ -385,12 +381,12 @@
         </p>
       </article>
 
-      <article class="card" id="tournamentTab" role="tabpanel" style="display:none" aria-hidden="true">
+      <article class="card" id="tournamentTab" role="tabpanel" aria-hidden="true" style="display:none;">
         <h2>Schedule &amp; Results</h2>
         <div id="matchSchedule" aria-live="polite" aria-atomic="true"></div>
       </article>
 
-      <article class="card" id="liveTab" role="tabpanel" style="display:none" aria-hidden="true">
+      <article class="card" id="liveTab" role="tabpanel" aria-hidden="true" style="display:none;">
         <h2>Live Scoring</h2>
         <form style="display:flex;gap:10px;align-items:center;margin-bottom:12px" aria-label="Match selection and overs">
           <label for="matchSelect" class="small">Select Match</label>
@@ -462,7 +458,7 @@
         </section>
       </article>
 
-      <article class="card" id="rulesTabContent" role="tabpanel" aria-hidden="true" style="display:none; max-height: 420px; overflow-y: auto; padding-right: 12px;">
+      <article class="card small" id="rulesTabContent" role="tabpanel" aria-hidden="true" style="display:none; max-height: 420px; overflow-y: auto; padding-right: 12px;">
         <h2>GULLY CRICKET TOURNAMENT RULEBOOK 2025</h2>
         <div class="small" tabindex="0">
           <h3>1. Tournament Format</h3>
@@ -538,74 +534,4 @@
           <h3>8. Bonus Suggestions</h3>
           <ul>
             <li>Fair Play Award, Best Catch, Best Bowler, Best Batter in Finals.</li>
-            <li>Music &amp; friendly commentary encouraged.</li>
-          </ul>
-
-          <p style="font-weight:700; margin-top: 15px;">Let’s Play Hard, Fair &amp; Fun — The Gully Way!</p>
-        </div>
-      </article>
-    </section>
-
-    <!-- Right column: match details & control -->
-    <section class="col" aria-label="Match control and share">
-      <article class="card" aria-labelledby="matchControlTitle">
-        <h2 id="matchControlTitle">Match Control</h2>
-        <div style="display:flex;gap:10px;margin-bottom:12px">
-          <button id="startAuto" title="Auto-save and enable smooth mode" type="button">Enable Smooth Mode</button>
-          <button id="forceSuper" type="button">Force Super Over</button>
-        </div>
-        <div class="small" style="margin-bottom: 8px;">Manual Controls</div>
-        <div style="display:flex;gap:10px;">
-          <button id="swapInnings" type="button">Switch Innings</button>
-          <button id="endNow" type="button">End &amp; Record Result</button>
-        </div>
-      </article>
-
-      <article class="card" aria-labelledby="shareExportTitle" style="margin-top:16px;">
-        <h3 id="shareExportTitle">Share &amp; Export</h3>
-        <div style="display:flex;gap:12px;align-items:center;">
-          <button id="copyMatchLink2" type="button">Copy Current Match Link</button>
-          <button id="resetBtn" type="button" style="background:#444">Reset Tournament</button>
-        </div>
-      </article>
-
-      <article class="card small" aria-label="Top performers" style="margin-top:16px;">
-        <h3>Top Performers</h3>
-        <div id="topBatter" style="margin-bottom:6px;">-</div>
-        <div id="topBowler">-</div>
-      </article>
-    </section>
-  </main>
-
-  <footer role="contentinfo">
-    Built for the Gully — Zenith Gully Cricket 2025
-  </footer>
-
-  <!-- jsPDF for PDF export -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-
-  <script>
-    // Your existing JavaScript logic can remain unchanged,
-    // but consider adding subtle animation for log entries after update:
-    const liveLog = document.getElementById('liveLog');
-    const observer = new MutationObserver(() => {
-      const lastEntry = liveLog.lastElementChild;
-      if(lastEntry){
-        lastEntry.style.opacity = '0';
-        lastEntry.style.transform = 'translateY(8px)';
-        setTimeout(() => {
-          lastEntry.style.transition = 'all 0.3s ease';
-          lastEntry.style.opacity = '1';
-          lastEntry.style.transform = 'translateY(0)';
-        }, 20);
-      }
-    });
-    observer.observe(liveLog, { childList: true });
-
-    // Rest of your script code follows...
-
-    // (All other scripts from your provided code remain intact here)
-
-  </script>
-</body>
-</html>
+            <
