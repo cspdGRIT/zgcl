@@ -3,29 +3,41 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Zenith Gully Cricket 2.0</title>
+  <title>🏏 Zenith Gully Cricket 2.0</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700;900&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700;900&family=Poppins:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --accent: #0b6efd;
-      --accent-dark: #0851c3;
-      --bg: #041226;
-      --card: rgba(255, 255, 255, 0.05);
-      --muted: #9aa7bf;
-      --hover-bg: #0d75ff;
-      --shadow: rgba(11, 109, 253, 0.4);
+      --saffron: #FF9933;
+      --white: #FFFFFF;
+      --green: #138808;
+      --blue: #000080;
+      --cricket-red: #DC143C;
+      --accent: #FF6B00;
+      --accent-dark: #E65100;
+      --bg: #0a1929;
+      --card: rgba(255, 255, 255, 0.08);
+      --muted: #b0bec5;
+      --hover-bg: #FF8533;
+      --shadow: rgba(255, 153, 51, 0.5);
+      --team-india: linear-gradient(135deg, #FF9933 0%, #FFFFFF 50%, #138808 100%);
     }
+    
     * {
       box-sizing: border-box;
-      font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
-      transition: background-color 0.2s ease, color 0.2s ease;
+      font-family: 'Poppins', 'Inter', system-ui, -apple-system, sans-serif;
+      transition: background-color 0.3s ease, color 0.2s ease, transform 0.2s ease;
     }
+    
     body {
       margin: 0;
-      background: linear-gradient(180deg, #021024 0%, #061428 100%);
-      color: #eaf3ff;
+      background: 
+        linear-gradient(135deg, rgba(255,153,51,0.05) 0%, rgba(19,136,8,0.05) 100%),
+        repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(255,255,255,0.02) 10px, rgba(255,255,255,0.02) 20px),
+        linear-gradient(180deg, #0a1929 0%, #1a2332 100%);
+      background-attachment: fixed;
+      color: #ffffff;
       font-weight: 500;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
@@ -33,296 +45,661 @@
       min-height: 100vh;
       display: flex;
       flex-direction: column;
+      position: relative;
+      overflow-x: hidden;
     }
+    
+    /* Cricket themed decorations */
+    body::before {
+      content: '🏏';
+      position: fixed;
+      font-size: 200px;
+      opacity: 0.03;
+      top: 10%;
+      right: -50px;
+      transform: rotate(-20deg);
+      pointer-events: none;
+      z-index: 0;
+    }
+    
+    body::after {
+      content: '🏏';
+      position: fixed;
+      font-size: 150px;
+      opacity: 0.03;
+      bottom: 15%;
+      left: -30px;
+      transform: rotate(25deg);
+      pointer-events: none;
+      z-index: 0;
+    }
+    
     header {
       display: flex;
       align-items: center;
       gap: 16px;
-      padding: 14px 24px;
-      background: linear-gradient(90deg, #031025, #071733);
+      padding: 16px 28px;
+      background: linear-gradient(135deg, 
+        rgba(255, 153, 51, 0.15) 0%, 
+        rgba(255, 255, 255, 0.05) 50%, 
+        rgba(19, 136, 8, 0.15) 100%);
+      backdrop-filter: blur(10px);
       position: sticky;
       top: 0;
       z-index: 20;
-      box-shadow: 0 2px 8px var(--shadow);
+      box-shadow: 0 4px 20px rgba(255, 107, 0, 0.3),
+                  inset 0 -2px 0 rgba(255, 153, 51, 0.3);
+      border-bottom: 2px solid rgba(255, 153, 51, 0.2);
     }
+    
     .logo {
-      width: 48px;
-      height: 48px;
-      border-radius: 10px;
-      background: #072244;
+      width: 56px;
+      height: 56px;
+      border-radius: 14px;
+      background: var(--team-india);
       display: flex;
       align-items: center;
       justify-content: center;
       font-weight: 900;
-      font-size: 1.4rem;
-      user-select:none;
+      font-size: 1.6rem;
+      user-select: none;
+      box-shadow: 0 4px 15px rgba(255, 153, 51, 0.4);
+      position: relative;
+      animation: pulse 3s ease-in-out infinite;
     }
+    
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+    
+    .logo::after {
+      content: '🏏';
+      position: absolute;
+      font-size: 24px;
+      animation: spin 8s linear infinite;
+    }
+    
+    @keyframes spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    
     h1 {
       margin: 0;
-      font-size: 22px;
+      font-size: 26px;
       font-weight: 900;
-      letter-spacing: 0.03em;
+      letter-spacing: 0.02em;
       line-height: 1.2;
+      background: linear-gradient(135deg, var(--saffron) 0%, #fff 50%, var(--green) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-shadow: 0 2px 10px rgba(255, 153, 51, 0.3);
     }
+    
     .small {
       font-size: 14px;
       color: var(--muted);
       font-weight: 400;
       margin-top: 4px;
     }
+    
     .tabs {
       margin-left: auto;
       display: flex;
       gap: 12px;
+      flex-wrap: wrap;
     }
+    
     .tab {
-      background: #0c1a2b;
-      padding: 10px 16px;
-      border-radius: 10px;
+      background: rgba(255, 153, 51, 0.1);
+      padding: 12px 18px;
+      border-radius: 12px;
       cursor: pointer;
-      color: #cfe5ff;
+      color: #fff;
       font-weight: 700;
       font-size: 15px;
-      user-select:none;
-      box-shadow: inset 0 0 0 1px rgba(255 255 255 / 0.1);
+      user-select: none;
+      border: 2px solid rgba(255, 153, 51, 0.3);
       text-transform: uppercase;
       letter-spacing: 0.05em;
-      transition: background-color 0.25s ease, color 0.25s ease;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
     }
+    
+    .tab::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      transition: left 0.5s;
+    }
+    
+    .tab:hover:not(.active)::before {
+      left: 100%;
+    }
+    
     .tab:hover:not(.active) {
-      background-color: var(--hover-bg);
-      box-shadow: inset 0 0 5px var(--accent);
-      color: #021124;
+      background: var(--hover-bg);
+      border-color: var(--saffron);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 15px var(--shadow);
     }
+    
     .tab.active {
-      background: linear-gradient(90deg, var(--accent), #6ea8ff);
-      color: #021124;
-      box-shadow: 0 0 10px var(--accent);
+      background: linear-gradient(135deg, var(--saffron), var(--cricket-red));
+      color: #fff;
+      box-shadow: 0 4px 20px var(--shadow);
       cursor: default;
+      border-color: var(--saffron);
+      transform: scale(1.05);
     }
+    
     main {
       display: grid;
       grid-template-columns: 320px 1fr 360px;
-      gap: 20px;
-      padding: 24px 32px;
+      gap: 24px;
+      padding: 28px 36px 80px 36px;
       flex-grow: 1;
+      position: relative;
+      z-index: 1;
     }
+    
     @media (max-width: 1100px) {
       main {
         grid-template-columns: 1fr;
       }
     }
+    
     .col {
       display: flex;
       flex-direction: column;
-      gap: 14px;
+      gap: 16px;
     }
+    
     .card {
       background: var(--card);
-      padding: 16px 18px;
-      border-radius: 14px;
-      border: 1px solid rgba(255, 255, 255, 0.07);
-      box-shadow: 0 1px 6px rgba(0, 0, 0, 0.2);
-      user-select:none;
+      padding: 20px 22px;
+      border-radius: 16px;
+      border: 2px solid rgba(255, 153, 51, 0.2);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3),
+                  inset 0 1px 0 rgba(255, 255, 255, 0.1);
+      user-select: none;
+      backdrop-filter: blur(10px);
+      position: relative;
+      overflow: hidden;
+      transition: all 0.3s ease;
     }
+    
+    .card::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(255,153,51,0.1) 0%, transparent 70%);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    
+    .card:hover::before {
+      opacity: 1;
+    }
+    
+    .card:hover {
+      transform: translateY(-2px);
+      border-color: rgba(255, 153, 51, 0.4);
+      box-shadow: 0 8px 25px rgba(255, 107, 0, 0.4);
+    }
+    
     .team-card {
       display: flex;
       align-items: center;
-      gap: 10px;
-      padding: 10px 8px;
-      border-radius: 12px;
-      transition: background-color 0.25s ease;
-      cursor: default;
+      gap: 12px;
+      padding: 12px 10px;
+      border-radius: 14px;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      border: 1px solid transparent;
     }
+    
     .team-card:hover {
-      background-color: #0b2c60;
-      box-shadow: 0 2px 8px var(--accent);
+      background: linear-gradient(135deg, rgba(255,153,51,0.2), rgba(19,136,8,0.2));
+      box-shadow: 0 4px 15px var(--shadow);
+      transform: translateX(5px);
+      border-color: rgba(255, 153, 51, 0.4);
     }
+    
     .logo-team {
-      min-width: 44px;
-      height: 44px;
-      border-radius: 10px;
-      background: #0b3a5b;
+      min-width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--saffron), var(--cricket-red));
       color: #fff;
       display: flex;
       align-items: center;
       justify-content: center;
       font-weight: 800;
-      font-size: 1.3rem;
-      user-select:none;
+      font-size: 1.4rem;
+      user-select: none;
+      box-shadow: 0 2px 10px rgba(255, 153, 51, 0.5);
     }
-    .small {
-      font-size: 13px;
-      color: var(--muted);
-      font-weight: 400;
-    }
+    
     .big {
-      font-size: 32px;
+      font-size: 36px;
       font-weight: 900;
-      letter-spacing: 0.05em;
-      user-select:none;
+      letter-spacing: 0.03em;
+      user-select: none;
+      background: linear-gradient(135deg, var(--saffron) 0%, #fff 50%, var(--green) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
     }
+    
     button {
-      background: var(--accent);
+      background: linear-gradient(135deg, var(--saffron), var(--cricket-red));
       border: none;
       color: white;
-      padding: 10px 14px;
-      border-radius: 10px;
+      padding: 12px 18px;
+      border-radius: 12px;
       cursor: pointer;
       font-weight: 700;
       font-size: 15px;
-      box-shadow: 0 0 8px var(--accent);
-      user-select:none;
-      transition: background-color 0.25s ease, box-shadow 0.25s ease;
+      box-shadow: 0 4px 15px rgba(255, 107, 0, 0.4);
+      user-select: none;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
     }
+    
+    button::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.3);
+      transform: translate(-50%, -50%);
+      transition: width 0.6s, height 0.6s;
+    }
+    
+    button:hover:not(:disabled)::before {
+      width: 300px;
+      height: 300px;
+    }
+    
     button:hover:not(:disabled) {
-      background-color: var(--accent-dark);
-      box-shadow: 0 0 14px var(--accent);
+      background: linear-gradient(135deg, var(--cricket-red), var(--accent-dark));
+      transform: translateY(-2px) scale(1.05);
+      box-shadow: 0 6px 20px rgba(255, 107, 0, 0.6);
     }
+    
+    button:active:not(:disabled) {
+      transform: translateY(0) scale(0.98);
+    }
+    
     button:disabled {
       cursor: not-allowed;
-      opacity: 0.65;
+      opacity: 0.5;
       box-shadow: none;
     }
+    
     select,
     input {
-      padding: 10px 14px;
-      border-radius: 10px;
-      border: 1px solid rgba(255, 255, 255, 0.07);
-      background: transparent;
+      padding: 12px 16px;
+      border-radius: 12px;
+      border: 2px solid rgba(255, 153, 51, 0.3);
+      background: rgba(255, 255, 255, 0.05);
       color: inherit;
       font-size: 14px;
       font-weight: 600;
-      user-select:none;
-      transition: border-color 0.25s ease;
+      user-select: none;
+      transition: all 0.3s ease;
       min-width: 100px;
     }
+    
     select:focus,
     input:focus {
       outline: none;
-      border-color: var(--accent);
-      box-shadow: 0 0 6px var(--accent);
+      border-color: var(--saffron);
+      box-shadow: 0 0 15px rgba(255, 153, 51, 0.4);
+      background: rgba(255, 255, 255, 0.08);
     }
+    
     .controls {
       display: flex;
       gap: 10px;
       flex-wrap: wrap;
     }
+    
     .controls button {
       flex: 1 1 48px;
       text-align: center;
-      padding: 10px 0;
-      font-weight: 700;
+      padding: 12px 0;
+      min-width: 60px;
       font-size: 16px;
+      font-weight: 800;
     }
+    
+    h2,
+    h3 {
+      margin: 0 0 12px 0;
+      font-weight: 900;
+      letter-spacing: 0.02em;
+      user-select: none;
+      color: var(--saffron);
+      text-shadow: 0 2px 10px rgba(255, 153, 51, 0.3);
+    }
+    
+    h3 {
+      font-size: 20px;
+      margin-top: 12px;
+    }
+    
     .score-log {
       max-height: 280px;
       overflow-y: auto;
-      padding: 12px 14px;
-      background: rgba(0, 0, 0, 0.18);
-      border-radius: 10px;
+      padding: 14px 16px;
+      background: rgba(0, 0, 0, 0.3);
+      border-radius: 12px;
       font-size: 14px;
-      line-height: 1.3;
-      user-select:none;
+      line-height: 1.5;
+      user-select: none;
+      border: 1px solid rgba(255, 153, 51, 0.2);
     }
+    
     .score-log div {
-      animation: fadeInUp 0.3s ease forwards;
-      padding: 2px 0;
+      animation: slideInRight 0.4s ease forwards;
+      padding: 4px 0;
+      border-bottom: 1px dashed rgba(255, 153, 51, 0.1);
     }
-    @keyframes fadeInUp {
+    
+    @keyframes slideInRight {
       from {
         opacity: 0;
-        transform: translateY(8px);
+        transform: translateX(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+    
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+      user-select: none;
+    }
+    
+    th,
+    td {
+      padding: 10px 12px;
+      border-bottom: 1px solid rgba(255, 153, 51, 0.2);
+      text-align: left;
+      font-weight: 600;
+    }
+    
+    th {
+      color: var(--saffron);
+      letter-spacing: 0.05em;
+      font-size: 13px;
+      user-select: none;
+      text-transform: uppercase;
+      background: rgba(255, 153, 51, 0.1);
+    }
+    
+    tr:hover {
+      background: rgba(255, 153, 51, 0.1);
+    }
+    
+    ul {
+      padding-left: 20px;
+      margin: 8px 0;
+      color: var(--muted);
+      font-weight: 400;
+    }
+    
+    ul li {
+      margin-bottom: 8px;
+      line-height: 1.6;
+    }
+    
+    strong {
+      color: #ffd700;
+      font-weight: 700;
+    }
+    
+    .score-log::-webkit-scrollbar,
+    .small::-webkit-scrollbar {
+      width: 10px;
+    }
+    
+    .score-log::-webkit-scrollbar-thumb,
+    .small::-webkit-scrollbar-thumb {
+      background: linear-gradient(180deg, var(--saffron), var(--cricket-red));
+      border-radius: 5px;
+    }
+    
+    .score-log::-webkit-scrollbar-track,
+    .small::-webkit-scrollbar-track {
+      background: rgba(0, 0, 0, 0.2);
+      border-radius: 5px;
+    }
+    
+    #nextBallLive {
+      background: linear-gradient(135deg, #555, #777) !important;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    }
+    
+    #nextBallLive:hover:not(:disabled) {
+      background: linear-gradient(135deg, #666, #888) !important;
+      transform: translateY(-2px) scale(1.05);
+    }
+    
+    /* Chai Cheers Button - Bottom Right */
+    .chai-button {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #8B4513 0%, #D2691E 100%);
+      border: 3px solid #FFD700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 36px;
+      box-shadow: 0 6px 25px rgba(139, 69, 19, 0.6),
+                  0 0 40px rgba(255, 215, 0, 0.3);
+      z-index: 1000;
+      transition: all 0.3s ease;
+      animation: float 3s ease-in-out infinite;
+    }
+    
+    @keyframes float {
+      0%, 100% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-10px);
+      }
+    }
+    
+    .chai-button:hover {
+      transform: scale(1.15) rotate(10deg);
+      box-shadow: 0 8px 35px rgba(139, 69, 19, 0.8),
+                  0 0 60px rgba(255, 215, 0, 0.5);
+    }
+    
+    .chai-button:active {
+      transform: scale(0.95);
+    }
+    
+    .chai-popup {
+      position: fixed;
+      bottom: 120px;
+      right: 30px;
+      background: linear-gradient(135deg, rgba(139, 69, 19, 0.95), rgba(210, 105, 30, 0.95));
+      padding: 20px 25px;
+      border-radius: 20px;
+      border: 3px solid #FFD700;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+      z-index: 999;
+      display: none;
+      min-width: 250px;
+      backdrop-filter: blur(10px);
+      animation: popIn 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    }
+    
+    @keyframes popIn {
+      0% {
+        opacity: 0;
+        transform: scale(0.5) translateY(20px);
+      }
+      100% {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+      }
+    }
+    
+    .chai-popup.show {
+      display: block;
+    }
+    
+    .chai-popup h3 {
+      margin: 0 0 15px 0;
+      font-size: 22px;
+      color: #FFD700;
+      text-align: center;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+    }
+    
+    .chai-popup p {
+      margin: 0;
+      color: #FFF;
+      text-align: center;
+      font-size: 16px;
+      line-height: 1.6;
+      font-weight: 500;
+    }
+    
+    .chai-popup::before {
+      content: '';
+      position: absolute;
+      bottom: -20px;
+      right: 35px;
+      width: 0;
+      height: 0;
+      border-left: 15px solid transparent;
+      border-right: 15px solid transparent;
+      border-top: 20px solid #8B4513;
+    }
+    
+    /* Cricket field decoration */
+    .cricket-decoration {
+      position: fixed;
+      font-size: 40px;
+      opacity: 0.08;
+      pointer-events: none;
+      animation: drift 20s ease-in-out infinite;
+    }
+    
+    @keyframes drift {
+      0%, 100% {
+        transform: translate(0, 0) rotate(0deg);
+      }
+      25% {
+        transform: translate(20px, -20px) rotate(5deg);
+      }
+      50% {
+        transform: translate(-20px, 20px) rotate(-5deg);
+      }
+      75% {
+        transform: translate(20px, 20px) rotate(5deg);
+      }
+    }
+    
+    .decoration-1 { top: 20%; left: 10%; animation-delay: 0s; }
+    .decoration-2 { top: 60%; right: 15%; animation-delay: 3s; }
+    .decoration-3 { bottom: 25%; left: 20%; animation-delay: 6s; }
+    .decoration-4 { top: 40%; right: 25%; animation-delay: 9s; }
+    
+    /* Responsive */
+    @media (max-width: 768px) {
+      .chai-button {
+        width: 60px;
+        height: 60px;
+        font-size: 30px;
+        bottom: 20px;
+        right: 20px;
+      }
+      
+      .chai-popup {
+        right: 20px;
+        bottom: 95px;
+        min-width: 200px;
+      }
+      
+      h1 {
+        font-size: 20px;
+      }
+      
+      .tabs {
+        gap: 8px;
+      }
+      
+      .tab {
+        padding: 8px 12px;
+        font-size: 13px;
+      }
+    }
+    
+    /* Loading animation for page */
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
       }
       to {
         opacity: 1;
         transform: translateY(0);
       }
     }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 14px;
-      user-select:none;
+    
+    .col {
+      animation: fadeIn 0.6s ease forwards;
     }
-    th,
-    td {
-      padding: 8px 10px;
-      border-bottom: 1px dashed rgba(255, 255, 255, 0.05);
-      text-align: left;
-      font-weight: 600;
-    }
-    th {
-      color: var(--accent);
-      letter-spacing: 0.05em;
-      font-size: 13px;
-      user-select:none;
-    }
-    footer {
-      grid-column: 1 / -1;
-      padding: 14px 0;
-      text-align: center;
-      color: var(--muted);
-      font-weight: 500;
-      font-size: 14px;
-      user-select:none;
-      border-top: 1px solid rgba(255, 255, 255, 0.07);
-    }
-    h2,
-    h3 {
-      margin: 0 0 8px 0;
-      font-weight: 900;
-      letter-spacing: 0.03em;
-      user-select:none;
-    }
-    h3 {
-      font-size: 18px;
-      margin-top: 10px;
-    }
-    ul {
-      padding-left: 20px;
-      margin: 0;
-      color: var(--muted);
-      font-weight: 400;
-    }
-    ul li {
-      margin-bottom: 6px;
-    }
-    strong {
-      color: #aec8ff;
-    }
-    .card.small strong {
-      color: #c4d7ff;
-    }
-    .score-log::-webkit-scrollbar,
-    .small::-webkit-scrollbar {
-      width: 8px;
-    }
-    .score-log::-webkit-scrollbar-thumb,
-    .small::-webkit-scrollbar-thumb {
-      background: var(--accent);
-      border-radius: 4px;
-    }
-    .score-log::-webkit-scrollbar-track,
-    .small::-webkit-scrollbar-track {
-      background: transparent;
-    }
-    #nextBallLive {
-      background-color: #444;
-      box-shadow: none;
-      transition: background-color 0.25s ease;
-    }
-    #nextBallLive:hover:not(:disabled) {
-      background-color: #666;
-    }
+    
+    .col:nth-child(1) { animation-delay: 0.1s; }
+    .col:nth-child(2) { animation-delay: 0.2s; }
+    .col:nth-child(3) { animation-delay: 0.3s; }
   </style>
 </head>
 <body>
+  <!-- Cricket decorations floating around -->
+  <div class="cricket-decoration decoration-1">🏏</div>
+  <div class="cricket-decoration decoration-2">🏏</div>
+  <div class="cricket-decoration decoration-3">⚾</div>
+  <div class="cricket-decoration decoration-4">🏆</div>
+
   <header>
-    <div class="logo">ZG</div>
+    <div class="logo"></div>
     <div>
-      <h1>Zenith Gully Cricket — Tournament Portal</h1>
-      <div class="small">Version 2.0 — Player stats, Super Over, PDF scorecard, share links</div>
+      <h1>🏏 Zenith Gully Cricket — Tournament Portal</h1>
+      <div class="small">Version 2.0 — Player stats, Super Over, PDF scorecard, share links ✨</div>
     </div>
 
     <nav class="tabs" role="tablist" aria-label="Main Navigation Tabs">
@@ -337,12 +714,12 @@
     <!-- Left column -->
     <section class="col" aria-label="Teams and leaderboard area">
       <article class="card" id="teamsCard" aria-labelledby="teamsTitle">
-        <h2 id="teamsTitle">Teams</h2>
+        <h2 id="teamsTitle">🏆 Teams</h2>
         <div id="teamsList" role="list"></div>
       </article>
 
       <article class="card" aria-labelledby="leaderboardTitle">
-        <h2 id="leaderboardTitle">Leaderboard</h2>
+        <h2 id="leaderboardTitle">📊 Leaderboard</h2>
         <table id="leaderboard" role="grid" aria-describedby="leaderboardSummary">
           <thead>
             <tr>
@@ -359,7 +736,7 @@
       </article>
 
       <article class="card small" aria-label="Quick Tips">
-        <strong>Quick Tips</strong>
+        <strong>⚡ Quick Tips</strong>
         <ul>
           <li>Load a match in Live tab → set overs → pick striker &amp; bowler → score.</li>
           <li>PDF scorecard available after match ends.</li>
@@ -371,24 +748,24 @@
     <!-- Middle column -->
     <section class="col" aria-label="Match and tournament actions">
       <article class="card" id="overviewTab" role="tabpanel" aria-hidden="false" style="display:block;">
-        <h2>Zenith Gully Cricket — Tournament Overview</h2>
+        <h2>🏏 Zenith Gully Cricket — Tournament Overview</h2>
         <p class="small">
-          GULLY CRICKET TOURNAMENT RULEBOOK 2025 — additions initiated by Sandeep, Surya
+          🇮🇳 GULLY CRICKET TOURNAMENT RULEBOOK 2025 — additions initiated by Sandeep, Surya
         </p>
         <p class="small">
           6 teams, each plays every other team once. Matches are 6 overs per side; best of 3 games per fixture.
-          Top 2 teams to final. See Rules tab for full rulebook.
+          Top 2 teams to final. See Rules tab for full rulebook. 🏆
         </p>
       </article>
 
       <article class="card" id="tournamentTab" role="tabpanel" aria-hidden="true" style="display:none;">
-        <h2>Schedule &amp; Results</h2>
+        <h2>📅 Schedule &amp; Results</h2>
         <div id="matchSchedule" aria-live="polite" aria-atomic="true"></div>
       </article>
 
       <article class="card" id="liveTab" role="tabpanel" aria-hidden="true" style="display:none;">
-        <h2>Live Scoring</h2>
-        <form style="display:flex;gap:10px;align-items:center;margin-bottom:12px" aria-label="Match selection and overs">
+        <h2>🎯 Live Scoring</h2>
+        <form style="display:flex;gap:10px;align-items:center;margin-bottom:12px;flex-wrap:wrap;" aria-label="Match selection and overs">
           <label for="matchSelect" class="small">Select Match</label>
           <select id="matchSelect" name="matchSelect" aria-required="true"></select>
 
@@ -402,18 +779,18 @@
           <button id="loadLive" type="button" aria-label="Load selected match">Load</button>
         </form>
 
-        <div class="live-info" style="display:flex;gap:16px;align-items:center;margin-bottom:14px;" aria-live="polite" aria-atomic="true" aria-relevant="text">
-          <div style="flex:1">
+        <div class="live-info" style="display:flex;gap:16px;align-items:center;margin-bottom:14px;flex-wrap:wrap;" aria-live="polite" aria-atomic="true" aria-relevant="text">
+          <div style="flex:1;min-width:150px;">
             <div class="small">Batting</div>
             <div id="liveBatting" class="big" aria-live="polite" aria-atomic="true">-</div>
             <div class="small" id="liveOversDisplay">Overs: 0.0</div>
           </div>
-          <div style="flex:1; text-align:center;">
+          <div style="flex:1;min-width:150px; text-align:center;">
             <div class="small">Score</div>
             <div id="liveScore" class="big" aria-live="polite" aria-atomic="true">0/0</div>
             <div class="small" id="liveRR">RR: -</div>
           </div>
-          <div style="flex:1">
+          <div style="flex:1;min-width:150px;">
             <div class="small">Opponent</div>
             <div id="liveOpp" class="big">-</div>
             <div class="small">Status: <span id="liveStatus">Idle</span></div>
@@ -422,7 +799,7 @@
 
         <form class="controls" style="margin-bottom:14px" aria-label="Score controls">
           <fieldset style="display: flex; gap: 10px; flex-wrap: wrap; border: none; padding: 0; margin: 0;">
-            <legend class="small" style="width: 100%; margin-bottom: 6px; font-weight: 700; color: var(--accent);">Runs</legend>
+            <legend class="small" style="width: 100%; margin-bottom: 6px; font-weight: 700; color: var(--saffron);">🏏 Runs</legend>
             <button type="button" data-run="1" aria-label="Add 1 run">+1</button>
             <button type="button" data-run="2" aria-label="Add 2 runs">+2</button>
             <button type="button" data-run="3" aria-label="Add 3 runs">+3</button>
@@ -432,34 +809,34 @@
             <button type="button" data-run="W" aria-label="Wicket">W</button>
             <button type="button" data-run="NB" aria-label="No ball">NB</button>
             <button type="button" data-run="LB" aria-label="Leg bye">LB</button>
-            <button type="button" id="nextBallLive" style="background:#444" aria-label="Next ball">Next Ball</button>
+            <button type="button" id="nextBallLive" aria-label="Next ball">Next Ball</button>
           </fieldset>
         </form>
 
         <section class="card" aria-label="Score log and export options">
-          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
-            <h3 style="margin:0">Score Log</h3>
-            <div style="display:flex;gap:10px;">
-              <button id="exportPDF" type="button" aria-label="Download scorecard as PDF">Download Scorecard (PDF)</button>
-              <button id="copyLink" type="button" aria-label="Copy match share link">Copy Match Link</button>
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;flex-wrap:wrap;gap:10px;">
+            <h3 style="margin:0">📝 Score Log</h3>
+            <div style="display:flex;gap:10px;flex-wrap:wrap;">
+              <button id="exportPDF" type="button" aria-label="Download scorecard as PDF">📄 PDF</button>
+              <button id="copyLink" type="button" aria-label="Copy match share link">🔗 Share</button>
             </div>
           </div>
           <div id="liveLog" class="score-log small" aria-live="polite" aria-atomic="true">No match loaded</div>
         </section>
 
         <section class="card" aria-label="Player batting statistics" style="margin-top:14px;">
-          <h3>Player Stats (Batting)</h3>
+          <h3>🏏 Player Stats (Batting)</h3>
           <div id="batStats" class="small">-</div>
         </section>
 
         <section class="card" aria-label="Player bowling statistics" style="margin-top:14px;">
-          <h3>Player Stats (Bowling)</h3>
+          <h3>⚾ Player Stats (Bowling)</h3>
           <div id="bowlStats" class="small">-</div>
         </section>
       </article>
 
-      <article class="card small" id="rulesTabContent" role="tabpanel" aria-hidden="true" style="display:none; max-height: 420px; overflow-y: auto; padding-right: 12px;">
-        <h2>GULLY CRICKET TOURNAMENT RULEBOOK 2025</h2>
+      <article class="card small" id="rulesTabContent" role="tabpanel" aria-hidden="true" style="display:none; max-height: 500px; overflow-y: auto; padding-right: 12px;">
+        <h2>📜 GULLY CRICKET TOURNAMENT RULEBOOK 2025</h2>
         <div class="small" tabindex="0">
           <h3>1. Tournament Format</h3>
           <strong>Teams &amp; Matches</strong>
@@ -534,4 +911,287 @@
           <h3>8. Bonus Suggestions</h3>
           <ul>
             <li>Fair Play Award, Best Catch, Best Bowler, Best Batter in Finals.</li>
-            <
+            <li>Man of the Match for each game.</li>
+            <li>Photo/video coverage encouraged!</li>
+          </ul>
+        </div>
+      </article>
+    </section>
+
+    <!-- Right column (empty in original, can add more features) -->
+    <section class="col" aria-label="Additional features">
+      <article class="card">
+        <h2>🎊 Tournament Highlights</h2>
+        <div class="small">
+          <p style="margin: 10px 0;"><strong>🏆 Champions League Format</strong></p>
+          <p style="margin: 10px 0;">Experience the thrill of gully cricket with professional tournament management!</p>
+          <p style="margin: 10px 0;"><strong>🌟 Features:</strong></p>
+          <ul>
+            <li>Live scoring with real-time updates</li>
+            <li>Player statistics tracking</li>
+            <li>PDF scorecards for memories</li>
+            <li>Shareable match links</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="card">
+        <h2>💪 Team Spirit</h2>
+        <div class="small">
+          <p style="margin: 10px 0;">Remember: It's not just about winning, it's about the joy of playing together! 🤝</p>
+          <p style="margin: 10px 0;"><em>"Cricket is a team game. If you want fame for yourself, go play an individual game."</em></p>
+          <p style="margin: 10px 0; text-align: right;">— Gautam Gambhir</p>
+        </div>
+      </article>
+    </section>
+  </main>
+
+  <!-- Chai Cheers Button -->
+  <div class="chai-button" id="chaiButton" title="Chai pe charcha!">☕</div>
+  
+  <!-- Chai Popup -->
+  <div class="chai-popup" id="chaiPopup">
+    <h3>☕ Chai Cheers!</h3>
+    <p>Break ke liye chai ka time! 🏏<br>Gully cricket aur chai - perfect combo! 🎉</p>
+  </div>
+
+  <script>
+    // Chai Button functionality
+    const chaiButton = document.getElementById('chaiButton');
+    const chaiPopup = document.getElementById('chaiPopup');
+    let popupTimeout;
+
+    chaiButton.addEventListener('click', function() {
+      chaiPopup.classList.toggle('show');
+      
+      // Auto-hide after 3 seconds
+      if (chaiPopup.classList.contains('show')) {
+        clearTimeout(popupTimeout);
+        popupTimeout = setTimeout(() => {
+          chaiPopup.classList.remove('show');
+        }, 3000);
+      }
+    });
+
+    // Close popup when clicking outside
+    document.addEventListener('click', function(e) {
+      if (!chaiButton.contains(e.target) && !chaiPopup.contains(e.target)) {
+        chaiPopup.classList.remove('show');
+      }
+    });
+
+    // Tab functionality
+    const tabs = document.querySelectorAll('.tab');
+    tabs.forEach(tab => {
+      tab.addEventListener('click', function() {
+        tabs.forEach(t => {
+          t.classList.remove('active');
+          t.setAttribute('aria-selected', 'false');
+          t.setAttribute('tabindex', '-1');
+        });
+        
+        this.classList.add('active');
+        this.setAttribute('aria-selected', 'true');
+        this.setAttribute('tabindex', '0');
+        
+        const tabName = this.getAttribute('data-tab');
+        
+        // Hide all tab panels
+        document.querySelectorAll('[role="tabpanel"]').forEach(panel => {
+          panel.style.display = 'none';
+          panel.setAttribute('aria-hidden', 'true');
+        });
+        
+        // Show selected tab panel
+        const panels = {
+          'overview': 'overviewTab',
+          'rules': 'rulesTabContent',
+          'tournament': 'tournamentTab',
+          'live': 'liveTab'
+        };
+        
+        const panelId = panels[tabName];
+        if (panelId) {
+          const panel = document.getElementById(panelId);
+          panel.style.display = 'block';
+          panel.setAttribute('aria-hidden', 'false');
+        }
+      });
+    });
+
+    // Placeholder for tournament data - you can expand this
+    const teams = [
+      { name: 'Mumbai Maulers', emoji: '🦁', color: '#FF6B00' },
+      { name: 'Delhi Daredevils', emoji: '⚡', color: '#DC143C' },
+      { name: 'Chennai Champions', emoji: '👑', color: '#FFD700' },
+      { name: 'Kolkata Kings', emoji: '🏆', color: '#9932CC' },
+      { name: 'Bangalore Blasters', emoji: '💥', color: '#FF4500' },
+      { name: 'Hyderabad Heroes', emoji: '🌟', color: '#FF9933' }
+    ];
+
+    // Populate teams list
+    const teamsList = document.getElementById('teamsList');
+    teams.forEach((team, index) => {
+      const teamCard = document.createElement('div');
+      teamCard.className = 'team-card';
+      teamCard.innerHTML = `
+        <div class="logo-team">${team.emoji}</div>
+        <div>
+          <div style="font-weight: 700; font-size: 15px;">${team.name}</div>
+          <div class="small">Team ${index + 1}</div>
+        </div>
+      `;
+      teamsList.appendChild(teamCard);
+    });
+
+    // Populate leaderboard with sample data
+    const leaderboard = document.querySelector('#leaderboard tbody');
+    teams.forEach((team, index) => {
+      const row = document.createElement('tr');
+      const played = Math.floor(Math.random() * 5);
+      const won = Math.floor(Math.random() * played);
+      const lost = played - won;
+      const points = won * 2;
+      
+      row.innerHTML = `
+        <td>${team.emoji} ${team.name}</td>
+        <td>${played}</td>
+        <td>${won}</td>
+        <td>${lost}</td>
+        <td><strong>${points}</strong></td>
+      `;
+      leaderboard.appendChild(row);
+    });
+
+    // Populate match schedule
+    const matchSchedule = document.getElementById('matchSchedule');
+    for (let i = 0; i < 5; i++) {
+      const team1 = teams[Math.floor(Math.random() * teams.length)];
+      const team2 = teams[Math.floor(Math.random() * teams.length)];
+      
+      if (team1 !== team2) {
+        const matchCard = document.createElement('div');
+        matchCard.className = 'card';
+        matchCard.style.marginBottom = '12px';
+        matchCard.innerHTML = `
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <div><strong>${team1.emoji} ${team1.name}</strong></div>
+            <div style="font-size: 18px; font-weight: 900; color: var(--saffron);">VS</div>
+            <div><strong>${team2.emoji} ${team2.name}</strong></div>
+          </div>
+          <div class="small" style="margin-top: 8px; text-align: center;">
+            Match ${i + 1} • Date TBD
+          </div>
+        `;
+        matchSchedule.appendChild(matchCard);
+      }
+    }
+
+    // Populate match select dropdown
+    const matchSelect = document.getElementById('matchSelect');
+    for (let i = 0; i < 5; i++) {
+      const option = document.createElement('option');
+      option.value = i;
+      option.textContent = `Match ${i + 1}`;
+      matchSelect.appendChild(option);
+    }
+
+    // Live scoring placeholder functionality
+    let currentRuns = 0;
+    let currentWickets = 0;
+    let currentOvers = 0;
+    let currentBalls = 0;
+
+    document.getElementById('loadLive').addEventListener('click', function() {
+      const matchNum = matchSelect.value;
+      const overs = document.getElementById('liveOvers').value;
+      
+      const team1 = teams[Math.floor(Math.random() * teams.length)];
+      const team2 = teams[Math.floor(Math.random() * teams.length)];
+      
+      document.getElementById('liveBatting').textContent = team1.name;
+      document.getElementById('liveOpp').textContent = team2.name;
+      document.getElementById('liveStatus').textContent = 'In Progress';
+      document.getElementById('liveLog').innerHTML = `<div>Match loaded: ${team1.name} vs ${team2.name} (${overs} overs)</div>`;
+      
+      currentRuns = 0;
+      currentWickets = 0;
+      currentOvers = 0;
+      currentBalls = 0;
+      updateLiveScore();
+    });
+
+    // Score buttons
+    document.querySelectorAll('[data-run]').forEach(button => {
+      button.addEventListener('click', function() {
+        const run = this.getAttribute('data-run');
+        const log = document.getElementById('liveLog');
+        
+        if (run === 'W') {
+          currentWickets++;
+          const logEntry = document.createElement('div');
+          logEntry.textContent = `⚠️ Wicket! Score: ${currentRuns}/${currentWickets}`;
+          log.appendChild(logEntry);
+        } else if (run === 'NB' || run === 'LB') {
+          currentRuns++;
+          const logEntry = document.createElement('div');
+          logEntry.textContent = `${run} - 1 run added`;
+          log.appendChild(logEntry);
+        } else {
+          const runs = parseInt(run);
+          currentRuns += runs;
+          const logEntry = document.createElement('div');
+          logEntry.textContent = `${runs === 0 ? 'Dot ball' : runs + ' run' + (runs > 1 ? 's' : '')}! Total: ${currentRuns}/${currentWickets}`;
+          log.appendChild(logEntry);
+        }
+        
+        updateLiveScore();
+        log.scrollTop = log.scrollHeight;
+      });
+    });
+
+    document.getElementById('nextBallLive').addEventListener('click', function() {
+      currentBalls++;
+      if (currentBalls === 6) {
+        currentOvers++;
+        currentBalls = 0;
+      }
+      updateLiveScore();
+    });
+
+    function updateLiveScore() {
+      document.getElementById('liveScore').textContent = `${currentRuns}/${currentWickets}`;
+      document.getElementById('liveOversDisplay').textContent = `Overs: ${currentOvers}.${currentBalls}`;
+      
+      const totalBalls = (currentOvers * 6) + currentBalls;
+      const runRate = totalBalls > 0 ? (currentRuns / totalBalls * 6).toFixed(2) : '-';
+      document.getElementById('liveRR').textContent = `RR: ${runRate}`;
+    }
+
+    // Export PDF placeholder
+    document.getElementById('exportPDF').addEventListener('click', function() {
+      alert('📄 PDF scorecard feature coming soon! This will generate a downloadable PDF with match details.');
+    });
+
+    // Copy link placeholder
+    document.getElementById('copyLink').addEventListener('click', function() {
+      alert('🔗 Match link copied! (This is a placeholder - actual sharing functionality would go here)');
+    });
+
+    // Player stats placeholders
+    document.getElementById('batStats').innerHTML = `
+      <div style="margin: 5px 0;"><strong>Player 1:</strong> 25 runs (18 balls)</div>
+      <div style="margin: 5px 0;"><strong>Player 2:</strong> 12 runs (15 balls)</div>
+      <div style="margin: 5px 0; color: var(--muted);">Stats updated in real-time</div>
+    `;
+
+    document.getElementById('bowlStats').innerHTML = `
+      <div style="margin: 5px 0;"><strong>Bowler 1:</strong> 2-0-15-1</div>
+      <div style="margin: 5px 0;"><strong>Bowler 2:</strong> 1.5-0-12-0</div>
+      <div style="margin: 5px 0; color: var(--muted);">Format: Overs-Maidens-Runs-Wickets</div>
+    `;
+
+    console.log('🏏 Zenith Gully Cricket 2.0 loaded! Enjoy the game! ☕');
+  </script>
+</body>
+</html>
