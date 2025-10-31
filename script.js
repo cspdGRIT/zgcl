@@ -225,7 +225,7 @@ function generateFixtures() {
                 match_id: matchId++,
                 round: "Round Robin",
                 date: dates[Math.floor((matchId - 1) / 3) % dates.length],
-                time: ["09:00", "11:00", "14:00"][(matchId - 1) % 3],
+                time: ["06:30", "07:10", "07:50"][(matchId - 1) % 3],
                 team1: `Team ${i}`,
                 team2: `Team ${j}`,
                 venue: "Ground A",
