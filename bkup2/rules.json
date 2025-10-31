@@ -1,0 +1,43 @@
+{
+  "tournament": {
+    "name": "Zenith Gully Cricket League",
+    "format": "Round Robin + Finals",
+    "edition": "2025"
+  },
+  "match_rules": {
+    "overs_per_side": 6,
+    "players_per_team": 6,
+    "powerplay_overs": 2,
+    "max_overs_per_bowler": 2,
+    "games_per_fixture": 3,
+    "format": "Best of 3"
+  },
+  "scoring": {
+    "boundary_four": 4,
+    "boundary_six": 6,
+    "no_ball": 1,
+    "wide": 1,
+    "bye": 1,
+    "leg_bye": 1
+  },
+  "points_system": {
+    "win": 2,
+    "loss": 0,
+    "tie": 1,
+    "no_result": 1
+  },
+  "playoffs": {
+    "qualifying_teams": 2,
+    "final_format": "Best of 3",
+    "third_place_playoff": false
+  },
+  "general_rules": [
+    "Tennis ball to be used for all matches",
+    "Compound boundaries apply",
+    "LBW only if ball pitches in line",
+    "No runner allowed",
+    "Retired hurt allowed with substitute fielder",
+    "Umpire's decision is final",
+    "Fair play and sportsmanship mandatory"
+  ]
+}

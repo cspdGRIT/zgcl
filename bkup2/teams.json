@@ -1,13 +1,8 @@
 {
-  "pools": {
-    "A": ["Team 1", "Team 2", "Team 3"],
-    "B": ["Team 4", "Team 5", "Team 6"]
-  },
   "teams": [
     {
       "id": 1,
       "name": "Team 1",
-      "pool": "A",
       "players": [
         {"name": "Sandeep", "role": "Captain"},
         {"name": "Praveen", "role": "Player"},
@@ -19,15 +14,11 @@
       "wins": 0,
       "losses": 0,
       "points": 0,
-      "played": 0,
-      "runs_scored": 0,
-      "runs_conceded": 0,
-      "net_run_rate": 0
+      "played": 0
     },
     {
       "id": 2,
       "name": "Team 2",
-      "pool": "A",
       "players": [
         {"name": "Raja", "role": "Captain"},
         {"name": "Bhargav", "role": "Player"},
@@ -39,15 +30,11 @@
       "wins": 0,
       "losses": 0,
       "points": 0,
-      "played": 0,
-      "runs_scored": 0,
-      "runs_conceded": 0,
-      "net_run_rate": 0
+      "played": 0
     },
     {
       "id": 3,
       "name": "Team 3",
-      "pool": "A",
       "players": [
         {"name": "Vijay", "role": "Captain"},
         {"name": "Kiran", "role": "Player"},
@@ -59,15 +46,11 @@
       "wins": 0,
       "losses": 0,
       "points": 0,
-      "played": 0,
-      "runs_scored": 0,
-      "runs_conceded": 0,
-      "net_run_rate": 0
+      "played": 0
     },
     {
       "id": 4,
       "name": "Team 4",
-      "pool": "B",
       "players": [
         {"name": "PD", "role": "Captain"},
         {"name": "Ramesh", "role": "Player"},
@@ -79,15 +62,11 @@
       "wins": 0,
       "losses": 0,
       "points": 0,
-      "played": 0,
-      "runs_scored": 0,
-      "runs_conceded": 0,
-      "net_run_rate": 0
+      "played": 0
     },
     {
       "id": 5,
       "name": "Team 5",
-      "pool": "B",
       "players": [
         {"name": "Satish Patil", "role": "Captain"},
         {"name": "Vihang", "role": "Player"},
@@ -99,15 +78,11 @@
       "wins": 0,
       "losses": 0,
       "points": 0,
-      "played": 0,
-      "runs_scored": 0,
-      "runs_conceded": 0,
-      "net_run_rate": 0
+      "played": 0
     },
     {
       "id": 6,
       "name": "Team 6",
-      "pool": "B",
       "players": [
         {"name": "Varun", "role": "Captain"},
         {"name": "Guna", "role": "Player"},
@@ -119,10 +94,7 @@
       "wins": 0,
       "losses": 0,
       "points": 0,
-      "played": 0,
-      "runs_scored": 0,
-      "runs_conceded": 0,
-      "net_run_rate": 0
+      "played": 0
     }
   ]
 }

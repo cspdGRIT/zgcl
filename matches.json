@@ -10,18 +10,39 @@
     "total_wickets": 0,
     "total_sixes": 0,
     "total_fours": 0,
-    "highest_score": {
+    "total_matches": 0,
+    "highest_team_score": {
+      "team": null,
+      "score": 0,
+      "overs": 0,
+      "match_id": null,
+      "date": null
+    },
+    "lowest_team_score": {
+      "team": null,
+      "score": null,
+      "overs": 0,
+      "match_id": null,
+      "date": null
+    },
+    "highest_individual_score": {
       "player": null,
       "runs": 0,
+      "balls": 0,
       "team": null,
-      "match": null
+      "match_id": null
     },
-    "best_bowling": {
+    "best_bowling_figures": {
       "player": null,
       "wickets": 0,
       "runs": 0,
+      "overs": 0,
       "team": null,
-      "match": null
+      "match_id": null
     }
-  }
+  },
+  "pool_a_matches": [],
+  "pool_b_matches": [],
+  "knockout_matches": [],
+  "tournament_winner": null
 }

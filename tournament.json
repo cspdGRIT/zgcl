@@ -1,4 +1,7 @@
 {
+  "tournament_format": "Pool Stage + Knockouts",
+  "match_duration": "40 minutes",
+  "overs_per_side": 7,
   "fixtures": [
     {
       "match_id": 1,
@@ -9,32 +12,38 @@
       "team2": "Team 2",
       "venue": "Ground A",
       "status": "scheduled",
+      "duration": "40 min",
       "result": null,
-      "games": []
+      "toss": null,
+      "innings": []
     },
     {
       "match_id": 2,
       "round": "Pool A",
       "date": "2025-11-01",
-      "time": "07:10",
+      "time": "07:15",
       "team1": "Team 2",
       "team2": "Team 3",
       "venue": "Ground A",
       "status": "scheduled",
+      "duration": "40 min",
       "result": null,
-      "games": []
+      "toss": null,
+      "innings": []
     },
     {
       "match_id": 3,
       "round": "Pool A",
       "date": "2025-11-01",
-      "time": "07:50",
+      "time": "08:00",
       "team1": "Team 1",
       "team2": "Team 3",
       "venue": "Ground A",
       "status": "scheduled",
+      "duration": "40 min",
       "result": null,
-      "games": []
+      "toss": null,
+      "innings": []
     },
     {
       "match_id": 4,
@@ -43,46 +52,82 @@
       "time": "15:00",
       "team1": "Team 4",
       "team2": "Team 5",
-      "venue": "Ground B",
+      "venue": "Ground A",
       "status": "scheduled",
+      "duration": "40 min",
       "result": null,
-      "games": []
+      "toss": null,
+      "innings": []
     },
     {
       "match_id": 5,
       "round": "Pool B",
       "date": "2025-11-01",
-      "time": "15:40",
+      "time": "15:45",
       "team1": "Team 5",
       "team2": "Team 6",
-      "venue": "Ground B",
+      "venue": "Ground A",
       "status": "scheduled",
+      "duration": "40 min",
       "result": null,
-      "games": []
+      "toss": null,
+      "innings": []
     },
     {
       "match_id": 6,
       "round": "Pool B",
       "date": "2025-11-01",
-      "time": "16:20",
+      "time": "16:30",
       "team1": "Team 4",
       "team2": "Team 6",
-      "venue": "Ground B",
+      "venue": "Ground A",
       "status": "scheduled",
+      "duration": "40 min",
       "result": null,
-      "games": []
+      "toss": null,
+      "innings": []
     },
     {
       "match_id": 7,
-      "round": "Final",
+      "round": "Semi Final 1",
       "date": "2025-11-02",
-      "time": "07:00",
-      "team1": "Winner Pool A",
-      "team2": "Winner Pool B",
+      "time": "09:00",
+      "team1": "Pool A Winner",
+      "team2": "Pool B Runner-up",
       "venue": "Ground A",
       "status": "scheduled",
+      "duration": "40 min",
       "result": null,
-      "games": []
+      "toss": null,
+      "innings": []
+    },
+    {
+      "match_id": 8,
+      "round": "Semi Final 2",
+      "date": "2025-11-02",
+      "time": "10:00",
+      "team1": "Pool B Winner",
+      "team2": "Pool A Runner-up",
+      "venue": "Ground A",
+      "status": "scheduled",
+      "duration": "40 min",
+      "result": null,
+      "toss": null,
+      "innings": []
+    },
+    {
+      "match_id": 9,
+      "round": "Final",
+      "date": "2025-11-02",
+      "time": "15:00",
+      "team1": "Semi Final 1 Winner",
+      "team2": "Semi Final 2 Winner",
+      "venue": "Ground A",
+      "status": "scheduled",
+      "duration": "40 min",
+      "result": null,
+      "toss": null,
+      "innings": []
     }
   ],
   "current_round": "Pool Stage",

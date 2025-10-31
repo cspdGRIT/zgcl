@@ -1,0 +1,90 @@
+{
+  "fixtures": [
+    {
+      "match_id": 1,
+      "round": "Pool A",
+      "date": "2025-11-01",
+      "time": "06:30",
+      "team1": "Team 1",
+      "team2": "Team 2",
+      "venue": "Ground A",
+      "status": "scheduled",
+      "result": null,
+      "games": []
+    },
+    {
+      "match_id": 2,
+      "round": "Pool A",
+      "date": "2025-11-01",
+      "time": "07:10",
+      "team1": "Team 2",
+      "team2": "Team 3",
+      "venue": "Ground A",
+      "status": "scheduled",
+      "result": null,
+      "games": []
+    },
+    {
+      "match_id": 3,
+      "round": "Pool A",
+      "date": "2025-11-01",
+      "time": "07:50",
+      "team1": "Team 1",
+      "team2": "Team 3",
+      "venue": "Ground A",
+      "status": "scheduled",
+      "result": null,
+      "games": []
+    },
+    {
+      "match_id": 4,
+      "round": "Pool B",
+      "date": "2025-11-01",
+      "time": "15:00",
+      "team1": "Team 4",
+      "team2": "Team 5",
+      "venue": "Ground B",
+      "status": "scheduled",
+      "result": null,
+      "games": []
+    },
+    {
+      "match_id": 5,
+      "round": "Pool B",
+      "date": "2025-11-01",
+      "time": "15:40",
+      "team1": "Team 5",
+      "team2": "Team 6",
+      "venue": "Ground B",
+      "status": "scheduled",
+      "result": null,
+      "games": []
+    },
+    {
+      "match_id": 6,
+      "round": "Pool B",
+      "date": "2025-11-01",
+      "time": "16:20",
+      "team1": "Team 4",
+      "team2": "Team 6",
+      "venue": "Ground B",
+      "status": "scheduled",
+      "result": null,
+      "games": []
+    },
+    {
+      "match_id": 7,
+      "round": "Final",
+      "date": "2025-11-02",
+      "time": "07:00",
+      "team1": "Winner Pool A",
+      "team2": "Winner Pool B",
+      "venue": "Ground A",
+      "status": "scheduled",
+      "result": null,
+      "games": []
+    }
+  ],
+  "current_round": "Pool Stage",
+  "tournament_status": "upcoming"
+}
