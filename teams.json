@@ -1,0 +1,100 @@
+{
+  "teams": [
+    {
+      "id": 1,
+      "name": "Team 1",
+      "players": [
+        {"name": "Sandeep", "role": "Captain"},
+        {"name": "Praveen", "role": "Player"},
+        {"name": "Ashish Pandey", "role": "Player"},
+        {"name": "Sriram Moka", "role": "Player"},
+        {"name": "Damoder", "role": "Player"},
+        {"name": "Somashekhar", "role": "Player"}
+      ],
+      "wins": 0,
+      "losses": 0,
+      "points": 0,
+      "played": 0
+    },
+    {
+      "id": 2,
+      "name": "Team 2",
+      "players": [
+        {"name": "Raja", "role": "Captain"},
+        {"name": "Bhargav", "role": "Player"},
+        {"name": "Srinivasu BV", "role": "Player"},
+        {"name": "Gopal", "role": "Player"},
+        {"name": "Satish Adapa", "role": "Player"},
+        {"name": "Goutham", "role": "Player"}
+      ],
+      "wins": 0,
+      "losses": 0,
+      "points": 0,
+      "played": 0
+    },
+    {
+      "id": 3,
+      "name": "Team 3",
+      "players": [
+        {"name": "Vijay", "role": "Captain"},
+        {"name": "Kiran", "role": "Player"},
+        {"name": "Srinivas", "role": "Player"},
+        {"name": "Amit", "role": "Player"},
+        {"name": "Ashok", "role": "Player"},
+        {"name": "Cheris", "role": "Player"}
+      ],
+      "wins": 0,
+      "losses": 0,
+      "points": 0,
+      "played": 0
+    },
+    {
+      "id": 4,
+      "name": "Team 4",
+      "players": [
+        {"name": "PD", "role": "Captain"},
+        {"name": "Ramesh", "role": "Player"},
+        {"name": "Chaitanya", "role": "Player"},
+        {"name": "VenKee", "role": "Player"},
+        {"name": "Srinivasa Reddy Eeda", "role": "Player"},
+        {"name": "Jeevan", "role": "Player"}
+      ],
+      "wins": 0,
+      "losses": 0,
+      "points": 0,
+      "played": 0
+    },
+    {
+      "id": 5,
+      "name": "Team 5",
+      "players": [
+        {"name": "Satish Patil", "role": "Captain"},
+        {"name": "Vihang", "role": "Player"},
+        {"name": "Nagireddy", "role": "Player"},
+        {"name": "Ravindra", "role": "Player"},
+        {"name": "Sanjay", "role": "Player"},
+        {"name": "KSK", "role": "Player"}
+      ],
+      "wins": 0,
+      "losses": 0,
+      "points": 0,
+      "played": 0
+    },
+    {
+      "id": 6,
+      "name": "Team 6",
+      "players": [
+        {"name": "Varun", "role": "Captain"},
+        {"name": "Guna", "role": "Player"},
+        {"name": "Surya Sathi", "role": "Player"},
+        {"name": "Ramesh Naidu", "role": "Player"},
+        {"name": "Suryaprakash", "role": "Player"},
+        {"name": "Siva Kaku", "role": "Player"}
+      ],
+      "wins": 0,
+      "losses": 0,
+      "points": 0,
+      "played": 0
+    }
+  ]
+}

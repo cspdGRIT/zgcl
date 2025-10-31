@@ -1,0 +1,27 @@
+{
+  "matches": [],
+  "live_match": null,
+  "completed_matches": [],
+  "upcoming_matches": [],
+  "top_scorers": [],
+  "top_wicket_takers": [],
+  "statistics": {
+    "total_runs": 0,
+    "total_wickets": 0,
+    "total_sixes": 0,
+    "total_fours": 0,
+    "highest_score": {
+      "player": null,
+      "runs": 0,
+      "team": null,
+      "match": null
+    },
+    "best_bowling": {
+      "player": null,
+      "wickets": 0,
+      "runs": 0,
+      "team": null,
+      "match": null
+    }
+  }
+}
