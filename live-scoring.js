@@ -205,12 +205,13 @@ function getDefaultData(filename) {
             },
             scoring: {
                 boundary_four: 4,
-                boundary_six: 6,
+                // boundary_six: 6,
                 wide: 1,
-                wide_boundary: 5,
-                no_ball: 1,
-                bye: 1,
-                leg_bye: 1
+                single: 1,
+                // wide_boundary: 5,
+                // no_ball: 1,
+                // bye: 1,
+                // leg_bye: 1
             },
             points_system: {
                 win: 2,
