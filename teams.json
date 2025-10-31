@@ -49,11 +49,11 @@
       "name": "Team 3",
       "pool": "A",
       "players": [
+        {"name": "Ashok", "role": "Captain"},
         {"name": "Vijay", "role": "Player"},
         {"name": "Kiran", "role": "Player"},
         {"name": "Srinivas", "role": "Player"},
         {"name": "Amit", "role": "Player"},
-        {"name": "Ashok", "role": "Captain"},
         {"name": "Cheris", "role": "Player"}
       ],
       "wins": 0,
