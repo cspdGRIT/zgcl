@@ -30,17 +30,10 @@
   "scoring": {
     "runs": {
       "single": 1,
-      "double": 2,
-      "three": 3,
-      "boundary_four": 4,
-      "boundary_six": 6
+      "boundary_four": 4
     },
     "extras": {
-      "wide": 1,
-      "wide_plus_boundary": 5,
-      "no_ball": 1,
-      "bye": "as run",
-      "leg_bye": "as run"
+      "wide": 1
     }
   },
   "points_system": {
