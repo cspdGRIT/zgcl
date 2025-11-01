@@ -15,7 +15,14 @@
         {"name": "Sriram Moka", "role": "Player"},
         {"name": "Damoder", "role": "Player"},
         {"name": "Somashekhar", "role": "Player"}
-      ]
+      ],
+      "wins": 1,
+      "losses": 1,
+      "points": 2,
+      "played": 2,
+      "runs_scored": 84,
+      "runs_conceded": 71,
+      "net_run_rate": 0.93
     },
     {
       "id": 2,
@@ -28,7 +35,14 @@
         {"name": "Gopal", "role": "Player"},
         {"name": "Satish Adapa", "role": "Player"},
         {"name": "Goutham", "role": "Player"}
-      ]
+      ],
+      "wins": 0,
+      "losses": 2,
+      "points": 0,
+      "played": 2,
+      "runs_scored": 67,
+      "runs_conceded": 89,
+      "net_run_rate": -1.57
     },
     {
       "id": 3,
@@ -41,7 +55,14 @@
         {"name": "Srinivas", "role": "Player"},
         {"name": "Amit", "role": "Player"},
         {"name": "Cheris", "role": "Player"}
-      ]
+      ],
+      "wins": 2,
+      "losses": 0,
+      "points": 4,
+      "played": 2,
+      "runs_scored": 79,
+      "runs_conceded": 70,
+      "net_run_rate": 0.64
     },
     {
       "id": 4,
@@ -54,7 +75,14 @@
         {"name": "VenKee", "role": "Player"},
         {"name": "Srinivasa Reddy Eeda", "role": "Player"},
         {"name": "Jeevan", "role": "Player"}
-      ]
+      ],
+      "wins": 0,
+      "losses": 0,
+      "points": 0,
+      "played": 0,
+      "runs_scored": 0,
+      "runs_conceded": 0,
+      "net_run_rate": 0
     },
     {
       "id": 5,
@@ -67,7 +95,14 @@
         {"name": "Ravindra", "role": "Player"},
         {"name": "Sanjay", "role": "Player"},
         {"name": "KSK", "role": "Player"}
-      ]
+      ],
+      "wins": 0,
+      "losses": 0,
+      "points": 0,
+      "played": 0,
+      "runs_scored": 0,
+      "runs_conceded": 0,
+      "net_run_rate": 0
     },
     {
       "id": 6,
@@ -80,7 +115,22 @@
         {"name": "Ramesh Naidu", "role": "Player"},
         {"name": "Suryaprakash", "role": "Player"},
         {"name": "Siva Kaku", "role": "Player"}
-      ]
+      ],
+      "wins": 0,
+      "losses": 0,
+      "points": 0,
+      "played": 0,
+      "runs_scored": 0,
+      "runs_conceded": 0,
+      "net_run_rate": 0
     }
-  ]
+  ],
+  "pool_a_qualified": {
+    "winner": "Team 3",
+    "runner_up": "Team 1"
+  },
+  "pool_b_qualified": {
+    "winner": "TBD",
+    "runner_up": "TBD"
+  }
 }

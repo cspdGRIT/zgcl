@@ -9,14 +9,12 @@
       "team2": "Team 2",
       "status": "completed",
       "winner": "Team 1",
-      "margin": "17 runs",
       "team1_score": 49,
       "team1_wickets": 5,
       "team1_overs": 7,
       "team2_score": 32,
       "team2_wickets": 6,
-      "team2_overs": 6.3,
-      "player_of_match": null
+      "team2_overs": 6.3
     },
     {
       "match_id": 2,
@@ -27,14 +25,12 @@
       "team2": "Team 3",
       "status": "completed",
       "winner": "Team 3",
-      "margin": "5 runs",
       "team1_score": 35,
       "team1_wickets": 5,
       "team1_overs": 7,
       "team2_score": 40,
       "team2_wickets": 4,
-      "team2_overs": 7,
-      "player_of_match": null
+      "team2_overs": 7
     },
     {
       "match_id": 3,
@@ -45,84 +41,12 @@
       "team2": "Team 3",
       "status": "completed",
       "winner": "Team 3",
-      "margin": "4 runs",
       "team1_score": 35,
       "team1_wickets": 4,
       "team1_overs": 7,
       "team2_score": 39,
       "team2_wickets": 5,
-      "team2_overs": 7,
-      "player_of_match": null
+      "team2_overs": 7
     }
-  ],
-  "live_match": null,
-  "completed_matches": [1, 2, 3],
-  "upcoming_matches": [4, 5, 6, 7, 8, 9],
-  "top_scorers": [],
-  "top_wicket_takers": [],
-  "statistics": {
-    "total_runs": 230,
-    "total_wickets": 29,
-    "total_sixes": 0,
-    "total_fours": 0,
-    "total_matches": 3,
-    "highest_team_score": {
-      "team": "Team 1",
-      "score": 49,
-      "overs": 7,
-      "match_id": 1,
-      "date": "2025-11-01",
-      "against": "Team 2"
-    },
-    "lowest_team_score": {
-      "team": "Team 2",
-      "score": 32,
-      "overs": 6.3,
-      "match_id": 1,
-      "date": "2025-11-01",
-      "against": "Team 1"
-    },
-    "closest_match": {
-      "match_id": 3,
-      "teams": "Team 1 vs Team 3",
-      "margin": "4 runs",
-      "date": "2025-11-01"
-    }
-  },
-  "pool_a_matches": {
-    "completed": 3,
-    "total": 3,
-    "results": [
-      "Match 1: Team 1 beat Team 2 by 17 runs",
-      "Match 2: Team 3 beat Team 2 by 5 runs",
-      "Match 3: Team 3 beat Team 1 by 4 runs"
-    ]
-  },
-  "pool_b_matches": {
-    "completed": 0,
-    "total": 3,
-    "results": []
-  },
-  "knockout_matches": {
-    "semi_final_1": {
-      "team1": "Team 3 (Pool A Winner)",
-      "team2": "TBD (Pool B Runner-up)"
-    },
-    "semi_final_2": {
-      "team1": "TBD (Pool B Winner)",
-      "team2": "Team 1 (Pool A Runner-up)"
-    },
-    "final": {
-      "team1": "TBD",
-      "team2": "TBD"
-    }
-  },
-  "tournament_winner": null,
-  "tournament_summary": {
-    "pool_a_winner": "Team 3",
-    "pool_a_runner_up": "Team 1",
-    "pool_b_winner": null,
-    "pool_b_runner_up": null,
-    "status": "Pool B matches pending"
-  }
+  ]
 }

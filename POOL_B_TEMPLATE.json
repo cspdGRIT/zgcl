@@ -1,0 +1,53 @@
+{
+  "example_pool_b_matches_to_add": [
+    {
+      "match_id": 4,
+      "date": "2025-11-01",
+      "time": "15:00",
+      "pool": "B",
+      "team1": "Team 4",
+      "team2": "Team 5",
+      "status": "completed",
+      "winner": "ENTER_WINNER_HERE",
+      "team1_score": 0,
+      "team1_wickets": 0,
+      "team1_overs": 0,
+      "team2_score": 0,
+      "team2_wickets": 0,
+      "team2_overs": 0
+    },
+    {
+      "match_id": 5,
+      "date": "2025-11-01",
+      "time": "15:45",
+      "pool": "B",
+      "team1": "Team 5",
+      "team2": "Team 6",
+      "status": "completed",
+      "winner": "ENTER_WINNER_HERE",
+      "team1_score": 0,
+      "team1_wickets": 0,
+      "team1_overs": 0,
+      "team2_score": 0,
+      "team2_wickets": 0,
+      "team2_overs": 0
+    },
+    {
+      "match_id": 6,
+      "date": "2025-11-01",
+      "time": "16:30",
+      "pool": "B",
+      "team1": "Team 4",
+      "team2": "Team 6",
+      "status": "completed",
+      "winner": "ENTER_WINNER_HERE",
+      "team1_score": 0,
+      "team1_wickets": 0,
+      "team1_overs": 0,
+      "team2_score": 0,
+      "team2_wickets": 0,
+      "team2_overs": 0
+    }
+  ],
+  "instructions": "Copy any of these match objects, fill in the scores and winner, then add to the 'matches' array in matches.json"
+}
