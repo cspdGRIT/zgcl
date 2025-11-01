@@ -1,0 +1,52 @@
+{
+  "matches": [
+    {
+      "match_id": 1,
+      "date": "2025-11-01",
+      "time": "06:30",
+      "pool": "A",
+      "team1": "Team 1",
+      "team2": "Team 2",
+      "status": "completed",
+      "winner": "Team 1",
+      "team1_score": 49,
+      "team1_wickets": 5,
+      "team1_overs": 7,
+      "team2_score": 32,
+      "team2_wickets": 6,
+      "team2_overs": 6.3
+    },
+    {
+      "match_id": 2,
+      "date": "2025-11-01",
+      "time": "07:15",
+      "pool": "A",
+      "team1": "Team 2",
+      "team2": "Team 3",
+      "status": "completed",
+      "winner": "Team 3",
+      "team1_score": 35,
+      "team1_wickets": 5,
+      "team1_overs": 7,
+      "team2_score": 40,
+      "team2_wickets": 4,
+      "team2_overs": 7
+    },
+    {
+      "match_id": 3,
+      "date": "2025-11-01",
+      "time": "08:00",
+      "pool": "A",
+      "team1": "Team 1",
+      "team2": "Team 3",
+      "status": "completed",
+      "winner": "Team 3",
+      "team1_score": 35,
+      "team1_wickets": 4,
+      "team1_overs": 7,
+      "team2_score": 39,
+      "team2_wickets": 5,
+      "team2_overs": 7
+    }
+  ]
+}

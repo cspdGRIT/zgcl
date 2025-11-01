@@ -1,0 +1,301 @@
+{
+  "cricket_config": {
+    "tournament": {
+      "name": "Zenith Gully Cricket League",
+      "sport": "cricket",
+      "format": "pools",
+      "status": "ongoing",
+      "description": "Gully Cricket Tournament with 7 overs per side",
+      "venue": "Ground A",
+      "start_date": "2025-11-01",
+      "end_date": "2025-11-02",
+      "icon": "🏏"
+    },
+    "sport_config": {
+      "sport_name": "Cricket",
+      "sport_icon": "🏏",
+      "terminology": {
+        "score_unit": "runs",
+        "period_name": "overs",
+        "period_unit": "over",
+        "team_size_name": "players",
+        "dismissal_name": "wickets",
+        "score_display": "{score}/{wickets} ({overs} ov)"
+      },
+      "match_config": {
+        "periods_per_match": 7,
+        "max_dismissals": 6,
+        "players_per_team": 6,
+        "match_duration": "40 minutes"
+      },
+      "scoring_fields": [
+        { "name": "runs", "display": "Runs", "type": "number" },
+        { "name": "wickets", "display": "Wickets", "type": "number" },
+        { "name": "overs", "display": "Overs", "type": "decimal" }
+      ]
+    },
+    "rules": {
+      "points_system": {
+        "win": 2,
+        "draw": 1,
+        "loss": 0,
+        "no_result": 1
+      },
+      "tie_breakers": ["Points", "Net Run Rate", "Head to Head", "Runs Scored"]
+    },
+    "theme": {
+      "primary_color": "#FF6B35",
+      "secondary_color": "#004E89",
+      "background": "linear-gradient(135deg, #667eea 0%, #764ba2 100%)"
+    }
+  },
+  
+  "football_config": {
+    "tournament": {
+      "name": "5-a-Side Football Championship",
+      "sport": "football",
+      "format": "league",
+      "status": "upcoming",
+      "description": "Mini Football Tournament",
+      "venue": "Sports Complex",
+      "icon": "⚽"
+    },
+    "sport_config": {
+      "sport_name": "Football",
+      "sport_icon": "⚽",
+      "terminology": {
+        "score_unit": "goals",
+        "period_name": "halves",
+        "period_unit": "minute",
+        "team_size_name": "players",
+        "dismissal_name": "red cards",
+        "score_display": "{home} - {away}"
+      },
+      "match_config": {
+        "periods_per_match": 2,
+        "max_dismissals": 0,
+        "players_per_team": 5,
+        "match_duration": "30 minutes"
+      },
+      "scoring_fields": [
+        { "name": "goals", "display": "Goals", "type": "number" },
+        { "name": "yellow_cards", "display": "Yellow Cards", "type": "number" },
+        { "name": "red_cards", "display": "Red Cards", "type": "number" }
+      ]
+    },
+    "theme": {
+      "primary_color": "#2ECC71",
+      "secondary_color": "#27AE60",
+      "background": "linear-gradient(135deg, #11998e 0%, #38ef7d 100%)"
+    }
+  },
+  
+  "carrom_config": {
+    "tournament": {
+      "name": "Carrom Championship 2025",
+      "sport": "carrom",
+      "format": "knockout",
+      "status": "upcoming",
+      "description": "Singles & Doubles Carrom Tournament",
+      "venue": "Indoor Hall",
+      "icon": "🎯"
+    },
+    "sport_config": {
+      "sport_name": "Carrom",
+      "sport_icon": "🎯",
+      "terminology": {
+        "score_unit": "points",
+        "period_name": "boards",
+        "period_unit": "board",
+        "team_size_name": "players",
+        "dismissal_name": "",
+        "score_display": "{score} points ({boards} boards)"
+      },
+      "match_config": {
+        "periods_per_match": 3,
+        "max_dismissals": 0,
+        "players_per_team": 2,
+        "match_duration": "45 minutes"
+      },
+      "scoring_fields": [
+        { "name": "points", "display": "Points", "type": "number" },
+        { "name": "queens", "display": "Queens Pocketed", "type": "number" },
+        { "name": "boards_won", "display": "Boards Won", "type": "number" }
+      ]
+    },
+    "theme": {
+      "primary_color": "#E74C3C",
+      "secondary_color": "#C0392B",
+      "background": "linear-gradient(135deg, #f2709c 0%, #ff9472 100%)"
+    }
+  },
+  
+  "chess_config": {
+    "tournament": {
+      "name": "Chess Masters Tournament",
+      "sport": "chess",
+      "format": "swiss",
+      "status": "upcoming",
+      "description": "Rapid Chess Championship",
+      "venue": "Chess Club",
+      "icon": "♟️"
+    },
+    "sport_config": {
+      "sport_name": "Chess",
+      "sport_icon": "♟️",
+      "terminology": {
+        "score_unit": "points",
+        "period_name": "games",
+        "period_unit": "game",
+        "team_size_name": "players",
+        "dismissal_name": "",
+        "score_display": "{wins}W-{draws}D-{losses}L"
+      },
+      "match_config": {
+        "periods_per_match": 1,
+        "max_dismissals": 0,
+        "players_per_team": 1,
+        "match_duration": "30 minutes"
+      },
+      "scoring_fields": [
+        { "name": "result", "display": "Result", "type": "select", "options": ["Win", "Draw", "Loss"] },
+        { "name": "moves", "display": "Total Moves", "type": "number" },
+        { "name": "time_left", "display": "Time Left (min)", "type": "number" }
+      ]
+    },
+    "rules": {
+      "points_system": {
+        "win": 1,
+        "draw": 0.5,
+        "loss": 0
+      },
+      "tie_breakers": ["Points", "Buchholz", "Sonneborn-Berger", "Direct Encounter"]
+    },
+    "theme": {
+      "primary_color": "#34495E",
+      "secondary_color": "#2C3E50",
+      "background": "linear-gradient(135deg, #667db6 0%, #0082c8 50%, #667db6 100%)"
+    }
+  },
+  
+  "badminton_config": {
+    "tournament": {
+      "name": "Badminton Premier League",
+      "sport": "badminton",
+      "format": "pools",
+      "status": "upcoming",
+      "description": "Singles Championship",
+      "venue": "Indoor Courts",
+      "icon": "🏸"
+    },
+    "sport_config": {
+      "sport_name": "Badminton",
+      "sport_icon": "🏸",
+      "terminology": {
+        "score_unit": "points",
+        "period_name": "sets",
+        "period_unit": "set",
+        "team_size_name": "players",
+        "dismissal_name": "",
+        "score_display": "{sets_won}-{sets_lost} ({game1_score}, {game2_score}, {game3_score})"
+      },
+      "match_config": {
+        "periods_per_match": 3,
+        "max_dismissals": 0,
+        "players_per_team": 1,
+        "match_duration": "45 minutes"
+      },
+      "scoring_fields": [
+        { "name": "sets_won", "display": "Sets Won", "type": "number" },
+        { "name": "game1_points", "display": "Set 1 Score", "type": "number" },
+        { "name": "game2_points", "display": "Set 2 Score", "type": "number" },
+        { "name": "game3_points", "display": "Set 3 Score", "type": "number" }
+      ]
+    },
+    "theme": {
+      "primary_color": "#9B59B6",
+      "secondary_color": "#8E44AD",
+      "background": "linear-gradient(135deg, #667eea 0%, #764ba2 100%)"
+    }
+  },
+  
+  "volleyball_config": {
+    "tournament": {
+      "name": "Volleyball Championship",
+      "sport": "volleyball",
+      "format": "pools",
+      "status": "upcoming",
+      "description": "6-a-side Volleyball Tournament",
+      "venue": "Beach Courts",
+      "icon": "🏐"
+    },
+    "sport_config": {
+      "sport_name": "Volleyball",
+      "sport_icon": "🏐",
+      "terminology": {
+        "score_unit": "points",
+        "period_name": "sets",
+        "period_unit": "set",
+        "team_size_name": "players",
+        "dismissal_name": "",
+        "score_display": "{sets_won}-{sets_lost}"
+      },
+      "match_config": {
+        "periods_per_match": 5,
+        "max_dismissals": 0,
+        "players_per_team": 6,
+        "match_duration": "90 minutes"
+      },
+      "scoring_fields": [
+        { "name": "sets_won", "display": "Sets Won", "type": "number" },
+        { "name": "total_points", "display": "Total Points", "type": "number" },
+        { "name": "aces", "display": "Aces", "type": "number" },
+        { "name": "blocks", "display": "Blocks", "type": "number" }
+      ]
+    },
+    "theme": {
+      "primary_color": "#3498DB",
+      "secondary_color": "#2980B9",
+      "background": "linear-gradient(135deg, #667eea 0%, #764ba2 100%)"
+    }
+  },
+  
+  "table_tennis_config": {
+    "tournament": {
+      "name": "Table Tennis Championship",
+      "sport": "table-tennis",
+      "format": "knockout",
+      "status": "upcoming",
+      "description": "Singles Tournament",
+      "venue": "TT Hall",
+      "icon": "🏓"
+    },
+    "sport_config": {
+      "sport_name": "Table Tennis",
+      "sport_icon": "🏓",
+      "terminology": {
+        "score_unit": "points",
+        "period_name": "games",
+        "period_unit": "game",
+        "team_size_name": "players",
+        "dismissal_name": "",
+        "score_display": "{games_won}-{games_lost}"
+      },
+      "match_config": {
+        "periods_per_match": 5,
+        "max_dismissals": 0,
+        "players_per_team": 1,
+        "match_duration": "30 minutes"
+      },
+      "scoring_fields": [
+        { "name": "games_won", "display": "Games Won", "type": "number" },
+        { "name": "total_points", "display": "Total Points", "type": "number" }
+      ]
+    },
+    "theme": {
+      "primary_color": "#E67E22",
+      "secondary_color": "#D35400",
+      "background": "linear-gradient(135deg, #FA8BFF 0%, #2BD2FF 50%, #2BFF88 100%)"
+    }
+  }
+}

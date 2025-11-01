@@ -1,0 +1,56 @@
+{
+  "tournament": {
+    "name": "Zenith Gully Cricket League 2025",
+    "sport": "cricket",
+    "format": "pools",
+    "status": "ongoing",
+    "description": "The Ultimate Gully Cricket Tournament",
+    "venue": "Ground A",
+    "start_date": "2025-11-01",
+    "end_date": "2025-11-02",
+    "icon": "🏏"
+  },
+  "sport_config": {
+    "sport_name": "Cricket",
+    "sport_icon": "🏏",
+    "terminology": {
+      "score_unit": "runs",
+      "period_name": "overs",
+      "period_unit": "over",
+      "team_size_name": "players",
+      "dismissal_name": "wickets",
+      "score_display": "{score}/{wickets} ({overs} ov)"
+    },
+    "match_config": {
+      "periods_per_match": 7,
+      "max_dismissals": 6,
+      "players_per_team": 6,
+      "match_duration": "40 minutes"
+    },
+    "scoring_fields": [
+      { "name": "runs", "display": "Runs", "type": "number" },
+      { "name": "wickets", "display": "Wickets", "type": "number" },
+      { "name": "overs", "display": "Overs", "type": "decimal" }
+    ]
+  },
+  "rules": {
+    "points_system": {
+      "win": 2,
+      "draw": 1,
+      "loss": 0,
+      "no_result": 1
+    },
+    "tie_breakers": [
+      "Points",
+      "Net Run Rate",
+      "Head to Head",
+      "Runs Scored",
+      "Wickets Taken"
+    ]
+  },
+  "theme": {
+    "primary_color": "#FF6B35",
+    "secondary_color": "#004E89",
+    "background": "linear-gradient(135deg, #667eea 0%, #764ba2 100%)"
+  }
+}

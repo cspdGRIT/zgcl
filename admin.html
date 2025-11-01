@@ -1,0 +1,959 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tournament Admin Panel</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #6366f1;
+            --secondary: #4f46e5;
+            --success: #10b981;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            --dark: #1f2937;
+            --light: #f3f4f6;
+        }
+
+        body {
+            font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #1f2937;
+        }
+
+        .admin-container {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .admin-header {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        }
+
+        .admin-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            color: var(--primary);
+            font-size: 2.5rem;
+            font-weight: 700;
+        }
+
+        .view-tournament-btn {
+            padding: 12px 24px;
+            background: var(--success);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s;
+        }
+
+        .view-tournament-btn:hover {
+            background: #059669;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+        }
+
+        .admin-nav {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            background: var(--light);
+            padding: 10px;
+            border-radius: 12px;
+        }
+
+        .nav-btn {
+            padding: 10px 20px;
+            background: white;
+            border: 2px solid transparent;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--dark);
+            transition: all 0.3s;
+        }
+
+        .nav-btn:hover {
+            border-color: var(--primary);
+            transform: translateY(-1px);
+        }
+
+        .nav-btn.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .admin-content {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 20px;
+        }
+
+        .sidebar {
+            background: white;
+            border-radius: 16px;
+            padding: 20px;
+            height: fit-content;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+
+        .sidebar h3 {
+            color: var(--secondary);
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+
+        .template-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .template-btn {
+            padding: 12px;
+            background: var(--light);
+            border: 2px solid transparent;
+            border-radius: 8px;
+            cursor: pointer;
+            text-align: left;
+            transition: all 0.3s;
+        }
+
+        .template-btn:hover {
+            background: white;
+            border-color: var(--primary);
+            transform: translateX(5px);
+        }
+
+        .template-btn .sport-icon {
+            font-size: 24px;
+            margin-right: 10px;
+        }
+
+        .template-btn .sport-name {
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .template-btn .sport-desc {
+            font-size: 12px;
+            color: #6b7280;
+            margin-top: 4px;
+        }
+
+        .main-panel {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+
+        .section {
+            display: none;
+            animation: fadeIn 0.5s;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--dark);
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 15px;
+            transition: all 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+        }
+
+        .form-group textarea {
+            min-height: 120px;
+            font-family: 'Monaco', 'Courier New', monospace;
+            font-size: 13px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .btn:hover {
+            background: var(--secondary);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
+        }
+
+        .btn-success {
+            background: var(--success);
+        }
+
+        .btn-success:hover {
+            background: #059669;
+        }
+
+        .btn-danger {
+            background: var(--danger);
+        }
+
+        .btn-danger:hover {
+            background: #dc2626;
+        }
+
+        .btn-secondary {
+            background: #6b7280;
+        }
+
+        .btn-secondary:hover {
+            background: #4b5563;
+        }
+
+        .teams-container,
+        .pools-container {
+            display: grid;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .team-card,
+        .pool-card {
+            background: var(--light);
+            border-radius: 12px;
+            padding: 15px;
+            border: 2px solid transparent;
+            transition: all 0.3s;
+        }
+
+        .team-card:hover,
+        .pool-card:hover {
+            border-color: var(--primary);
+            background: white;
+        }
+
+        .team-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .team-name {
+            font-weight: 600;
+            color: var(--dark);
+            font-size: 16px;
+        }
+
+        .team-actions {
+            display: flex;
+            gap: 5px;
+        }
+
+        .icon-btn {
+            width: 30px;
+            height: 30px;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+
+        .edit-btn {
+            background: var(--warning);
+            color: white;
+        }
+
+        .edit-btn:hover {
+            background: #d97706;
+        }
+
+        .delete-btn {
+            background: var(--danger);
+            color: white;
+        }
+
+        .delete-btn:hover {
+            background: #dc2626;
+        }
+
+        .player-list {
+            font-size: 14px;
+            color: #6b7280;
+            margin-top: 8px;
+        }
+
+        .json-editor {
+            background: #1f2937;
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        .json-editor textarea {
+            width: 100%;
+            min-height: 400px;
+            background: #111827;
+            color: #10b981;
+            border: 1px solid #374151;
+            border-radius: 8px;
+            padding: 15px;
+            font-family: 'Monaco', 'Courier New', monospace;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        .status-message {
+            padding: 12px;
+            border-radius: 8px;
+            margin: 15px 0;
+            display: none;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .status-message.success {
+            background: #d1fae5;
+            color: #065f46;
+            border: 1px solid #6ee7b7;
+            display: flex;
+        }
+
+        .status-message.error {
+            background: #fee2e2;
+            color: #991b1b;
+            border: 1px solid #fca5a5;
+            display: flex;
+        }
+
+        .status-message.warning {
+            background: #fef3c7;
+            color: #92400e;
+            border: 1px solid #fcd34d;
+            display: flex;
+        }
+
+        .preview-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        .preview-card h3 {
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+
+        .preview-content {
+            display: grid;
+            gap: 10px;
+        }
+
+        .preview-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 6px;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            animation: fadeIn 0.3s;
+        }
+
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            max-width: 600px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            animation: slideIn 0.3s;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .modal-close {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            border: none;
+            background: var(--light);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            color: var(--dark);
+            transition: all 0.3s;
+        }
+
+        .modal-close:hover {
+            background: var(--danger);
+            color: white;
+        }
+
+        .help-text {
+            font-size: 13px;
+            color: #6b7280;
+            margin-top: 5px;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-left: 8px;
+        }
+
+        .badge-success {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .badge-warning {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .badge-danger {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .quick-actions {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .action-card {
+            background: var(--light);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+        }
+
+        .action-card:hover {
+            background: white;
+            border-color: var(--primary);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+        .action-icon {
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+
+        .action-title {
+            font-weight: 600;
+            color: var(--dark);
+            margin-bottom: 5px;
+        }
+
+        .action-desc {
+            font-size: 13px;
+            color: #6b7280;
+        }
+
+        @media (max-width: 768px) {
+            .admin-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .sidebar {
+                order: 2;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .admin-nav {
+                flex-direction: column;
+            }
+            
+            .nav-btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-container">
+        <div class="admin-header">
+            <div class="admin-title">
+                <h1>⚙️ Tournament Admin Panel</h1>
+                <a href="index.html" class="view-tournament-btn">
+                    <span>👁️</span>
+                    <span>View Tournament</span>
+                </a>
+            </div>
+            <div class="admin-nav">
+                <button class="nav-btn active" onclick="showSection('dashboard')">📊 Dashboard</button>
+                <button class="nav-btn" onclick="showSection('tournament')">🏆 Tournament Setup</button>
+                <button class="nav-btn" onclick="showSection('teams')">👥 Teams</button>
+                <button class="nav-btn" onclick="showSection('fixtures')">📅 Fixtures</button>
+                <button class="nav-btn" onclick="showSection('scoring')">📝 Scoring Rules</button>
+                <button class="nav-btn" onclick="showSection('json')">🔧 JSON Editor</button>
+                <button class="nav-btn" onclick="showSection('templates')">📋 Templates</button>
+            </div>
+        </div>
+
+        <div class="admin-content">
+            <div class="sidebar">
+                <h3>🎮 Sport Templates</h3>
+                <div class="template-list">
+                    <button class="template-btn" onclick="loadTemplate('cricket')">
+                        <span class="sport-icon">🏏</span>
+                        <div>
+                            <div class="sport-name">Cricket</div>
+                            <div class="sport-desc">Overs, wickets, runs</div>
+                        </div>
+                    </button>
+                    <button class="template-btn" onclick="loadTemplate('football')">
+                        <span class="sport-icon">⚽</span>
+                        <div>
+                            <div class="sport-name">Football</div>
+                            <div class="sport-desc">Goals, halves, penalties</div>
+                        </div>
+                    </button>
+                    <button class="template-btn" onclick="loadTemplate('carrom')">
+                        <span class="sport-icon">🎯</span>
+                        <div>
+                            <div class="sport-name">Carrom</div>
+                            <div class="sport-desc">Points, boards, coins</div>
+                        </div>
+                    </button>
+                    <button class="template-btn" onclick="loadTemplate('chess')">
+                        <span class="sport-icon">♟️</span>
+                        <div>
+                            <div class="sport-name">Chess</div>
+                            <div class="sport-desc">Games, wins, draws</div>
+                        </div>
+                    </button>
+                    <button class="template-btn" onclick="loadTemplate('badminton')">
+                        <span class="sport-icon">🏸</span>
+                        <div>
+                            <div class="sport-name">Badminton</div>
+                            <div class="sport-desc">Sets, points, rallies</div>
+                        </div>
+                    </button>
+                    <button class="template-btn" onclick="loadTemplate('table-tennis')">
+                        <span class="sport-icon">🏓</span>
+                        <div>
+                            <div class="sport-name">Table Tennis</div>
+                            <div class="sport-desc">Sets, points, serves</div>
+                        </div>
+                    </button>
+                    <button class="template-btn" onclick="loadTemplate('volleyball')">
+                        <span class="sport-icon">🏐</span>
+                        <div>
+                            <div class="sport-name">Volleyball</div>
+                            <div class="sport-desc">Sets, points, rotations</div>
+                        </div>
+                    </button>
+                    <button class="template-btn" onclick="loadTemplate('custom')">
+                        <span class="sport-icon">⚡</span>
+                        <div>
+                            <div class="sport-name">Custom Sport</div>
+                            <div class="sport-desc">Define your own rules</div>
+                        </div>
+                    </button>
+                </div>
+            </div>
+
+            <div class="main-panel">
+                <!-- Dashboard Section -->
+                <div id="dashboard" class="section active">
+                    <h2>Tournament Dashboard</h2>
+                    <div id="tournament-info" class="preview-card">
+                        <h3>Current Tournament</h3>
+                        <div class="preview-content">
+                            <div class="preview-item">
+                                <span>Name:</span>
+                                <span id="current-tournament-name">Loading...</span>
+                            </div>
+                            <div class="preview-item">
+                                <span>Sport:</span>
+                                <span id="current-sport">Loading...</span>
+                            </div>
+                            <div class="preview-item">
+                                <span>Format:</span>
+                                <span id="current-format">Loading...</span>
+                            </div>
+                            <div class="preview-item">
+                                <span>Teams:</span>
+                                <span id="current-teams">Loading...</span>
+                            </div>
+                            <div class="preview-item">
+                                <span>Status:</span>
+                                <span id="current-status">Loading...</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h3 style="margin-top: 30px;">Quick Actions</h3>
+                    <div class="quick-actions">
+                        <div class="action-card" onclick="showSection('tournament')">
+                            <div class="action-icon">🏆</div>
+                            <div class="action-title">Setup Tournament</div>
+                            <div class="action-desc">Configure basic settings</div>
+                        </div>
+                        <div class="action-card" onclick="showSection('teams')">
+                            <div class="action-icon">👥</div>
+                            <div class="action-title">Manage Teams</div>
+                            <div class="action-desc">Add teams and players</div>
+                        </div>
+                        <div class="action-card" onclick="showSection('fixtures')">
+                            <div class="action-icon">📅</div>
+                            <div class="action-title">Create Fixtures</div>
+                            <div class="action-desc">Schedule matches</div>
+                        </div>
+                        <div class="action-card" onclick="showSection('scoring')">
+                            <div class="action-icon">📝</div>
+                            <div class="action-title">Scoring Rules</div>
+                            <div class="action-desc">Define scoring system</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tournament Setup Section -->
+                <div id="tournament" class="section">
+                    <h2>Tournament Setup</h2>
+                    <form id="tournament-form">
+                        <div class="form-group">
+                            <label>Tournament Name</label>
+                            <input type="text" id="tournament-name" placeholder="e.g., Summer Championship 2025">
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Sport Type</label>
+                                <select id="sport-type" onchange="updateSportFields()">
+                                    <option value="cricket">Cricket</option>
+                                    <option value="football">Football</option>
+                                    <option value="carrom">Carrom</option>
+                                    <option value="chess">Chess</option>
+                                    <option value="badminton">Badminton</option>
+                                    <option value="table-tennis">Table Tennis</option>
+                                    <option value="volleyball">Volleyball</option>
+                                    <option value="custom">Custom Sport</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Tournament Format</label>
+                                <select id="tournament-format">
+                                    <option value="pools">Pools + Knockout</option>
+                                    <option value="league">League</option>
+                                    <option value="knockout">Knockout Only</option>
+                                    <option value="round-robin">Round Robin</option>
+                                    <option value="swiss">Swiss System</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Number of Teams</label>
+                                <input type="number" id="num-teams" min="2" max="32" value="6">
+                            </div>
+
+                            <div class="form-group">
+                                <label>Players per Team</label>
+                                <input type="number" id="players-per-team" min="1" max="20" value="6">
+                            </div>
+                        </div>
+
+                        <div class="form-group" id="sport-specific-fields">
+                            <!-- Sport-specific fields will be added here dynamically -->
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Start Date</label>
+                                <input type="date" id="start-date">
+                            </div>
+
+                            <div class="form-group">
+                                <label>End Date</label>
+                                <input type="date" id="end-date">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Venue</label>
+                            <input type="text" id="venue" placeholder="e.g., Sports Complex, Ground A">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Description</label>
+                            <textarea id="description" placeholder="Enter tournament description..."></textarea>
+                        </div>
+
+                        <button type="button" class="btn btn-success" onclick="saveTournamentConfig()">
+                            💾 Save Tournament Configuration
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Teams Section -->
+                <div id="teams" class="section">
+                    <h2>Teams Management</h2>
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                        <h3>Current Teams</h3>
+                        <button class="btn" onclick="showAddTeamModal()">➕ Add Team</button>
+                    </div>
+                    <div id="teams-list" class="teams-container">
+                        <!-- Teams will be loaded here -->
+                    </div>
+                </div>
+
+                <!-- Fixtures Section -->
+                <div id="fixtures" class="section">
+                    <h2>Fixtures Management</h2>
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                        <h3>Match Schedule</h3>
+                        <button class="btn" onclick="generateFixtures()">🔄 Auto Generate Fixtures</button>
+                    </div>
+                    <div id="fixtures-list">
+                        <!-- Fixtures will be loaded here -->
+                    </div>
+                </div>
+
+                <!-- Scoring Rules Section -->
+                <div id="scoring" class="section">
+                    <h2>Scoring Rules Configuration</h2>
+                    <form id="scoring-form">
+                        <h3>Points System</h3>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Points for Win</label>
+                                <input type="number" id="points-win" value="2" min="0">
+                            </div>
+                            <div class="form-group">
+                                <label>Points for Draw/Tie</label>
+                                <input type="number" id="points-draw" value="1" min="0">
+                            </div>
+                            <div class="form-group">
+                                <label>Points for Loss</label>
+                                <input type="number" id="points-loss" value="0" min="0">
+                            </div>
+                        </div>
+
+                        <h3 style="margin-top: 30px;">Scoring Fields</h3>
+                        <div id="scoring-fields">
+                            <!-- Sport-specific scoring fields will be added here -->
+                        </div>
+
+                        <button type="button" class="btn btn-success" onclick="saveScoringRules()">
+                            💾 Save Scoring Rules
+                        </button>
+                    </form>
+                </div>
+
+                <!-- JSON Editor Section -->
+                <div id="json" class="section">
+                    <h2>Advanced JSON Editor</h2>
+                    <div class="form-group">
+                        <label>Select Configuration File</label>
+                        <select id="json-file-selector" onchange="loadJSONFile()">
+                            <option value="">Select a file...</option>
+                            <option value="config">config.json (Main Configuration)</option>
+                            <option value="teams">teams.json (Teams & Players)</option>
+                            <option value="tournament">tournament.json (Tournament Structure)</option>
+                            <option value="matches">matches.json (Match Results)</option>
+                            <option value="rules">rules.json (Game Rules)</option>
+                        </select>
+                    </div>
+
+                    <div id="status-message" class="status-message"></div>
+
+                    <div class="json-editor">
+                        <textarea id="json-editor-textarea" placeholder="Select a JSON file to edit..."></textarea>
+                    </div>
+
+                    <div style="margin-top: 15px;">
+                        <button class="btn btn-success" onclick="saveJSONFile()">💾 Save Changes</button>
+                        <button class="btn btn-secondary" onclick="validateJSON()">✔️ Validate JSON</button>
+                        <button class="btn" onclick="exportAllData()">📦 Export All Data</button>
+                    </div>
+                </div>
+
+                <!-- Templates Section -->
+                <div id="templates" class="section">
+                    <h2>Tournament Templates</h2>
+                    <p>Choose a pre-configured template to quickly set up your tournament:</p>
+                    
+                    <div class="quick-actions" style="margin-top: 30px;">
+                        <div class="action-card" onclick="applyTemplate('cricket-t20')">
+                            <div class="action-icon">🏏</div>
+                            <div class="action-title">Cricket T20</div>
+                            <div class="action-desc">20 overs, 11 players</div>
+                        </div>
+                        <div class="action-card" onclick="applyTemplate('cricket-gully')">
+                            <div class="action-icon">🏏</div>
+                            <div class="action-title">Gully Cricket</div>
+                            <div class="action-desc">6-7 overs, 6 players</div>
+                        </div>
+                        <div class="action-card" onclick="applyTemplate('football-5aside')">
+                            <div class="action-icon">⚽</div>
+                            <div class="action-title">5-a-side Football</div>
+                            <div class="action-desc">30 min, 5 players</div>
+                        </div>
+                        <div class="action-card" onclick="applyTemplate('chess-rapid')">
+                            <div class="action-icon">♟️</div>
+                            <div class="action-title">Rapid Chess</div>
+                            <div class="action-desc">15 min games</div>
+                        </div>
+                        <div class="action-card" onclick="applyTemplate('carrom-singles')">
+                            <div class="action-icon">🎯</div>
+                            <div class="action-title">Carrom Singles</div>
+                            <div class="action-desc">Best of 3 boards</div>
+                        </div>
+                        <div class="action-card" onclick="applyTemplate('badminton-singles')">
+                            <div class="action-icon">🏸</div>
+                            <div class="action-title">Badminton</div>
+                            <div class="action-desc">Best of 3 sets</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Team Modal -->
+    <div id="add-team-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Add New Team</h2>
+                <button class="modal-close" onclick="closeModal('add-team-modal')">×</button>
+            </div>
+            <form id="add-team-form">
+                <div class="form-group">
+                    <label>Team Name</label>
+                    <input type="text" id="new-team-name" required>
+                </div>
+                <div class="form-group">
+                    <label>Pool/Group</label>
+                    <select id="new-team-pool">
+                        <option value="A">Pool A</option>
+                        <option value="B">Pool B</option>
+                        <option value="C">Pool C</option>
+                        <option value="D">Pool D</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Players (comma separated)</label>
+                    <textarea id="new-team-players" placeholder="Player 1, Player 2, Player 3..."></textarea>
+                    <div class="help-text">First player will be marked as captain</div>
+                </div>
+                <button type="button" class="btn btn-success" onclick="addNewTeam()">Add Team</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="admin.js"></script>
+</body>
+</html>

@@ -1,0 +1,86 @@
+{
+  "pools": {
+    "A": ["Team 1", "Team 2", "Team 3"],
+    "B": ["Team 4", "Team 5", "Team 6"]
+  },
+  "teams": [
+    {
+      "id": 1,
+      "name": "Team 1",
+      "pool": "A",
+      "players": [
+        {"name": "Sandeep", "role": "Captain"},
+        {"name": "Praveen", "role": "Player"},
+        {"name": "Ashish Pandey", "role": "Player"},
+        {"name": "Sriram Moka", "role": "Player"},
+        {"name": "Damoder", "role": "Player"},
+        {"name": "Somashekhar", "role": "Player"}
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Team 2",
+      "pool": "A",
+      "players": [
+        {"name": "Raja", "role": "Captain"},
+        {"name": "Bhargav", "role": "Player"},
+        {"name": "Srinivasu BV", "role": "Player"},
+        {"name": "Gopal", "role": "Player"},
+        {"name": "Satish Adapa", "role": "Player"},
+        {"name": "Goutham", "role": "Player"}
+      ]
+    },
+    {
+      "id": 3,
+      "name": "Team 3",
+      "pool": "A",
+      "players": [
+        {"name": "Ashok", "role": "Captain"},
+        {"name": "Vijay", "role": "Player"},
+        {"name": "Kiran", "role": "Player"},
+        {"name": "Srinivas", "role": "Player"},
+        {"name": "Amit", "role": "Player"},
+        {"name": "Cheris", "role": "Player"}
+      ]
+    },
+    {
+      "id": 4,
+      "name": "Team 4",
+      "pool": "B",
+      "players": [
+        {"name": "PD", "role": "Captain"},
+        {"name": "Ramesh", "role": "Player"},
+        {"name": "Chaitanya", "role": "Player"},
+        {"name": "VenKee", "role": "Player"},
+        {"name": "Srinivasa Reddy Eeda", "role": "Player"},
+        {"name": "Jeevan", "role": "Player"}
+      ]
+    },
+    {
+      "id": 5,
+      "name": "Team 5",
+      "pool": "B",
+      "players": [
+        {"name": "Satish Patil", "role": "Captain"},
+        {"name": "Vihang", "role": "Player"},
+        {"name": "Nagireddy", "role": "Player"},
+        {"name": "Ravindra", "role": "Player"},
+        {"name": "Sanjay", "role": "Player"},
+        {"name": "KSK", "role": "Player"}
+      ]
+    },
+    {
+      "id": 6,
+      "name": "Team 6",
+      "pool": "B",
+      "players": [
+        {"name": "Varun", "role": "Captain"},
+        {"name": "Guna", "role": "Player"},
+        {"name": "Surya Sathi", "role": "Player"},
+        {"name": "Ramesh Naidu", "role": "Player"},
+        {"name": "Suryaprakash", "role": "Player"},
+        {"name": "Siva Kaku", "role": "Player"}
+      ]
+    }
+  ]
+}
