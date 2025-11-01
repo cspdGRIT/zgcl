@@ -111,8 +111,8 @@ function getDefaultData(filename) {
                         {name: "Damoder", role: "Player"},
                         {name: "Somashekhar", role: "Player"}
                     ],
-                    wins: 1, losses: 1, points: 2, played: 2,
-                    runs_scored: 84, runs_conceded: 71, net_run_rate: 0.93
+                    wins: 0, losses: 0, points: 0, played: 0,
+                    runs_scored: 0, runs_conceded: 0, net_run_rate: 0
                 },
                 {
                     id: 2,
@@ -126,23 +126,23 @@ function getDefaultData(filename) {
                         {name: "Satish Adapa", role: "Player"},
                         {name: "Goutham", role: "Player"}
                     ],
-                    wins: 0, losses: 2, points: 0, played: 2,
-                    runs_scored: 67, runs_conceded: 89, net_run_rate: -1.57
+                    wins: 0, losses: 0, points: 0, played: 0,
+                    runs_scored: 0, runs_conceded: 0, net_run_rate: 0
                 },
                 {
                     id: 3,
                     name: "Team 3",
                     pool: "A",
                     players: [
-                        {name: "Ashok", role: "Captain"},
-                        {name: "Vijay", role: "Player"},
+                        {name: "Vijay", role: "Captain"},
                         {name: "Kiran", role: "Player"},
                         {name: "Srinivas", role: "Player"},
                         {name: "Amit", role: "Player"},
+                        {name: "Ashok", role: "Player"},
                         {name: "Cheris", role: "Player"}
                     ],
-                    wins: 2, losses: 0, points: 4, played: 2,
-                    runs_scored: 79, runs_conceded: 70, net_run_rate: 0.64
+                    wins: 0, losses: 0, points: 0, played: 0,
+                    runs_scored: 0, runs_conceded: 0, net_run_rate: 0
                 },
                 {
                     id: 4,
@@ -205,12 +205,13 @@ function getDefaultData(filename) {
             },
             scoring: {
                 boundary_four: 4,
-                boundary_six: 6,
+                // boundary_six: 6,
                 wide: 1,
-                wide_boundary: 5,
-                no_ball: 1,
-                bye: 1,
-                leg_bye: 1
+                single: 1,
+                // wide_boundary: 5,
+                // no_ball: 1,
+                // bye: 1,
+                // leg_bye: 1
             },
             points_system: {
                 win: 2,

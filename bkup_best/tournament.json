@@ -11,24 +11,11 @@
       "team1": "Team 1",
       "team2": "Team 2",
       "venue": "Ground A",
-      "status": "completed",
+      "status": "scheduled",
       "duration": "40 min",
-      "result": "Team 1 won by 17 runs",
-      "toss": "Team 1 won toss, elected to bat",
-      "innings": [
-        {
-          "batting_team": "Team 1",
-          "score": 49,
-          "wickets": 5,
-          "overs": 7
-        },
-        {
-          "batting_team": "Team 2",
-          "score": 32,
-          "wickets": 6,
-          "overs": 6.3
-        }
-      ]
+      "result": null,
+      "toss": null,
+      "innings": []
     },
     {
       "match_id": 2,
@@ -38,24 +25,11 @@
       "team1": "Team 2",
       "team2": "Team 3",
       "venue": "Ground A",
-      "status": "completed",
+      "status": "scheduled",
       "duration": "40 min",
-      "result": "Team 3 won by 5 runs",
-      "toss": "Team 3 won toss, elected to bat",
-      "innings": [
-        {
-          "batting_team": "Team 3",
-          "score": 40,
-          "wickets": 4,
-          "overs": 7
-        },
-        {
-          "batting_team": "Team 2",
-          "score": 35,
-          "wickets": 5,
-          "overs": 7
-        }
-      ]
+      "result": null,
+      "toss": null,
+      "innings": []
     },
     {
       "match_id": 3,
@@ -65,24 +39,11 @@
       "team1": "Team 1",
       "team2": "Team 3",
       "venue": "Ground A",
-      "status": "completed",
+      "status": "scheduled",
       "duration": "40 min",
-      "result": "Team 3 won by 4 runs",
-      "toss": "Team 1 won toss, elected to field",
-      "innings": [
-        {
-          "batting_team": "Team 3",
-          "score": 39,
-          "wickets": 5,
-          "overs": 7
-        },
-        {
-          "batting_team": "Team 1",
-          "score": 35,
-          "wickets": 4,
-          "overs": 7
-        }
-      ]
+      "result": null,
+      "toss": null,
+      "innings": []
     },
     {
       "match_id": 4,
@@ -131,9 +92,8 @@
       "round": "Semi Final 1",
       "date": "2025-11-02",
       "time": "09:00",
-      "team1": "Team 3",
-      "team1_qualified_as": "Pool A Winner",
-      "team2": "Pool B Runner-up (TBD)",
+      "team1": "Pool A Winner",
+      "team2": "Pool B Runner-up",
       "venue": "Ground A",
       "status": "scheduled",
       "duration": "40 min",
@@ -146,9 +106,8 @@
       "round": "Semi Final 2",
       "date": "2025-11-02",
       "time": "10:00",
-      "team1": "Pool B Winner (TBD)",
-      "team2": "Team 1",
-      "team2_qualified_as": "Pool A Runner-up",
+      "team1": "Pool B Winner",
+      "team2": "Pool A Runner-up",
       "venue": "Ground A",
       "status": "scheduled",
       "duration": "40 min",
@@ -161,8 +120,8 @@
       "round": "Final",
       "date": "2025-11-02",
       "time": "15:00",
-      "team1": "SF1 Winner",
-      "team2": "SF2 Winner",
+      "team1": "Semi Final 1 Winner",
+      "team2": "Semi Final 2 Winner",
       "venue": "Ground A",
       "status": "scheduled",
       "duration": "40 min",
@@ -172,23 +131,5 @@
     }
   ],
   "current_round": "Pool Stage",
-  "tournament_status": "ongoing",
-  "pool_a_status": "completed",
-  "pool_b_status": "scheduled",
-  "qualified_teams": {
-    "pool_a": {
-      "winner": "Team 3",
-      "runner_up": "Team 1",
-      "standings": [
-        {"position": 1, "team": "Team 3", "played": 2, "won": 2, "lost": 0, "points": 4},
-        {"position": 2, "team": "Team 1", "played": 2, "won": 1, "lost": 1, "points": 2},
-        {"position": 3, "team": "Team 2", "played": 2, "won": 0, "lost": 2, "points": 0}
-      ]
-    },
-    "pool_b": {
-      "winner": null,
-      "runner_up": null,
-      "standings": []
-    }
-  }
+  "tournament_status": "upcoming"
 }

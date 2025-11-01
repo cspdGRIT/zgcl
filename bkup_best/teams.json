@@ -16,13 +16,13 @@
         {"name": "Damoder", "role": "Player"},
         {"name": "Somashekhar", "role": "Player"}
       ],
-      "wins": 1,
-      "losses": 1,
-      "points": 2,
-      "played": 2,
-      "runs_scored": 84,
-      "runs_conceded": 71,
-      "net_run_rate": 0.93
+      "wins": 0,
+      "losses": 0,
+      "points": 0,
+      "played": 0,
+      "runs_scored": 0,
+      "runs_conceded": 0,
+      "net_run_rate": 0
     },
     {
       "id": 2,
@@ -37,12 +37,12 @@
         {"name": "Goutham", "role": "Player"}
       ],
       "wins": 0,
-      "losses": 2,
+      "losses": 0,
       "points": 0,
-      "played": 2,
-      "runs_scored": 67,
-      "runs_conceded": 89,
-      "net_run_rate": -1.57
+      "played": 0,
+      "runs_scored": 0,
+      "runs_conceded": 0,
+      "net_run_rate": 0
     },
     {
       "id": 3,
@@ -56,13 +56,13 @@
         {"name": "Amit", "role": "Player"},
         {"name": "Cheris", "role": "Player"}
       ],
-      "wins": 2,
+      "wins": 0,
       "losses": 0,
-      "points": 4,
-      "played": 2,
-      "runs_scored": 79,
-      "runs_conceded": 70,
-      "net_run_rate": 0.64
+      "points": 0,
+      "played": 0,
+      "runs_scored": 0,
+      "runs_conceded": 0,
+      "net_run_rate": 0
     },
     {
       "id": 4,
@@ -124,13 +124,5 @@
       "runs_conceded": 0,
       "net_run_rate": 0
     }
-  ],
-  "pool_a_qualified": {
-    "winner": "Team 3",
-    "runner_up": "Team 1"
-  },
-  "pool_b_qualified": {
-    "winner": "TBD",
-    "runner_up": "TBD"
-  }
+  ]
 }
