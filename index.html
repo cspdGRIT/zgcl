@@ -347,7 +347,7 @@
             border: 2px solid var(--primary);
             font-size: 16px;
             width: 100%;
-            max-width: 400px;
+            max-width: 600px;
         }
 
         .btn {
@@ -619,7 +619,7 @@
             <h1>🏏 Zenith Gully Cricket League 🏏</h1>
             <div class="tagline">League Format | 7 Overs | 40 Min Matches</div>
             <div style="background: linear-gradient(135deg, #4CAF50, #45a049); color: white; padding: 15px; border-radius: 10px; margin-top: 15px;">
-                <h3>📅 Tournament: Feb 8-9, 2026</h3>
+                <h3>📅 Tournament: Feb 7-8, 2026</h3>
                 <p><strong>Saturday:</strong> League Matches | <strong>Sunday:</strong> League + Playoffs</p>
             </div>
         </header>
@@ -912,31 +912,31 @@
                         id: 1,
                         name: "Team Vihang",
                         captain: "Vihang",
-                        players: ["Player 1", "Player 2", "Player 3", "Player 4", "Player 5", "Player 6"]
+                        players: ["Vihang", "Goutham", "Praveen", "Eswar", "Rammohan", "Chai", "Gopal"]
                     },
                     {
                         id: 2,
-                        name: "Team Raja",
-                        captain: "Raja",
-                        players: ["Player 7", "Player 8", "Player 9", "Player 10", "Player 11", "Player 12"]
+                        name: "Team Sandeep",
+                        captain: "Sandeep",
+                        players: ["Sandeep", "Abhishek", "Phani", "VS", "Sagar", "Rakesh", "Venkee"]
                     },
                     {
                         id: 3,
                         name: "Team Varun",
                         captain: "Varun",
-                        players: ["Player 13", "Player 14", "Player 15", "Player 16", "Player 17", "Player 18"]
+                        players: ["Varun", "Guna", "Nagi reddy", "Srini eeda", "Soma", "Srinivas bv", "Suryaprakash"]
                     },
                     {
                         id: 4,
-                        name: "Team PD",
-                        captain: "PD",
-                        players: ["Player 19", "Player 20", "Player 21", "Player 22", "Player 23", "Player 24"]
+                        name: "Team Raja",
+                        captain: "Raja",
+                        players: ["Raja", "Ramesh", "Satish", "Ksk", "Siva", "Ashish", "Ravinder"]
                     },
                     {
                         id: 5,
-                        name: "Team Sandeep",
-                        captain: "Sandeep",
-                        players: ["Player 25", "Player 26", "Player 27", "Player 28", "Player 29", "Player 30"]
+                        name: "Team PD",
+                        captain: "PD",
+                        players: ["PD", "Kiran", "Sriram moka", "Surya Sathi", "Vijay", "Sravan", "Vamsi Krishna"]
                     }
                 ];
                 saveToLocalStorage('zgcl_teams', ZGCL.teams);
@@ -945,29 +945,29 @@
             }
 
             if (!existingMatches) {
-                // Pre-populate the schedule
+                // Pre-populate the schedule (corrected to Feb 7-8, 2026)
                 ZGCL.matches = [
                     // Saturday Morning - League Matches
-                    { id: 1, team1Id: 1, team2Id: 2, type: "League", datetime: "2026-02-08T07:00:00", status: "upcoming", team1Score: 0, team1Wickets: 0, team1Overs: 0, team2Score: 0, team2Wickets: 0, team2Overs: 0, currentInnings: 1, ballByBall: [] },
-                    { id: 2, team1Id: 1, team2Id: 3, type: "League", datetime: "2026-02-08T07:30:00", status: "upcoming", team1Score: 0, team1Wickets: 0, team1Overs: 0, team2Score: 0, team2Wickets: 0, team2Overs: 0, currentInnings: 1, ballByBall: [] },
-                    { id: 3, team1Id: 2, team2Id: 3, type: "League", datetime: "2026-02-08T08:00:00", status: "upcoming", team1Score: 0, team1Wickets: 0, team1Overs: 0, team2Score: 0, team2Wickets: 0, team2Overs: 0, currentInnings: 1, ballByBall: [] },
+                    { id: 1, team1Id: 1, team2Id: 4, type: "League", datetime: "2026-02-07T07:00:00", status: "upcoming", team1Score: 0, team1Wickets: 0, team1Overs: 0, team2Score: 0, team2Wickets: 0, team2Overs: 0, currentInnings: 1, ballByBall: [] },
+                    { id: 2, team1Id: 1, team2Id: 3, type: "League", datetime: "2026-02-07T07:30:00", status: "upcoming", team1Score: 0, team1Wickets: 0, team1Overs: 0, team2Score: 0, team2Wickets: 0, team2Overs: 0, currentInnings: 1, ballByBall: [] },
+                    { id: 3, team1Id: 4, team2Id: 3, type: "League", datetime: "2026-02-07T08:00:00", status: "upcoming", team1Score: 0, team1Wickets: 0, team1Overs: 0, team2Score: 0, team2Wickets: 0, team2Overs: 0, currentInnings: 1, ballByBall: [] },
                     
                     // Saturday Afternoon/Evening - League Matches
-                    { id: 4, team1Id: 4, team2Id: 3, type: "League", datetime: "2026-02-08T14:30:00", status: "upcoming", team1Score: 0, team1Wickets: 0, team1Overs: 0, team2Score: 0, team2Wickets: 0, team2Overs: 0, currentInnings: 1, ballByBall: [] },
-                    { id: 5, team1Id: 5, team2Id: 4, type: "League", datetime: "2026-02-08T15:00:00", status: "upcoming", team1Score: 0, team1Wickets: 0, team1Overs: 0, team2Score: 0, team2Wickets: 0, team2Overs: 0, currentInnings: 1, ballByBall: [] },
-                    { id: 6, team1Id: 5, team2Id: 3, type: "League", datetime: "2026-02-08T15:30:00", status: "upcoming", team1Score: 0, team1Wickets: 0, team1Overs: 0, team2Score: 0, team2Wickets: 0, team2Overs: 0, currentInnings: 1, ballByBall: [] },
-                    { id: 7, team1Id: 5, team2Id: 1, type: "League", datetime: "2026-02-08T16:00:00", status: "upcoming", team1Score: 0, team1Wickets: 0, team1Overs: 0, team2Score: 0, team2Wickets: 0, team2Overs: 0, currentInnings: 1, ballByBall: [] },
-                    { id: 8, team1Id: 1, team2Id: 4, type: "League", datetime: "2026-02-08T16:30:00", status: "upcoming", team1Score: 0, team1Wickets: 0, team1Overs: 0, team2Score: 0, team2Wickets: 0, team2Overs: 0, currentInnings: 1, ballByBall: [] },
+                    { id: 4, team1Id: 2, team2Id: 3, type: "League", datetime: "2026-02-07T14:30:00", status: "upcoming", team1Score: 0, team1Wickets: 0, team1Overs: 0, team2Score: 0, team2Wickets: 0, team2Overs: 0, currentInnings: 1, ballByBall: [] },
+                    { id: 5, team1Id: 2, team2Id: 5, type: "League", datetime: "2026-02-07T15:00:00", status: "upcoming", team1Score: 0, team1Wickets: 0, team1Overs: 0, team2Score: 0, team2Wickets: 0, team2Overs: 0, currentInnings: 1, ballByBall: [] },
+                    { id: 6, team1Id: 5, team2Id: 3, type: "League", datetime: "2026-02-07T15:30:00", status: "upcoming", team1Score: 0, team1Wickets: 0, team1Overs: 0, team2Score: 0, team2Wickets: 0, team2Overs: 0, currentInnings: 1, ballByBall: [] },
+                    { id: 7, team1Id: 2, team2Id: 1, type: "League", datetime: "2026-02-07T16:00:00", status: "upcoming", team1Score: 0, team1Wickets: 0, team1Overs: 0, team2Score: 0, team2Wickets: 0, team2Overs: 0, currentInnings: 1, ballByBall: [] },
+                    { id: 8, team1Id: 1, team2Id: 5, type: "League", datetime: "2026-02-07T16:30:00", status: "upcoming", team1Score: 0, team1Wickets: 0, team1Overs: 0, team2Score: 0, team2Wickets: 0, team2Overs: 0, currentInnings: 1, ballByBall: [] },
                     
                     // Sunday Morning - Final League Matches
-                    { id: 9, team1Id: 4, team2Id: 2, type: "League", datetime: "2026-02-09T07:00:00", status: "upcoming", team1Score: 0, team1Wickets: 0, team1Overs: 0, team2Score: 0, team2Wickets: 0, team2Overs: 0, currentInnings: 1, ballByBall: [] },
-                    { id: 10, team1Id: 5, team2Id: 2, type: "League", datetime: "2026-02-09T07:30:00", status: "upcoming", team1Score: 0, team1Wickets: 0, team1Overs: 0, team2Score: 0, team2Wickets: 0, team2Overs: 0, currentInnings: 1, ballByBall: [] },
+                    { id: 9, team1Id: 5, team2Id: 4, type: "League", datetime: "2026-02-08T07:00:00", status: "upcoming", team1Score: 0, team1Wickets: 0, team1Overs: 0, team2Score: 0, team2Wickets: 0, team2Overs: 0, currentInnings: 1, ballByBall: [] },
+                    { id: 10, team1Id: 2, team2Id: 4, type: "League", datetime: "2026-02-08T07:30:00", status: "upcoming", team1Score: 0, team1Wickets: 0, team1Overs: 0, team2Score: 0, team2Wickets: 0, team2Overs: 0, currentInnings: 1, ballByBall: [] },
                     
                     // Sunday Afternoon - Playoffs (teams TBD based on league results)
-                    { id: 11, team1Id: 0, team2Id: 0, type: "Qualifier 1", datetime: "2026-02-09T15:00:00", status: "upcoming", team1Score: 0, team1Wickets: 0, team1Overs: 0, team2Score: 0, team2Wickets: 0, team2Overs: 0, currentInnings: 1, ballByBall: [] },
-                    { id: 12, team1Id: 0, team2Id: 0, type: "Eliminator", datetime: "2026-02-09T15:30:00", status: "upcoming", team1Score: 0, team1Wickets: 0, team1Overs: 0, team2Score: 0, team2Wickets: 0, team2Overs: 0, currentInnings: 1, ballByBall: [] },
-                    { id: 13, team1Id: 0, team2Id: 0, type: "Qualifier 2", datetime: "2026-02-09T16:00:00", status: "upcoming", team1Score: 0, team1Wickets: 0, team1Overs: 0, team2Score: 0, team2Wickets: 0, team2Overs: 0, currentInnings: 1, ballByBall: [] },
-                    { id: 14, team1Id: 0, team2Id: 0, type: "Final - Game 1", datetime: "2026-02-09T16:30:00", status: "upcoming", team1Score: 0, team1Wickets: 0, team1Overs: 0, team2Score: 0, team2Wickets: 0, team2Overs: 0, currentInnings: 1, ballByBall: [] }
+                    { id: 11, team1Id: 0, team2Id: 0, type: "Qualifier 1", datetime: "2026-02-08T15:00:00", status: "upcoming", team1Score: 0, team1Wickets: 0, team1Overs: 0, team2Score: 0, team2Wickets: 0, team2Overs: 0, currentInnings: 1, ballByBall: [] },
+                    { id: 12, team1Id: 0, team2Id: 0, type: "Eliminator", datetime: "2026-02-08T15:30:00", status: "upcoming", team1Score: 0, team1Wickets: 0, team1Overs: 0, team2Score: 0, team2Wickets: 0, team2Overs: 0, currentInnings: 1, ballByBall: [] },
+                    { id: 13, team1Id: 0, team2Id: 0, type: "Qualifier 2", datetime: "2026-02-08T16:00:00", status: "upcoming", team1Score: 0, team1Wickets: 0, team1Overs: 0, team2Score: 0, team2Wickets: 0, team2Overs: 0, currentInnings: 1, ballByBall: [] },
+                    { id: 14, team1Id: 0, team2Id: 0, type: "Final - Game 1", datetime: "2026-02-08T16:30:00", status: "upcoming", team1Score: 0, team1Wickets: 0, team1Overs: 0, team2Score: 0, team2Wickets: 0, team2Overs: 0, currentInnings: 1, ballByBall: [] }
                 ];
                 saveToLocalStorage('zgcl_matches', ZGCL.matches);
             } else {
@@ -1015,9 +1015,10 @@
                         </div>
                         <div class="team-stats">
                             <div>👨‍✈️ Captain: ${team.captain}</div>
+                            <div>👥 ${team.players.length} Players</div>
                         </div>
                         <div class="player-list">
-                            <strong>Squad (${team.players.length} players):</strong>
+                            <strong>Squad:</strong>
                             ${team.players.map(player => `
                                 <div class="player ${player === team.captain ? 'captain' : ''}">${player}</div>
                             `).join('')}
@@ -1158,18 +1159,18 @@
             }
 
             // Group by day
-            const saturday = ZGCL.matches.filter(m => m.datetime && m.datetime.startsWith('2026-02-08'));
-            const sunday = ZGCL.matches.filter(m => m.datetime && m.datetime.startsWith('2026-02-09'));
+            const saturday = ZGCL.matches.filter(m => m.datetime && m.datetime.startsWith('2026-02-07'));
+            const sunday = ZGCL.matches.filter(m => m.datetime && m.datetime.startsWith('2026-02-08'));
 
             let html = '';
 
             if (saturday.length > 0) {
-                html += '<div class="schedule-day">📅 Saturday, February 8, 2026</div>';
+                html += '<div class="schedule-day">📅 Saturday, February 7, 2026</div>';
                 html += saturday.map(m => renderFixtureCard(m)).join('');
             }
 
             if (sunday.length > 0) {
-                html += '<div class="schedule-day">📅 Sunday, February 9, 2026</div>';
+                html += '<div class="schedule-day">📅 Sunday, February 8, 2026</div>';
                 html += sunday.map(m => renderFixtureCard(m)).join('');
             }
 
@@ -1223,13 +1224,31 @@
             const matchSelect = document.getElementById('match-select');
             matchSelect.innerHTML = '<option value="">Choose a match...</option>';
             
-            ZGCL.matches.filter(m => m.status !== 'completed').forEach(match => {
+            // Sort matches by datetime chronologically
+            const sortedMatches = ZGCL.matches
+                .filter(m => m.status !== 'completed')
+                .sort((a, b) => new Date(a.datetime) - new Date(b.datetime));
+            
+            sortedMatches.forEach(match => {
                 const team1 = ZGCL.teams.find(t => t.id === match.team1Id);
                 const team2 = ZGCL.teams.find(t => t.id === match.team2Id);
                 const team1Name = team1 ? team1.name : 'TBD';
                 const team2Name = team2 ? team2.name : 'TBD';
+                
+                const time = new Date(match.datetime).toLocaleTimeString('en-US', { 
+                    hour: '2-digit', 
+                    minute: '2-digit',
+                    hour12: true 
+                });
+                
+                const date = new Date(match.datetime).toLocaleDateString('en-US', {
+                    weekday: 'short',
+                    month: 'short',
+                    day: 'numeric'
+                });
+                
                 matchSelect.innerHTML += `
-                    <option value="${match.id}">${team1Name} vs ${team2Name} - ${match.type}</option>
+                    <option value="${match.id}">${date} ${time} - ${team1Name} vs ${team2Name} (${match.type})</option>
                 `;
             });
         }
@@ -1613,7 +1632,7 @@
                 exportDate: new Date().toISOString()
             };
             
-            downloadJSON(data, `zgcl-data-${Date.now()}.json`);
+            downloadJSON(data, `zgcl-tournament-${Date.now()}.json`);
         }
 
         function exportMatches() {
