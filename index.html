@@ -191,6 +191,10 @@
             background: #f5f5f5;
         }
 
+        .leaderboard-table tr td:first-child strong {
+            color: var(--primary);
+        }
+
         .scorecard {
             background: #f5f5f5;
             border-radius: 15px;
@@ -726,6 +730,43 @@
                             </div>
                         </div>
 
+                        <!-- Player Selection -->
+                        <div style="background: white; padding: 15px; border-radius: 10px; margin: 15px 0;">
+                            <h4 style="color: var(--secondary); margin-bottom: 10px;">⚡ Current Players</h4>
+                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
+                                <div class="form-group" style="margin: 0;">
+                                    <label>Striker (On Strike):</label>
+                                    <select id="striker-select" onchange="updateStriker()">
+                                        <option value="">Select Striker</option>
+                                    </select>
+                                </div>
+                                <div class="form-group" style="margin: 0;">
+                                    <label>Non-Striker:</label>
+                                    <select id="non-striker-select" onchange="updateNonStriker()">
+                                        <option value="">Select Non-Striker</option>
+                                    </select>
+                                </div>
+                                <div class="form-group" style="margin: 0;">
+                                    <label>Bowler:</label>
+                                    <select id="bowler-select" onchange="updateBowler()">
+                                        <option value="">Select Bowler</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Current Batting Stats -->
+                        <div style="background: #e8f5e9; padding: 15px; border-radius: 10px; margin: 15px 0;">
+                            <h4 style="color: var(--secondary); margin-bottom: 10px;">🏏 Current Partnership</h4>
+                            <div id="current-batting-stats"></div>
+                        </div>
+
+                        <!-- Current Bowling Stats -->
+                        <div style="background: #fff3e0; padding: 15px; border-radius: 10px; margin: 15px 0;">
+                            <h4 style="color: var(--secondary); margin-bottom: 10px;">⚾ Current Bowler</h4>
+                            <div id="current-bowling-stats"></div>
+                        </div>
+
                         <div class="ball-tracker">
                             <div style="width: 100%; margin-bottom: 10px;">
                                 <strong>This Over:</strong>
@@ -736,6 +777,8 @@
                         <div class="scoring-buttons">
                             <button class="score-btn" onclick="recordBall(0, 'run')">0</button>
                             <button class="score-btn" onclick="recordBall(1, 'run')">1</button>
+                            <button class="score-btn" onclick="recordBall(2, 'run')">2</button>
+                            <button class="score-btn" onclick="recordBall(3, 'run')">3</button>
                             <button class="score-btn" onclick="recordBall(4, 'four')">FOUR</button>
                             <button class="score-btn" onclick="recordBall(6, 'six')">SIX</button>
                             <button class="score-btn wicket" onclick="recordBall(0, 'wicket')">WICKET</button>
@@ -748,6 +791,47 @@
                             <button class="btn btn-success" onclick="endInnings()" id="end-innings-btn">End Innings</button>
                             <button class="btn btn-danger" onclick="endMatch()" id="end-match-btn" style="display: none;">Finish Match</button>
                         </div>
+                    </div>
+
+                    <!-- Batting Card -->
+                    <div class="card">
+                        <h3>📊 Batting Card</h3>
+                        <table class="leaderboard-table">
+                            <thead>
+                                <tr>
+                                    <th>Batsman</th>
+                                    <th>R</th>
+                                    <th>B</th>
+                                    <th>4s</th>
+                                    <th>6s</th>
+                                    <th>SR</th>
+                                </tr>
+                            </thead>
+                            <tbody id="batting-card"></tbody>
+                        </table>
+                    </div>
+
+                    <!-- Bowling Card -->
+                    <div class="card">
+                        <h3>🎯 Bowling Card</h3>
+                        <table class="leaderboard-table">
+                            <thead>
+                                <tr>
+                                    <th>Bowler</th>
+                                    <th>O</th>
+                                    <th>R</th>
+                                    <th>W</th>
+                                    <th>Econ</th>
+                                </tr>
+                            </thead>
+                            <tbody id="bowling-card"></tbody>
+                        </table>
+                    </div>
+
+                    <!-- Over by Over Summary -->
+                    <div class="card">
+                        <h3>📈 Over by Over</h3>
+                        <div id="over-summary"></div>
                     </div>
 
                     <div class="card">
@@ -907,7 +991,10 @@
             currentMatch: null,
             currentInnings: 1,
             selectedMatchId: null,
-            battingFirstTeamId: null
+            battingFirstTeamId: null,
+            striker: null,
+            nonStriker: null,
+            bowler: null
         };
 
         // Initialize default data
@@ -958,26 +1045,26 @@
                 // Pre-populate the schedule (corrected to Feb 7-8, 2026)
                 ZGCL.matches = [
                     // Saturday Morning - League Matches
-                    { id: 1, team1Id: 1, team2Id: 4, type: "League", datetime: "2026-02-07T07:00:00", status: "upcoming", team1Score: 0, team1Wickets: 0, team1Overs: 0, team2Score: 0, team2Wickets: 0, team2Overs: 0, currentInnings: 1, ballByBall: [] },
-                    { id: 2, team1Id: 1, team2Id: 3, type: "League", datetime: "2026-02-07T07:30:00", status: "upcoming", team1Score: 0, team1Wickets: 0, team1Overs: 0, team2Score: 0, team2Wickets: 0, team2Overs: 0, currentInnings: 1, ballByBall: [] },
-                    { id: 3, team1Id: 4, team2Id: 3, type: "League", datetime: "2026-02-07T08:00:00", status: "upcoming", team1Score: 0, team1Wickets: 0, team1Overs: 0, team2Score: 0, team2Wickets: 0, team2Overs: 0, currentInnings: 1, ballByBall: [] },
+                    { id: 1, team1Id: 1, team2Id: 4, type: "League", datetime: "2026-02-07T07:00:00", status: "upcoming", team1Score: 0, team1Wickets: 0, team1Overs: 0, team2Score: 0, team2Wickets: 0, team2Overs: 0, currentInnings: 1, ballByBall: [], playerStats: { batting: {}, bowling: {} } },
+                    { id: 2, team1Id: 1, team2Id: 3, type: "League", datetime: "2026-02-07T07:30:00", status: "upcoming", team1Score: 0, team1Wickets: 0, team1Overs: 0, team2Score: 0, team2Wickets: 0, team2Overs: 0, currentInnings: 1, ballByBall: [], playerStats: { batting: {}, bowling: {} } },
+                    { id: 3, team1Id: 4, team2Id: 3, type: "League", datetime: "2026-02-07T08:00:00", status: "upcoming", team1Score: 0, team1Wickets: 0, team1Overs: 0, team2Score: 0, team2Wickets: 0, team2Overs: 0, currentInnings: 1, ballByBall: [], playerStats: { batting: {}, bowling: {} } },
                     
                     // Saturday Afternoon/Evening - League Matches
-                    { id: 4, team1Id: 2, team2Id: 3, type: "League", datetime: "2026-02-07T14:30:00", status: "upcoming", team1Score: 0, team1Wickets: 0, team1Overs: 0, team2Score: 0, team2Wickets: 0, team2Overs: 0, currentInnings: 1, ballByBall: [] },
-                    { id: 5, team1Id: 2, team2Id: 5, type: "League", datetime: "2026-02-07T15:00:00", status: "upcoming", team1Score: 0, team1Wickets: 0, team1Overs: 0, team2Score: 0, team2Wickets: 0, team2Overs: 0, currentInnings: 1, ballByBall: [] },
-                    { id: 6, team1Id: 5, team2Id: 3, type: "League", datetime: "2026-02-07T15:30:00", status: "upcoming", team1Score: 0, team1Wickets: 0, team1Overs: 0, team2Score: 0, team2Wickets: 0, team2Overs: 0, currentInnings: 1, ballByBall: [] },
-                    { id: 7, team1Id: 2, team2Id: 1, type: "League", datetime: "2026-02-07T16:00:00", status: "upcoming", team1Score: 0, team1Wickets: 0, team1Overs: 0, team2Score: 0, team2Wickets: 0, team2Overs: 0, currentInnings: 1, ballByBall: [] },
-                    { id: 8, team1Id: 1, team2Id: 5, type: "League", datetime: "2026-02-07T16:30:00", status: "upcoming", team1Score: 0, team1Wickets: 0, team1Overs: 0, team2Score: 0, team2Wickets: 0, team2Overs: 0, currentInnings: 1, ballByBall: [] },
+                    { id: 4, team1Id: 2, team2Id: 3, type: "League", datetime: "2026-02-07T14:30:00", status: "upcoming", team1Score: 0, team1Wickets: 0, team1Overs: 0, team2Score: 0, team2Wickets: 0, team2Overs: 0, currentInnings: 1, ballByBall: [], playerStats: { batting: {}, bowling: {} } },
+                    { id: 5, team1Id: 2, team2Id: 5, type: "League", datetime: "2026-02-07T15:00:00", status: "upcoming", team1Score: 0, team1Wickets: 0, team1Overs: 0, team2Score: 0, team2Wickets: 0, team2Overs: 0, currentInnings: 1, ballByBall: [], playerStats: { batting: {}, bowling: {} } },
+                    { id: 6, team1Id: 5, team2Id: 3, type: "League", datetime: "2026-02-07T15:30:00", status: "upcoming", team1Score: 0, team1Wickets: 0, team1Overs: 0, team2Score: 0, team2Wickets: 0, team2Overs: 0, currentInnings: 1, ballByBall: [], playerStats: { batting: {}, bowling: {} } },
+                    { id: 7, team1Id: 2, team2Id: 1, type: "League", datetime: "2026-02-07T16:00:00", status: "upcoming", team1Score: 0, team1Wickets: 0, team1Overs: 0, team2Score: 0, team2Wickets: 0, team2Overs: 0, currentInnings: 1, ballByBall: [], playerStats: { batting: {}, bowling: {} } },
+                    { id: 8, team1Id: 1, team2Id: 5, type: "League", datetime: "2026-02-07T16:30:00", status: "upcoming", team1Score: 0, team1Wickets: 0, team1Overs: 0, team2Score: 0, team2Wickets: 0, team2Overs: 0, currentInnings: 1, ballByBall: [], playerStats: { batting: {}, bowling: {} } },
                     
                     // Sunday Morning - Final League Matches
-                    { id: 9, team1Id: 5, team2Id: 4, type: "League", datetime: "2026-02-08T07:00:00", status: "upcoming", team1Score: 0, team1Wickets: 0, team1Overs: 0, team2Score: 0, team2Wickets: 0, team2Overs: 0, currentInnings: 1, ballByBall: [] },
-                    { id: 10, team1Id: 2, team2Id: 4, type: "League", datetime: "2026-02-08T07:30:00", status: "upcoming", team1Score: 0, team1Wickets: 0, team1Overs: 0, team2Score: 0, team2Wickets: 0, team2Overs: 0, currentInnings: 1, ballByBall: [] },
+                    { id: 9, team1Id: 5, team2Id: 4, type: "League", datetime: "2026-02-08T07:00:00", status: "upcoming", team1Score: 0, team1Wickets: 0, team1Overs: 0, team2Score: 0, team2Wickets: 0, team2Overs: 0, currentInnings: 1, ballByBall: [], playerStats: { batting: {}, bowling: {} } },
+                    { id: 10, team1Id: 2, team2Id: 4, type: "League", datetime: "2026-02-08T07:30:00", status: "upcoming", team1Score: 0, team1Wickets: 0, team1Overs: 0, team2Score: 0, team2Wickets: 0, team2Overs: 0, currentInnings: 1, ballByBall: [], playerStats: { batting: {}, bowling: {} } },
                     
                     // Sunday Afternoon - Playoffs (teams TBD based on league results)
-                    { id: 11, team1Id: 0, team2Id: 0, type: "Qualifier 1", datetime: "2026-02-08T15:00:00", status: "upcoming", team1Score: 0, team1Wickets: 0, team1Overs: 0, team2Score: 0, team2Wickets: 0, team2Overs: 0, currentInnings: 1, ballByBall: [] },
-                    { id: 12, team1Id: 0, team2Id: 0, type: "Eliminator", datetime: "2026-02-08T15:30:00", status: "upcoming", team1Score: 0, team1Wickets: 0, team1Overs: 0, team2Score: 0, team2Wickets: 0, team2Overs: 0, currentInnings: 1, ballByBall: [] },
-                    { id: 13, team1Id: 0, team2Id: 0, type: "Qualifier 2", datetime: "2026-02-08T16:00:00", status: "upcoming", team1Score: 0, team1Wickets: 0, team1Overs: 0, team2Score: 0, team2Wickets: 0, team2Overs: 0, currentInnings: 1, ballByBall: [] },
-                    { id: 14, team1Id: 0, team2Id: 0, type: "Final - Game 1", datetime: "2026-02-08T16:30:00", status: "upcoming", team1Score: 0, team1Wickets: 0, team1Overs: 0, team2Score: 0, team2Wickets: 0, team2Overs: 0, currentInnings: 1, ballByBall: [] }
+                    { id: 11, team1Id: 0, team2Id: 0, type: "Qualifier 1", datetime: "2026-02-08T15:00:00", status: "upcoming", team1Score: 0, team1Wickets: 0, team1Overs: 0, team2Score: 0, team2Wickets: 0, team2Overs: 0, currentInnings: 1, ballByBall: [], playerStats: { batting: {}, bowling: {} } },
+                    { id: 12, team1Id: 0, team2Id: 0, type: "Eliminator", datetime: "2026-02-08T15:30:00", status: "upcoming", team1Score: 0, team1Wickets: 0, team1Overs: 0, team2Score: 0, team2Wickets: 0, team2Overs: 0, currentInnings: 1, ballByBall: [], playerStats: { batting: {}, bowling: {} } },
+                    { id: 13, team1Id: 0, team2Id: 0, type: "Qualifier 2", datetime: "2026-02-08T16:00:00", status: "upcoming", team1Score: 0, team1Wickets: 0, team1Overs: 0, team2Score: 0, team2Wickets: 0, team2Overs: 0, currentInnings: 1, ballByBall: [], playerStats: { batting: {}, bowling: {} } },
+                    { id: 14, team1Id: 0, team2Id: 0, type: "Final - Game 1", datetime: "2026-02-08T16:30:00", status: "upcoming", team1Score: 0, team1Wickets: 0, team1Overs: 0, team2Score: 0, team2Wickets: 0, team2Overs: 0, currentInnings: 1, ballByBall: [], playerStats: { batting: {}, bowling: {} } }
                 ];
                 saveToLocalStorage('zgcl_matches', ZGCL.matches);
             } else {
@@ -1345,6 +1432,14 @@
                 return;
             }
 
+            // Initialize player stats if not exists
+            if (!match.playerStats) {
+                match.playerStats = {
+                    batting: {},
+                    bowling: {}
+                };
+            }
+
             // Store which team bats first in the match object
             match.battingFirstTeamId = ZGCL.battingFirstTeamId;
 
@@ -1352,14 +1447,172 @@
             ZGCL.currentMatch = match;
             ZGCL.currentInnings = match.currentInnings;
 
+            // Initialize players for current innings
+            initializeInningsPlayers();
+
             saveToLocalStorage('zgcl_matches', ZGCL.matches);
             
             // Hide toss selector
             document.getElementById('toss-selector').style.display = 'none';
             document.getElementById('live-score-area').style.display = 'block';
             
+            // Populate player dropdowns
+            populatePlayerDropdowns();
+            
             updateScoreDisplay();
             updateCommentary();
+        }
+
+        function initializeInningsPlayers() {
+            const match = ZGCL.currentMatch;
+            
+            // Determine batting and bowling teams
+            const isBattingTeam1 = (ZGCL.currentInnings === 1 && match.battingFirstTeamId === match.team1Id) ||
+                                   (ZGCL.currentInnings === 2 && match.battingFirstTeamId === match.team2Id);
+            
+            const battingTeamId = isBattingTeam1 ? match.team1Id : match.team2Id;
+            const bowlingTeamId = isBattingTeam1 ? match.team2Id : match.team1Id;
+            
+            const battingTeam = ZGCL.teams.find(t => t.id === battingTeamId);
+            const bowlingTeam = ZGCL.teams.find(t => t.id === bowlingTeamId);
+            
+            // Initialize batting stats for all players in batting team
+            battingTeam.players.forEach(player => {
+                const key = `${battingTeamId}_${player}_inn${ZGCL.currentInnings}`;
+                if (!match.playerStats.batting[key]) {
+                    match.playerStats.batting[key] = {
+                        player: player,
+                        teamId: battingTeamId,
+                        innings: ZGCL.currentInnings,
+                        runs: 0,
+                        balls: 0,
+                        fours: 0,
+                        sixes: 0,
+                        out: false,
+                        howOut: ''
+                    };
+                }
+            });
+            
+            // Initialize bowling stats for all players in bowling team
+            bowlingTeam.players.forEach(player => {
+                const key = `${bowlingTeamId}_${player}_inn${ZGCL.currentInnings}`;
+                if (!match.playerStats.bowling[key]) {
+                    match.playerStats.bowling[key] = {
+                        player: player,
+                        teamId: bowlingTeamId,
+                        innings: ZGCL.currentInnings,
+                        overs: 0,
+                        balls: 0,
+                        runs: 0,
+                        wickets: 0
+                    };
+                }
+            });
+        }
+
+        function populatePlayerDropdowns() {
+            const match = ZGCL.currentMatch;
+            
+            const isBattingTeam1 = (ZGCL.currentInnings === 1 && match.battingFirstTeamId === match.team1Id) ||
+                                   (ZGCL.currentInnings === 2 && match.battingFirstTeamId === match.team2Id);
+            
+            const battingTeamId = isBattingTeam1 ? match.team1Id : match.team2Id;
+            const bowlingTeamId = isBattingTeam1 ? match.team2Id : match.team1Id;
+            
+            const battingTeam = ZGCL.teams.find(t => t.id === battingTeamId);
+            const bowlingTeam = ZGCL.teams.find(t => t.id === bowlingTeamId);
+            
+            // Populate striker/non-striker dropdowns (only not out batsmen)
+            const strikerSelect = document.getElementById('striker-select');
+            const nonStrikerSelect = document.getElementById('non-striker-select');
+            
+            const availableBatsmen = battingTeam.players.filter(player => {
+                const key = `${battingTeamId}_${player}_inn${ZGCL.currentInnings}`;
+                return !match.playerStats.batting[key].out;
+            });
+            
+            strikerSelect.innerHTML = '<option value="">Select Striker</option>' + 
+                availableBatsmen.map(p => `<option value="${p}">${p}</option>`).join('');
+            
+            nonStrikerSelect.innerHTML = '<option value="">Select Non-Striker</option>' + 
+                availableBatsmen.map(p => `<option value="${p}">${p}</option>`).join('');
+            
+            // Populate bowler dropdown
+            const bowlerSelect = document.getElementById('bowler-select');
+            bowlerSelect.innerHTML = '<option value="">Select Bowler</option>' + 
+                bowlingTeam.players.map(p => `<option value="${p}">${p}</option>`).join('');
+        }
+
+        function updateStriker() {
+            ZGCL.striker = document.getElementById('striker-select').value;
+            updateCurrentStats();
+        }
+
+        function updateNonStriker() {
+            ZGCL.nonStriker = document.getElementById('non-striker-select').value;
+            updateCurrentStats();
+        }
+
+        function updateBowler() {
+            ZGCL.bowler = document.getElementById('bowler-select').value;
+            updateCurrentStats();
+        }
+
+        function updateCurrentStats() {
+            const match = ZGCL.currentMatch;
+            if (!match) return;
+            
+            const isBattingTeam1 = (ZGCL.currentInnings === 1 && match.battingFirstTeamId === match.team1Id) ||
+                                   (ZGCL.currentInnings === 2 && match.battingFirstTeamId === match.team2Id);
+            
+            const battingTeamId = isBattingTeam1 ? match.team1Id : match.team2Id;
+            const bowlingTeamId = isBattingTeam1 ? match.team2Id : match.team1Id;
+            
+            // Update current batting stats
+            const battingStatsDiv = document.getElementById('current-batting-stats');
+            let battingHTML = '<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">';
+            
+            if (ZGCL.striker) {
+                const strikerKey = `${battingTeamId}_${ZGCL.striker}_inn${ZGCL.currentInnings}`;
+                const strikerStats = match.playerStats.batting[strikerKey];
+                const sr = strikerStats.balls > 0 ? ((strikerStats.runs / strikerStats.balls) * 100).toFixed(1) : '0.0';
+                battingHTML += `
+                    <div>
+                        <strong>* ${ZGCL.striker}</strong><br>
+                        ${strikerStats.runs} (${strikerStats.balls}) - SR: ${sr}
+                    </div>
+                `;
+            }
+            
+            if (ZGCL.nonStriker) {
+                const nonStrikerKey = `${battingTeamId}_${ZGCL.nonStriker}_inn${ZGCL.currentInnings}`;
+                const nonStrikerStats = match.playerStats.batting[nonStrikerKey];
+                const sr = nonStrikerStats.balls > 0 ? ((nonStrikerStats.runs / nonStrikerStats.balls) * 100).toFixed(1) : '0.0';
+                battingHTML += `
+                    <div>
+                        <strong>${ZGCL.nonStriker}</strong><br>
+                        ${nonStrikerStats.runs} (${nonStrikerStats.balls}) - SR: ${sr}
+                    </div>
+                `;
+            }
+            
+            battingHTML += '</div>';
+            battingStatsDiv.innerHTML = battingHTML;
+            
+            // Update current bowling stats
+            const bowlingStatsDiv = document.getElementById('current-bowling-stats');
+            if (ZGCL.bowler) {
+                const bowlerKey = `${bowlingTeamId}_${ZGCL.bowler}_inn${ZGCL.currentInnings}`;
+                const bowlerStats = match.playerStats.bowling[bowlerKey];
+                const overs = Math.floor(bowlerStats.balls / 6) + (bowlerStats.balls % 6) / 10;
+                const econ = bowlerStats.balls > 0 ? ((bowlerStats.runs / bowlerStats.balls) * 6).toFixed(2) : '0.00';
+                bowlingStatsDiv.innerHTML = `
+                    <strong>${ZGCL.bowler}</strong>: ${overs.toFixed(1)} overs, ${bowlerStats.runs} runs, ${bowlerStats.wickets} wickets (Econ: ${econ})
+                `;
+            } else {
+                bowlingStatsDiv.innerHTML = 'No bowler selected';
+            }
         }
 
         function updateScoreDisplay() {
@@ -1474,6 +1727,9 @@
                     } else {
                         saveToLocalStorage('zgcl_matches', ZGCL.matches);
                         updateScoreDisplay();
+                        updateBattingCard();
+                        updateBowlingCard();
+                        updateCurrentStats();
                     }
                 }, 1000);
             }
@@ -1483,9 +1739,18 @@
             const match = ZGCL.currentMatch;
             if (!match) return;
 
+            // Check if players are selected
+            if (!ZGCL.striker || !ZGCL.nonStriker || !ZGCL.bowler) {
+                alert('Please select striker, non-striker, and bowler before scoring!');
+                return;
+            }
+
             // Determine which team is batting
             let isBattingTeam1 = (ZGCL.currentInnings === 1 && match.battingFirstTeamId === match.team1Id) ||
                                  (ZGCL.currentInnings === 2 && match.battingFirstTeamId === match.team2Id);
+
+            const battingTeamId = isBattingTeam1 ? match.team1Id : match.team2Id;
+            const bowlingTeamId = isBattingTeam1 ? match.team2Id : match.team1Id;
 
             const overs = isBattingTeam1 ? match.team1Overs : match.team2Overs;
             const currentOver = Math.floor(overs);
@@ -1501,36 +1766,96 @@
                 ).length + 1,
                 runs: runs,
                 type: type,
+                striker: ZGCL.striker,
+                bowler: ZGCL.bowler,
                 timestamp: new Date().toISOString()
             };
 
             match.ballByBall.push(ball);
 
-            // Update scores for the correct batting team
+            // Update team scores
             if (isBattingTeam1) {
                 match.team1Score += runs;
                 if (type === 'wicket') match.team1Wickets++;
-                
-                if (type !== 'wide' && type !== 'no-ball') {
-                    const legalBalls = match.ballByBall.filter(b => 
-                        b.innings === ZGCL.currentInnings && 
-                        b.type !== 'wide' && 
-                        b.type !== 'no-ball'
-                    ).length;
-                    match.team1Overs = Math.floor(legalBalls / 6) + ((legalBalls % 6) / 10);
-                }
             } else {
                 match.team2Score += runs;
                 if (type === 'wicket') match.team2Wickets++;
+            }
+
+            // Update batsman stats
+            const strikerKey = `${battingTeamId}_${ZGCL.striker}_inn${ZGCL.currentInnings}`;
+            const strikerStats = match.playerStats.batting[strikerKey];
+            
+            if (type !== 'wide' && type !== 'no-ball') {
+                strikerStats.balls++;
                 
-                if (type !== 'wide' && type !== 'no-ball') {
-                    const legalBalls = match.ballByBall.filter(b => 
-                        b.innings === ZGCL.currentInnings && 
-                        b.type !== 'wide' && 
-                        b.type !== 'no-ball'
-                    ).length;
+                if (type === 'wicket') {
+                    strikerStats.out = true;
+                    strikerStats.howOut = 'out';
+                } else {
+                    strikerStats.runs += runs;
+                    if (runs === 4) strikerStats.fours++;
+                    if (runs === 6) strikerStats.sixes++;
+                }
+            } else if (type === 'no-ball') {
+                // No ball - batsman can score runs
+                strikerStats.runs += runs;
+            }
+
+            // Update bowler stats
+            const bowlerKey = `${bowlingTeamId}_${ZGCL.bowler}_inn${ZGCL.currentInnings}`;
+            const bowlerStats = match.playerStats.bowling[bowlerKey];
+            
+            if (type !== 'wide' && type !== 'no-ball') {
+                bowlerStats.balls++;
+            }
+            bowlerStats.runs += runs;
+            if (type === 'wicket') {
+                bowlerStats.wickets++;
+            }
+
+            // Update overs
+            if (type !== 'wide' && type !== 'no-ball') {
+                const legalBalls = match.ballByBall.filter(b => 
+                    b.innings === ZGCL.currentInnings && 
+                    b.type !== 'wide' && 
+                    b.type !== 'no-ball'
+                ).length;
+                
+                if (isBattingTeam1) {
+                    match.team1Overs = Math.floor(legalBalls / 6) + ((legalBalls % 6) / 10);
+                } else {
                     match.team2Overs = Math.floor(legalBalls / 6) + ((legalBalls % 6) / 10);
                 }
+            }
+
+            // Handle strike rotation
+            if (type !== 'wicket' && type !== 'wide' && type !== 'no-ball') {
+                // Rotate strike on odd runs (1, 3)
+                if (runs % 2 === 1) {
+                    rotateStrike();
+                }
+            }
+
+            // Handle wicket
+            if (type === 'wicket') {
+                handleWicket();
+            }
+
+            // Check over completion
+            const currentOverBalls = match.ballByBall.filter(b => 
+                b.innings === ZGCL.currentInnings && 
+                b.over === currentOver &&
+                b.type !== 'wide' &&
+                b.type !== 'no-ball'
+            ).length;
+
+            if (currentOverBalls === 6) {
+                // Rotate strike at end of over
+                setTimeout(() => {
+                    rotateStrike();
+                    handleOverCompletion();
+                }, 500);
             }
 
             // Check if chasing team has won or lost
@@ -1559,7 +1884,173 @@
 
             saveToLocalStorage('zgcl_matches', ZGCL.matches);
             updateScoreDisplay();
+            updateBattingCard();
+            updateBowlingCard();
+            updateOverSummary();
+            updateCurrentStats();
             updateCommentary();
+        }
+
+        function rotateStrike() {
+            const temp = ZGCL.striker;
+            ZGCL.striker = ZGCL.nonStriker;
+            ZGCL.nonStriker = temp;
+            
+            document.getElementById('striker-select').value = ZGCL.striker;
+            document.getElementById('non-striker-select').value = ZGCL.nonStriker;
+        }
+
+        function handleWicket() {
+            // Prompt for new batsman
+            const match = ZGCL.currentMatch;
+            const isBattingTeam1 = (ZGCL.currentInnings === 1 && match.battingFirstTeamId === match.team1Id) ||
+                                   (ZGCL.currentInnings === 2 && match.battingFirstTeamId === match.team2Id);
+            
+            const battingTeamId = isBattingTeam1 ? match.team1Id : match.team2Id;
+            const battingTeam = ZGCL.teams.find(t => t.id === battingTeamId);
+            
+            // Find available batsmen
+            const availableBatsmen = battingTeam.players.filter(player => {
+                const key = `${battingTeamId}_${player}_inn${ZGCL.currentInnings}`;
+                return !match.playerStats.batting[key].out && player !== ZGCL.nonStriker;
+            });
+            
+            if (availableBatsmen.length > 0) {
+                // Update striker to first available batsman
+                ZGCL.striker = availableBatsmen[0];
+                document.getElementById('striker-select').value = ZGCL.striker;
+                populatePlayerDropdowns();
+            }
+        }
+
+        function handleOverCompletion() {
+            const match = ZGCL.currentMatch;
+            
+            // Check if innings should end (7 overs)
+            const isBattingTeam1 = (ZGCL.currentInnings === 1 && match.battingFirstTeamId === match.team1Id) ||
+                                   (ZGCL.currentInnings === 2 && match.battingFirstTeamId === match.team2Id);
+            
+            const overs = isBattingTeam1 ? match.team1Overs : match.team2Overs;
+            
+            if (overs >= 7) {
+                endInnings();
+            } else {
+                // Prompt for new bowler
+                alert('Over completed! Please select a new bowler.');
+                document.getElementById('bowler-select').value = '';
+                ZGCL.bowler = null;
+            }
+        }
+
+        function updateBattingCard() {
+            const match = ZGCL.currentMatch;
+            if (!match) return;
+            
+            const isBattingTeam1 = (ZGCL.currentInnings === 1 && match.battingFirstTeamId === match.team1Id) ||
+                                   (ZGCL.currentInnings === 2 && match.battingFirstTeamId === match.team2Id);
+            
+            const battingTeamId = isBattingTeam1 ? match.team1Id : match.team2Id;
+            const battingTeam = ZGCL.teams.find(t => t.id === battingTeamId);
+            
+            const tbody = document.getElementById('batting-card');
+            let html = '';
+            
+            battingTeam.players.forEach(player => {
+                const key = `${battingTeamId}_${player}_inn${ZGCL.currentInnings}`;
+                const stats = match.playerStats.batting[key];
+                
+                // Only show batsmen who have batted
+                if (stats.balls > 0 || stats.out) {
+                    const sr = stats.balls > 0 ? ((stats.runs / stats.balls) * 100).toFixed(1) : '-';
+                    const batting = player === ZGCL.striker ? '*' : (player === ZGCL.nonStriker ? '' : '');
+                    const outStatus = stats.out ? ' (out)' : '';
+                    
+                    html += `
+                        <tr>
+                            <td><strong>${batting}${player}${outStatus}</strong></td>
+                            <td>${stats.runs}</td>
+                            <td>${stats.balls}</td>
+                            <td>${stats.fours}</td>
+                            <td>${stats.sixes}</td>
+                            <td>${sr}</td>
+                        </tr>
+                    `;
+                }
+            });
+            
+            tbody.innerHTML = html || '<tr><td colspan="6">No batsmen yet</td></tr>';
+        }
+
+        function updateBowlingCard() {
+            const match = ZGCL.currentMatch;
+            if (!match) return;
+            
+            const isBattingTeam1 = (ZGCL.currentInnings === 1 && match.battingFirstTeamId === match.team1Id) ||
+                                   (ZGCL.currentInnings === 2 && match.battingFirstTeamId === match.team2Id);
+            
+            const bowlingTeamId = isBattingTeam1 ? match.team2Id : match.team1Id;
+            const bowlingTeam = ZGCL.teams.find(t => t.id === bowlingTeamId);
+            
+            const tbody = document.getElementById('bowling-card');
+            let html = '';
+            
+            bowlingTeam.players.forEach(player => {
+                const key = `${bowlingTeamId}_${player}_inn${ZGCL.currentInnings}`;
+                const stats = match.playerStats.bowling[key];
+                
+                // Only show bowlers who have bowled
+                if (stats.balls > 0) {
+                    const overs = Math.floor(stats.balls / 6) + (stats.balls % 6) / 10;
+                    const econ = stats.balls > 0 ? ((stats.runs / stats.balls) * 6).toFixed(2) : '0.00';
+                    const bowling = player === ZGCL.bowler ? '*' : '';
+                    
+                    html += `
+                        <tr>
+                            <td><strong>${bowling}${player}</strong></td>
+                            <td>${overs.toFixed(1)}</td>
+                            <td>${stats.runs}</td>
+                            <td>${stats.wickets}</td>
+                            <td>${econ}</td>
+                        </tr>
+                    `;
+                }
+            });
+            
+            tbody.innerHTML = html || '<tr><td colspan="5">No bowlers yet</td></tr>';
+        }
+
+        function updateOverSummary() {
+            const match = ZGCL.currentMatch;
+            if (!match) return;
+            
+            const oversDiv = document.getElementById('over-summary');
+            
+            // Group balls by over
+            const overGroups = {};
+            match.ballByBall.filter(b => b.innings === ZGCL.currentInnings).forEach(ball => {
+                if (!overGroups[ball.over]) {
+                    overGroups[ball.over] = [];
+                }
+                overGroups[ball.over].push(ball);
+            });
+            
+            let html = '';
+            Object.keys(overGroups).sort((a, b) => parseInt(a) - parseInt(b)).forEach(overNum => {
+                const balls = overGroups[overNum];
+                const overRuns = balls.reduce((sum, ball) => sum + (ball.runs || 0), 0);
+                const wickets = balls.filter(b => b.type === 'wicket').length;
+                
+                html += `
+                    <div style="margin-bottom: 10px; padding: 10px; background: #f5f5f5; border-radius: 5px;">
+                        <strong>Over ${parseInt(overNum) + 1}:</strong> ${overRuns} runs${wickets > 0 ? `, ${wickets} wicket(s)` : ''}
+                        <div style="margin-top: 5px; color: #666; font-size: 0.9em;">
+                            Bowler: ${balls[0].bowler}
+                        </div>
+                    </div>
+                `;
+            });
+            
+            oversDiv.innerHTML = html || '<p>No overs bowled yet</p>';
         }
 
         function undoLastBall() {
@@ -1572,6 +2063,10 @@
             let wasBattingTeam1 = (lastBall.innings === 1 && match.battingFirstTeamId === match.team1Id) ||
                                   (lastBall.innings === 2 && match.battingFirstTeamId === match.team2Id);
             
+            const battingTeamId = wasBattingTeam1 ? match.team1Id : match.team2Id;
+            const bowlingTeamId = wasBattingTeam1 ? match.team2Id : match.team1Id;
+            
+            // Revert team score and wickets
             if (wasBattingTeam1) {
                 match.team1Score -= lastBall.runs;
                 if (lastBall.type === 'wicket') match.team1Wickets--;
@@ -1593,9 +2088,48 @@
                 ).length;
                 match.team2Overs = Math.floor(legalBalls / 6) + ((legalBalls % 6) / 10);
             }
+            
+            // Revert batsman stats
+            if (lastBall.striker) {
+                const strikerKey = `${battingTeamId}_${lastBall.striker}_inn${lastBall.innings}`;
+                const strikerStats = match.playerStats.batting[strikerKey];
+                
+                if (lastBall.type !== 'wide' && lastBall.type !== 'no-ball') {
+                    strikerStats.balls--;
+                    
+                    if (lastBall.type === 'wicket') {
+                        strikerStats.out = false;
+                        strikerStats.howOut = '';
+                    } else {
+                        strikerStats.runs -= lastBall.runs;
+                        if (lastBall.runs === 4) strikerStats.fours--;
+                        if (lastBall.runs === 6) strikerStats.sixes--;
+                    }
+                } else if (lastBall.type === 'no-ball') {
+                    strikerStats.runs -= lastBall.runs;
+                }
+            }
+            
+            // Revert bowler stats
+            if (lastBall.bowler) {
+                const bowlerKey = `${bowlingTeamId}_${lastBall.bowler}_inn${lastBall.innings}`;
+                const bowlerStats = match.playerStats.bowling[bowlerKey];
+                
+                if (lastBall.type !== 'wide' && lastBall.type !== 'no-ball') {
+                    bowlerStats.balls--;
+                }
+                bowlerStats.runs -= lastBall.runs;
+                if (lastBall.type === 'wicket') {
+                    bowlerStats.wickets--;
+                }
+            }
 
             saveToLocalStorage('zgcl_matches', ZGCL.matches);
             updateScoreDisplay();
+            updateBattingCard();
+            updateBowlingCard();
+            updateOverSummary();
+            updateCurrentStats();
             updateCommentary();
         }
 
@@ -1610,10 +2144,29 @@
                 const firstInningsScore = match.battingFirstTeamId === match.team1Id ? match.team1Score : match.team2Score;
                 addCommentary(`End of 1st Innings. Target: ${firstInningsScore + 1} runs`);
                 
+                // Reset player selections
+                ZGCL.striker = null;
+                ZGCL.nonStriker = null;
+                ZGCL.bowler = null;
+                
+                // Initialize players for second innings
+                initializeInningsPlayers();
+                populatePlayerDropdowns();
+                
+                // Clear selections
+                document.getElementById('striker-select').value = '';
+                document.getElementById('non-striker-select').value = '';
+                document.getElementById('bowler-select').value = '';
+                
                 document.getElementById('end-innings-btn').style.display = 'none';
+                
+                alert('2nd Innings starting! Please select new striker, non-striker, and bowler.');
                 
                 saveToLocalStorage('zgcl_matches', ZGCL.matches);
                 updateScoreDisplay();
+                updateBattingCard();
+                updateBowlingCard();
+                updateCurrentStats();
             } else {
                 endMatch();
             }
@@ -1750,7 +2303,8 @@
                 team2Wickets: 0,
                 team2Overs: 0,
                 currentInnings: 1,
-                ballByBall: []
+                ballByBall: [],
+                playerStats: { batting: {}, bowling: {} }
             };
             
             ZGCL.matches.push(newMatch);
