@@ -1,0 +1,1716 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zenith Gully Cricket League - ZGCL</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #FF6B35;
+            --secondary: #004E89;
+            --accent: #FFC107;
+            --dark: #1A1A2E;
+            --light: #EAEAEA;
+            --success: #4CAF50;
+            --danger: #F44336;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        h1 {
+            color: var(--primary);
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .tagline {
+            color: var(--secondary);
+            font-size: 1.2em;
+            margin-bottom: 20px;
+        }
+
+        .nav-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .tab-btn {
+            padding: 12px 25px;
+            background: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--secondary);
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .tab-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 7px 20px rgba(0,0,0,0.15);
+        }
+
+        .tab-btn.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.5s;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .teams-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .team-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 15px;
+            padding: 20px;
+            color: white;
+            transition: transform 0.3s ease;
+            position: relative;
+        }
+
+        .team-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .team-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .team-name {
+            font-size: 1.5em;
+            font-weight: bold;
+        }
+
+        .team-stats {
+            display: flex;
+            gap: 15px;
+            font-size: 0.9em;
+            margin-bottom: 15px;
+        }
+
+        .player-list {
+            background: rgba(255,255,255,0.1);
+            border-radius: 10px;
+            padding: 15px;
+        }
+
+        .player {
+            padding: 5px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .player:last-child {
+            border-bottom: none;
+        }
+
+        .captain {
+            font-weight: bold;
+            color: var(--accent);
+        }
+
+        .leaderboard-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .leaderboard-table th,
+        .leaderboard-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .leaderboard-table th {
+            background: var(--secondary);
+            color: white;
+            position: sticky;
+            top: 0;
+        }
+
+        .leaderboard-table tr:hover {
+            background: #f5f5f5;
+        }
+
+        .scorecard {
+            background: #f5f5f5;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .score-display {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .score-box {
+            background: white;
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .score-box h3 {
+            color: var(--secondary);
+            margin-bottom: 10px;
+            font-size: 0.9em;
+        }
+
+        .score-value {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        .score-label {
+            font-size: 0.9em;
+            color: #666;
+            margin-top: 5px;
+        }
+
+        .scoring-buttons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        .score-btn {
+            padding: 15px;
+            background: white;
+            border: 2px solid var(--primary);
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--primary);
+            transition: all 0.3s ease;
+        }
+
+        .score-btn:hover:not(:disabled) {
+            background: var(--primary);
+            color: white;
+            transform: scale(1.05);
+        }
+
+        .score-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .score-btn.wicket {
+            border-color: var(--danger);
+            color: var(--danger);
+        }
+
+        .score-btn.wicket:hover:not(:disabled) {
+            background: var(--danger);
+            color: white;
+        }
+
+        .score-btn.extra {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        .score-btn.extra:hover:not(:disabled) {
+            background: var(--accent);
+            color: white;
+        }
+
+        .ball-tracker {
+            display: flex;
+            gap: 5px;
+            flex-wrap: wrap;
+            margin: 15px 0;
+            padding: 15px;
+            background: white;
+            border-radius: 10px;
+        }
+
+        .ball {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 0.9em;
+        }
+
+        .ball.run-0 {
+            background: #ddd;
+            color: #666;
+        }
+
+        .ball.run-1, .ball.run-2, .ball.run-3 {
+            background: var(--success);
+            color: white;
+        }
+
+        .ball.run-4 {
+            background: #2196F3;
+            color: white;
+        }
+
+        .ball.run-6 {
+            background: #9C27B0;
+            color: white;
+        }
+
+        .ball.wicket {
+            background: var(--danger);
+            color: white;
+        }
+
+        .ball.wide {
+            background: var(--accent);
+            color: white;
+        }
+
+        .ball.no-ball {
+            background: orange;
+            color: white;
+        }
+
+        .match-selector {
+            margin-bottom: 20px;
+        }
+
+        .match-selector select {
+            padding: 10px;
+            border-radius: 5px;
+            border: 2px solid var(--primary);
+            font-size: 16px;
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            margin: 5px;
+        }
+
+        .btn:hover:not(:disabled) {
+            background: #FF5722;
+            transform: translateY(-2px);
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .btn-success {
+            background: var(--success);
+        }
+
+        .btn-success:hover:not(:disabled) {
+            background: #45a049;
+        }
+
+        .btn-secondary {
+            background: var(--secondary);
+        }
+
+        .btn-secondary:hover:not(:disabled) {
+            background: #003A66;
+        }
+
+        .btn-danger {
+            background: var(--danger);
+        }
+
+        .btn-danger:hover:not(:disabled) {
+            background: #d32f2f;
+        }
+
+        .fixture-card {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            background: #f9f9f9;
+            border-radius: 10px;
+            margin-bottom: 10px;
+        }
+
+        .fixture-teams {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            font-weight: 600;
+        }
+
+        .vs {
+            color: var(--primary);
+            font-weight: bold;
+        }
+
+        .fixture-info {
+            text-align: right;
+            color: #666;
+        }
+
+        .fixture-time {
+            font-size: 0.9em;
+            color: var(--secondary);
+            margin-top: 5px;
+        }
+
+        .fixture-status {
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-weight: bold;
+            font-size: 0.9em;
+        }
+
+        .fixture-status.completed {
+            background: var(--success);
+            color: white;
+        }
+
+        .fixture-status.live {
+            background: var(--danger);
+            color: white;
+        }
+
+        .fixture-status.upcoming {
+            background: var(--accent);
+            color: white;
+        }
+
+        .control-panel {
+            background: #f0f0f0;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+
+        .control-panel h3 {
+            color: var(--secondary);
+            margin-bottom: 15px;
+        }
+
+        .status-message {
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+            display: none;
+        }
+
+        .status-message.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+            display: block;
+        }
+
+        .status-message.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+            display: block;
+        }
+
+        .rules-section {
+            margin-bottom: 20px;
+        }
+
+        .rules-section h3 {
+            color: var(--primary);
+            margin-bottom: 10px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--primary);
+        }
+
+        .rules-section ul {
+            list-style-position: inside;
+            padding-left: 15px;
+        }
+
+        .rules-section li {
+            margin-bottom: 8px;
+            line-height: 1.6;
+        }
+
+        .commentary-item {
+            padding: 10px;
+            margin-bottom: 8px;
+            background: white;
+            border-radius: 5px;
+            border-left: 4px solid var(--primary);
+        }
+
+        .commentary-item.wicket {
+            border-left-color: var(--danger);
+            background: #ffebee;
+        }
+
+        .commentary-item.boundary {
+            border-left-color: var(--success);
+            background: #e8f5e9;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.4);
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 10% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 90%;
+            max-width: 500px;
+            border-radius: 10px;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close:hover {
+            color: #000;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        .schedule-day {
+            background: linear-gradient(135deg, var(--secondary), #003A66);
+            color: white;
+            padding: 10px 15px;
+            border-radius: 8px;
+            margin: 20px 0 10px 0;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+
+        @media (max-width: 768px) {
+            .teams-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 1.8em;
+            }
+            
+            .nav-tabs {
+                flex-direction: column;
+            }
+            
+            .tab-btn {
+                width: 100%;
+            }
+
+            .scoring-buttons {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .score-display {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🏏 Zenith Gully Cricket League 🏏</h1>
+            <div class="tagline">League Format | 7 Overs | 40 Min Matches</div>
+            <div style="background: linear-gradient(135deg, #4CAF50, #45a049); color: white; padding: 15px; border-radius: 10px; margin-top: 15px;">
+                <h3>📅 Tournament: Feb 8-9, 2026</h3>
+                <p><strong>Saturday:</strong> League Matches | <strong>Sunday:</strong> League + Playoffs</p>
+            </div>
+        </header>
+
+        <div class="nav-tabs">
+            <button class="tab-btn active" onclick="switchTab('dashboard')">📊 Standings</button>
+            <button class="tab-btn" onclick="switchTab('teams')">👥 Teams</button>
+            <button class="tab-btn" onclick="switchTab('fixtures')">📅 Schedule</button>
+            <button class="tab-btn" onclick="switchTab('live')">🔴 Live Score</button>
+            <button class="tab-btn" onclick="switchTab('rules')">📋 Rules</button>
+            <button class="tab-btn" onclick="switchTab('data')">💾 Data</button>
+        </div>
+
+        <!-- Dashboard Tab -->
+        <div id="dashboard" class="tab-content active">
+            <div class="card">
+                <h2>🏆 League Standings</h2>
+                <table class="leaderboard-table">
+                    <thead>
+                        <tr>
+                            <th>Position</th>
+                            <th>Team</th>
+                            <th>Played</th>
+                            <th>Won</th>
+                            <th>Lost</th>
+                            <th>Points</th>
+                            <th>NRR</th>
+                        </tr>
+                    </thead>
+                    <tbody id="league-standings">
+                        <!-- Populated by JS -->
+                    </tbody>
+                </table>
+                <p style="margin-top: 15px; color: #666; font-size: 0.9em;">
+                    <strong>Qualification:</strong> Top 4 teams advance to playoffs
+                </p>
+            </div>
+
+            <div class="card">
+                <h2>🌟 Tournament Statistics</h2>
+                <div id="tournament-stats"></div>
+            </div>
+        </div>
+
+        <!-- Teams Tab -->
+        <div id="teams" class="tab-content">
+            <div class="card">
+                <h2>🏏 All Teams</h2>
+                <div class="teams-grid" id="all-teams"></div>
+            </div>
+        </div>
+
+        <!-- Fixtures Tab -->
+        <div id="fixtures" class="tab-content">
+            <div class="card">
+                <h2>📅 Tournament Schedule</h2>
+                <button class="btn btn-success" onclick="showAddMatchModal()">➕ Add New Match</button>
+                <div id="fixtures-list"></div>
+            </div>
+        </div>
+
+        <!-- Live Score Tab -->
+        <div id="live" class="tab-content">
+            <div class="card">
+                <h2>🔴 Live Scoring System</h2>
+                
+                <div class="match-selector">
+                    <label for="match-select">Select Match:</label>
+                    <select id="match-select" onchange="selectMatch()">
+                        <option value="">Choose a match...</option>
+                    </select>
+                    <button class="btn btn-success" onclick="startMatch()" id="start-match-btn">Start Match</button>
+                </div>
+
+                <div id="live-score-area" style="display: none;">
+                    <div class="scorecard">
+                        <h3 id="match-title">Match Title</h3>
+                        
+                        <div class="score-display">
+                            <div class="score-box">
+                                <h3>BATTING</h3>
+                                <div class="score-value" id="batting-team">Team</div>
+                            </div>
+                            <div class="score-box">
+                                <h3>SCORE</h3>
+                                <div class="score-value" id="current-score">0/0</div>
+                                <div class="score-label" id="current-overs">(0.0 overs)</div>
+                            </div>
+                            <div class="score-box">
+                                <h3>TARGET</h3>
+                                <div class="score-value" id="target">-</div>
+                            </div>
+                            <div class="score-box">
+                                <h3>RUN RATE</h3>
+                                <div class="score-value" id="run-rate">0.00</div>
+                            </div>
+                        </div>
+
+                        <div class="ball-tracker">
+                            <div style="width: 100%; margin-bottom: 10px;">
+                                <strong>This Over:</strong>
+                            </div>
+                            <div id="current-over" style="display: flex; gap: 5px; flex-wrap: wrap;"></div>
+                        </div>
+
+                        <div class="scoring-buttons">
+                            <button class="score-btn" onclick="recordBall(0, 'run')">0</button>
+                            <button class="score-btn" onclick="recordBall(1, 'run')">1</button>
+                            <button class="score-btn" onclick="recordBall(4, 'four')">FOUR</button>
+                            <button class="score-btn" onclick="recordBall(6, 'six')">SIX</button>
+                            <button class="score-btn wicket" onclick="recordBall(0, 'wicket')">WICKET</button>
+                            <button class="score-btn extra" onclick="recordBall(1, 'wide')">Wide</button>
+                            <button class="score-btn extra" onclick="recordBall(1, 'no-ball')">No Ball</button>
+                        </div>
+
+                        <div style="margin-top: 20px;">
+                            <button class="btn btn-secondary" onclick="undoLastBall()">↩️ Undo</button>
+                            <button class="btn btn-success" onclick="endInnings()" id="end-innings-btn">End Innings</button>
+                            <button class="btn btn-danger" onclick="endMatch()" id="end-match-btn" style="display: none;">Finish Match</button>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <h3>📝 Ball-by-Ball Commentary</h3>
+                        <div id="commentary" style="max-height: 400px; overflow-y: auto;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Rules Tab -->
+        <div id="rules" class="tab-content">
+            <div class="card">
+                <h2>📋 Tournament Rules</h2>
+                
+                <div class="rules-section">
+                    <h3>⚾ Umpiring & General Play</h3>
+                    <ul>
+                        <li>Everyone in the group must umpire as many matches as possible</li>
+                        <li>No leg umpire needed</li>
+                        <li>Batsman reaching crease (even touching) counts as safe on runs—no crashing into walls</li>
+                        <li>Batsmen limited to max 1 run to prevent injuries/wall crashes</li>
+                        <li>Keep non-striker/runner</li>
+                        <li>Last single batsman allowed</li>
+                        <li>Toss required for all best-of-3 games (finals)</li>
+                    </ul>
+                </div>
+
+                <div class="rules-section">
+                    <h3>🎾 Bowling Rules</h3>
+                    <ul>
+                        <li><strong>No-ball:</strong> Above shoulder height</li>
+                        <li>Bowler's foot on or before crease</li>
+                        <li><strong>Wide:</strong> 1 run + re-bowl</li>
+                        <li><strong>Balls:</strong> Brand new Wilson—same standard for all matches</li>
+                    </ul>
+                </div>
+
+                <div class="rules-section">
+                    <h3>🏃 Fielding & Boundaries</h3>
+                    <ul>
+                        <li>Max 3 fielders per side (one side only)</li>
+                        <li><strong>Catches:</strong> One-step allowed; current boundary rules apply</li>
+                        <li><strong>Fours:</strong> Fielder touches boundary with ball = 4; touches wall = 4</li>
+                        <li>No boundary if ball hits cement bags, deflects, and crosses</li>
+                        <li>Captain rotates fielders so everyone fields/bowls (6 on field max at a time)</li>
+                        <li><strong>Outs:</strong> Ball beyond boundary direct (even outside Zenith) = out; run-outs both sides</li>
+                    </ul>
+                </div>
+
+                <div class="rules-section">
+                    <h3>🔄 Bowling Rotations (Player-Dependent)</h3>
+                    <ul>
+                        <li><strong>6 players:</strong> All bowl 1 over; 1 bowler does extra (bowling team's choice). Non-bowler? Batting team picks replacement.</li>
+                        <li><strong>7 players:</strong> All bowl 1 over; 1 extra over (bowling team choice). Non-bowler? Batting team picks. Impact bowler gets the extra.</li>
+                    </ul>
+                </div>
+
+                <div class="rules-section">
+                    <h3>🏆 Tournament Format</h3>
+                    <ul>
+                        <li><strong>League:</strong> All 5 teams play each other (1 game/match, 7 overs/side) = 10 total league matches</li>
+                        <li><strong>Captain duty:</strong> Ensure everyone bats across matches if not all bat in one</li>
+                        <li><strong>Tiebreaker:</strong> Same points? Higher team = more total runs across league games</li>
+                        <li><strong>Playoffs:</strong> Top 4 teams qualify
+                            <ul>
+                                <li>Qualifier 1: T1 vs T2 (winner to Finals)</li>
+                                <li>Eliminator: T3 vs T4 (loser eliminated)</li>
+                                <li>Qualifier 2: Loser of Q1 vs Winner of Eliminator (winner to Finals)</li>
+                            </ul>
+                        </li>
+                        <li><strong>Finals:</strong> Best-of-3</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Data Manager Tab -->
+        <div id="data" class="tab-content">
+            <div class="card">
+                <h2>💾 Data Manager</h2>
+                
+                <div class="control-panel">
+                    <h3>📥 Import Data</h3>
+                    <div class="file-selector">
+                        <input type="file" id="import-file" accept=".json" onchange="importData()">
+                        <button class="btn btn-secondary" onclick="document.getElementById('import-file').click()">
+                            📂 Import JSON
+                        </button>
+                    </div>
+                    <div id="import-status" class="status-message"></div>
+                </div>
+
+                <div class="control-panel">
+                    <h3>📤 Export Data</h3>
+                    <p>Download all tournament data including teams, matches, and scores.</p>
+                    <button class="btn btn-success" onclick="exportAllData()">💾 Export All Data</button>
+                    <div style="margin-top: 10px;">
+                        <button class="btn btn-secondary" onclick="exportMatches()">Export Matches Only</button>
+                        <button class="btn btn-secondary" onclick="exportTeams()">Export Teams Only</button>
+                    </div>
+                </div>
+
+                <div class="control-panel">
+                    <h3>🔄 Reset Data</h3>
+                    <p style="color: var(--danger);">⚠️ Warning: This will delete all data and reload the default schedule!</p>
+                    <button class="btn btn-danger" onclick="resetAllData()">🗑️ Reset Everything</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Match Modal -->
+    <div id="addMatchModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeAddMatchModal()">&times;</span>
+            <h2>Add New Match</h2>
+            <form onsubmit="addNewMatch(event)">
+                <div class="form-group">
+                    <label>Team 1:</label>
+                    <select id="new-match-team1" required>
+                        <option value="">Select Team 1</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Team 2:</label>
+                    <select id="new-match-team2" required>
+                        <option value="">Select Team 2</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Match Type:</label>
+                    <select id="new-match-type" required>
+                        <option value="League">League</option>
+                        <option value="Qualifier 1">Qualifier 1</option>
+                        <option value="Eliminator">Eliminator</option>
+                        <option value="Qualifier 2">Qualifier 2</option>
+                        <option value="Final - Game 1">Final - Game 1</option>
+                        <option value="Final - Game 2">Final - Game 2</option>
+                        <option value="Final - Game 3">Final - Game 3</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Date & Time:</label>
+                    <input type="datetime-local" id="new-match-datetime" required>
+                </div>
+                <button type="submit" class="btn btn-success">Add Match</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Data Structure
+        const ZGCL = {
+            teams: [],
+            matches: [],
+            currentMatch: null,
+            currentInnings: 1
+        };
+
+        // Initialize default data
+        function initializeDefaultData() {
+            const existingTeams = localStorage.getItem('zgcl_teams');
+            const existingMatches = localStorage.getItem('zgcl_matches');
+            
+            // Only initialize if no data exists
+            if (!existingTeams) {
+                ZGCL.teams = [
+                    {
+                        id: 1,
+                        name: "Team Vihang",
+                        captain: "Vihang",
+                        players: ["Player 1", "Player 2", "Player 3", "Player 4", "Player 5", "Player 6"]
+                    },
+                    {
+                        id: 2,
+                        name: "Team Raja",
+                        captain: "Raja",
+                        players: ["Player 7", "Player 8", "Player 9", "Player 10", "Player 11", "Player 12"]
+                    },
+                    {
+                        id: 3,
+                        name: "Team Varun",
+                        captain: "Varun",
+                        players: ["Player 13", "Player 14", "Player 15", "Player 16", "Player 17", "Player 18"]
+                    },
+                    {
+                        id: 4,
+                        name: "Team PD",
+                        captain: "PD",
+                        players: ["Player 19", "Player 20", "Player 21", "Player 22", "Player 23", "Player 24"]
+                    },
+                    {
+                        id: 5,
+                        name: "Team Sandeep",
+                        captain: "Sandeep",
+                        players: ["Player 25", "Player 26", "Player 27", "Player 28", "Player 29", "Player 30"]
+                    }
+                ];
+                saveToLocalStorage('zgcl_teams', ZGCL.teams);
+            } else {
+                ZGCL.teams = JSON.parse(existingTeams);
+            }
+
+            if (!existingMatches) {
+                // Pre-populate the schedule
+                ZGCL.matches = [
+                    // Saturday Morning - League Matches
+                    { id: 1, team1Id: 1, team2Id: 2, type: "League", datetime: "2026-02-08T07:00:00", status: "upcoming", team1Score: 0, team1Wickets: 0, team1Overs: 0, team2Score: 0, team2Wickets: 0, team2Overs: 0, currentInnings: 1, ballByBall: [] },
+                    { id: 2, team1Id: 1, team2Id: 3, type: "League", datetime: "2026-02-08T07:30:00", status: "upcoming", team1Score: 0, team1Wickets: 0, team1Overs: 0, team2Score: 0, team2Wickets: 0, team2Overs: 0, currentInnings: 1, ballByBall: [] },
+                    { id: 3, team1Id: 2, team2Id: 3, type: "League", datetime: "2026-02-08T08:00:00", status: "upcoming", team1Score: 0, team1Wickets: 0, team1Overs: 0, team2Score: 0, team2Wickets: 0, team2Overs: 0, currentInnings: 1, ballByBall: [] },
+                    
+                    // Saturday Afternoon/Evening - League Matches
+                    { id: 4, team1Id: 4, team2Id: 3, type: "League", datetime: "2026-02-08T14:30:00", status: "upcoming", team1Score: 0, team1Wickets: 0, team1Overs: 0, team2Score: 0, team2Wickets: 0, team2Overs: 0, currentInnings: 1, ballByBall: [] },
+                    { id: 5, team1Id: 5, team2Id: 4, type: "League", datetime: "2026-02-08T15:00:00", status: "upcoming", team1Score: 0, team1Wickets: 0, team1Overs: 0, team2Score: 0, team2Wickets: 0, team2Overs: 0, currentInnings: 1, ballByBall: [] },
+                    { id: 6, team1Id: 5, team2Id: 3, type: "League", datetime: "2026-02-08T15:30:00", status: "upcoming", team1Score: 0, team1Wickets: 0, team1Overs: 0, team2Score: 0, team2Wickets: 0, team2Overs: 0, currentInnings: 1, ballByBall: [] },
+                    { id: 7, team1Id: 5, team2Id: 1, type: "League", datetime: "2026-02-08T16:00:00", status: "upcoming", team1Score: 0, team1Wickets: 0, team1Overs: 0, team2Score: 0, team2Wickets: 0, team2Overs: 0, currentInnings: 1, ballByBall: [] },
+                    { id: 8, team1Id: 1, team2Id: 4, type: "League", datetime: "2026-02-08T16:30:00", status: "upcoming", team1Score: 0, team1Wickets: 0, team1Overs: 0, team2Score: 0, team2Wickets: 0, team2Overs: 0, currentInnings: 1, ballByBall: [] },
+                    
+                    // Sunday Morning - Final League Matches
+                    { id: 9, team1Id: 4, team2Id: 2, type: "League", datetime: "2026-02-09T07:00:00", status: "upcoming", team1Score: 0, team1Wickets: 0, team1Overs: 0, team2Score: 0, team2Wickets: 0, team2Overs: 0, currentInnings: 1, ballByBall: [] },
+                    { id: 10, team1Id: 5, team2Id: 2, type: "League", datetime: "2026-02-09T07:30:00", status: "upcoming", team1Score: 0, team1Wickets: 0, team1Overs: 0, team2Score: 0, team2Wickets: 0, team2Overs: 0, currentInnings: 1, ballByBall: [] },
+                    
+                    // Sunday Afternoon - Playoffs (teams TBD based on league results)
+                    { id: 11, team1Id: 0, team2Id: 0, type: "Qualifier 1", datetime: "2026-02-09T15:00:00", status: "upcoming", team1Score: 0, team1Wickets: 0, team1Overs: 0, team2Score: 0, team2Wickets: 0, team2Overs: 0, currentInnings: 1, ballByBall: [] },
+                    { id: 12, team1Id: 0, team2Id: 0, type: "Eliminator", datetime: "2026-02-09T15:30:00", status: "upcoming", team1Score: 0, team1Wickets: 0, team1Overs: 0, team2Score: 0, team2Wickets: 0, team2Overs: 0, currentInnings: 1, ballByBall: [] },
+                    { id: 13, team1Id: 0, team2Id: 0, type: "Qualifier 2", datetime: "2026-02-09T16:00:00", status: "upcoming", team1Score: 0, team1Wickets: 0, team1Overs: 0, team2Score: 0, team2Wickets: 0, team2Overs: 0, currentInnings: 1, ballByBall: [] },
+                    { id: 14, team1Id: 0, team2Id: 0, type: "Final - Game 1", datetime: "2026-02-09T16:30:00", status: "upcoming", team1Score: 0, team1Wickets: 0, team1Overs: 0, team2Score: 0, team2Wickets: 0, team2Overs: 0, currentInnings: 1, ballByBall: [] }
+                ];
+                saveToLocalStorage('zgcl_matches', ZGCL.matches);
+            } else {
+                ZGCL.matches = JSON.parse(existingMatches);
+            }
+        }
+
+        // Local Storage helpers
+        function saveToLocalStorage(key, data) {
+            localStorage.setItem(key, JSON.stringify(data));
+        }
+
+        function loadFromLocalStorage(key) {
+            const data = localStorage.getItem(key);
+            return data ? JSON.parse(data) : null;
+        }
+
+        // Tab switching
+        function switchTab(tabName) {
+            const tabs = document.querySelectorAll('.tab-content');
+            const buttons = document.querySelectorAll('.tab-btn');
+            
+            tabs.forEach(tab => tab.classList.remove('active'));
+            buttons.forEach(btn => btn.classList.remove('active'));
+            
+            document.getElementById(tabName).classList.add('active');
+            event.target.classList.add('active');
+
+            if (tabName === 'dashboard') renderDashboard();
+            if (tabName === 'teams') renderTeams();
+            if (tabName === 'fixtures') renderFixtures();
+            if (tabName === 'live') renderLiveScoring();
+        }
+
+        // Render Teams
+        function renderTeams() {
+            const allTeams = document.getElementById('all-teams');
+            allTeams.innerHTML = '';
+
+            ZGCL.teams.forEach(team => {
+                const teamCard = `
+                    <div class="team-card">
+                        <div class="team-header">
+                            <div class="team-name">${team.name}</div>
+                        </div>
+                        <div class="team-stats">
+                            <div>👨‍✈️ Captain: ${team.captain}</div>
+                        </div>
+                        <div class="player-list">
+                            <strong>Squad (${team.players.length} players):</strong>
+                            ${team.players.map(player => `
+                                <div class="player ${player === team.captain ? 'captain' : ''}">${player}</div>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+                allTeams.innerHTML += teamCard;
+            });
+        }
+
+        // Render Dashboard
+        function renderDashboard() {
+            renderStandings();
+            renderTournamentStats();
+        }
+
+        function renderStandings() {
+            const standings = ZGCL.teams.map(team => {
+                const teamMatches = ZGCL.matches.filter(m => 
+                    m.status === 'completed' && 
+                    (m.team1Id === team.id || m.team2Id === team.id) &&
+                    m.type === 'League'
+                );
+
+                let won = 0, lost = 0;
+                let totalRunsScored = 0, totalBallsFaced = 0;
+                let totalRunsConceded = 0, totalBallsBowled = 0;
+
+                teamMatches.forEach(match => {
+                    const isTeam1 = match.team1Id === team.id;
+                    const teamScore = isTeam1 ? match.team1Score : match.team2Score;
+                    const oppScore = isTeam1 ? match.team2Score : match.team1Score;
+                    const teamWickets = isTeam1 ? match.team1Wickets : match.team2Wickets;
+                    const oppWickets = isTeam1 ? match.team2Wickets : match.team1Wickets;
+                    const teamOvers = isTeam1 ? match.team1Overs : match.team2Overs;
+                    const oppOvers = isTeam1 ? match.team2Overs : match.team1Overs;
+
+                    if (teamScore > oppScore) won++;
+                    else lost++;
+
+                    totalRunsScored += teamScore;
+                    totalBallsFaced += teamOvers * 6;
+                    totalRunsConceded += oppScore;
+                    totalBallsBowled += oppOvers * 6;
+                });
+
+                const runRate = totalBallsFaced > 0 ? (totalRunsScored / totalBallsFaced) * 6 : 0;
+                const concededRate = totalBallsBowled > 0 ? (totalRunsConceded / totalBallsBowled) * 6 : 0;
+                const nrr = runRate - concededRate;
+
+                return {
+                    team: team.name,
+                    played: teamMatches.length,
+                    won,
+                    lost,
+                    points: won * 2,
+                    nrr: nrr.toFixed(3),
+                    totalRuns: totalRunsScored
+                };
+            });
+
+            // Sort by points, then NRR, then total runs
+            standings.sort((a, b) => {
+                if (b.points !== a.points) return b.points - a.points;
+                if (b.nrr !== a.nrr) return parseFloat(b.nrr) - parseFloat(a.nrr);
+                return b.totalRuns - a.totalRuns;
+            });
+
+            const tbody = document.getElementById('league-standings');
+            tbody.innerHTML = standings.map((s, i) => `
+                <tr style="${i < 4 ? 'background: #e8f5e9; font-weight: bold;' : ''}">
+                    <td>${i + 1}${i < 4 ? ' ✓' : ''}</td>
+                    <td><strong>${s.team}</strong></td>
+                    <td>${s.played}</td>
+                    <td>${s.won}</td>
+                    <td>${s.lost}</td>
+                    <td><strong>${s.points}</strong></td>
+                    <td>${s.nrr}</td>
+                </tr>
+            `).join('');
+        }
+
+        function renderTournamentStats() {
+            const completed = ZGCL.matches.filter(m => m.status === 'completed').length;
+            const upcoming = ZGCL.matches.filter(m => m.status === 'upcoming').length;
+            
+            let totalRuns = 0, totalWickets = 0, totalSixes = 0, totalFours = 0;
+            
+            ZGCL.matches.filter(m => m.status === 'completed').forEach(match => {
+                totalRuns += (match.team1Score || 0) + (match.team2Score || 0);
+                totalWickets += (match.team1Wickets || 0) + (match.team2Wickets || 0);
+                
+                if (match.ballByBall) {
+                    match.ballByBall.forEach(ball => {
+                        if (ball.runs === 6) totalSixes++;
+                        if (ball.runs === 4) totalFours++;
+                    });
+                }
+            });
+
+            document.getElementById('tournament-stats').innerHTML = `
+                <div class="score-display">
+                    <div class="score-box">
+                        <h3>MATCHES PLAYED</h3>
+                        <div class="score-value">${completed}</div>
+                    </div>
+                    <div class="score-box">
+                        <h3>UPCOMING</h3>
+                        <div class="score-value">${upcoming}</div>
+                    </div>
+                    <div class="score-box">
+                        <h3>TOTAL RUNS</h3>
+                        <div class="score-value">${totalRuns}</div>
+                    </div>
+                    <div class="score-box">
+                        <h3>TOTAL WICKETS</h3>
+                        <div class="score-value">${totalWickets}</div>
+                    </div>
+                    <div class="score-box">
+                        <h3>SIXES</h3>
+                        <div class="score-value">${totalSixes}</div>
+                    </div>
+                    <div class="score-box">
+                        <h3>FOURS</h3>
+                        <div class="score-value">${totalFours}</div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Render Fixtures
+        function renderFixtures() {
+            const fixturesList = document.getElementById('fixtures-list');
+            
+            if (ZGCL.matches.length === 0) {
+                fixturesList.innerHTML = '<p>No matches scheduled yet.</p>';
+                return;
+            }
+
+            // Group by day
+            const saturday = ZGCL.matches.filter(m => m.datetime && m.datetime.startsWith('2026-02-08'));
+            const sunday = ZGCL.matches.filter(m => m.datetime && m.datetime.startsWith('2026-02-09'));
+
+            let html = '';
+
+            if (saturday.length > 0) {
+                html += '<div class="schedule-day">📅 Saturday, February 8, 2026</div>';
+                html += saturday.map(m => renderFixtureCard(m)).join('');
+            }
+
+            if (sunday.length > 0) {
+                html += '<div class="schedule-day">📅 Sunday, February 9, 2026</div>';
+                html += sunday.map(m => renderFixtureCard(m)).join('');
+            }
+
+            fixturesList.innerHTML = html;
+        }
+
+        function renderFixtureCard(match) {
+            const team1 = ZGCL.teams.find(t => t.id === match.team1Id);
+            const team2 = ZGCL.teams.find(t => t.id === match.team2Id);
+            
+            const team1Name = team1 ? team1.name : 'TBD';
+            const team2Name = team2 ? team2.name : 'TBD';
+            
+            let scoreInfo = '';
+            if (match.status === 'completed') {
+                scoreInfo = `${team1Name}: ${match.team1Score}/${match.team1Wickets} (${match.team1Overs} ov)<br>
+                            ${team2Name}: ${match.team2Score}/${match.team2Wickets} (${match.team2Overs} ov)<br>
+                            <strong>${match.result}</strong>`;
+            } else if (match.status === 'live') {
+                const battingTeam = match.currentInnings === 1 ? team1Name : team2Name;
+                const score = match.currentInnings === 1 ? match.team1Score : match.team2Score;
+                const wickets = match.currentInnings === 1 ? match.team1Wickets : match.team2Wickets;
+                const overs = match.currentInnings === 1 ? match.team1Overs : match.team2Overs;
+                scoreInfo = `${battingTeam}: ${score}/${wickets} (${overs} ov)`;
+            }
+
+            const time = new Date(match.datetime).toLocaleTimeString('en-US', { 
+                hour: '2-digit', 
+                minute: '2-digit',
+                hour12: true 
+            });
+
+            return `
+                <div class="fixture-card">
+                    <div class="fixture-teams">
+                        <span>${team1Name}</span>
+                        <span class="vs">vs</span>
+                        <span>${team2Name}</span>
+                    </div>
+                    <div class="fixture-info">
+                        <div class="fixture-status ${match.status}">${match.status.toUpperCase()}</div>
+                        <div class="fixture-time">${match.type} - ${time}</div>
+                        ${scoreInfo ? `<div style="margin-top: 10px; font-size: 0.9em;">${scoreInfo}</div>` : ''}
+                    </div>
+                </div>
+            `;
+        }
+
+        // Live Scoring
+        function renderLiveScoring() {
+            const matchSelect = document.getElementById('match-select');
+            matchSelect.innerHTML = '<option value="">Choose a match...</option>';
+            
+            ZGCL.matches.filter(m => m.status !== 'completed').forEach(match => {
+                const team1 = ZGCL.teams.find(t => t.id === match.team1Id);
+                const team2 = ZGCL.teams.find(t => t.id === match.team2Id);
+                const team1Name = team1 ? team1.name : 'TBD';
+                const team2Name = team2 ? team2.name : 'TBD';
+                matchSelect.innerHTML += `
+                    <option value="${match.id}">${team1Name} vs ${team2Name} - ${match.type}</option>
+                `;
+            });
+        }
+
+        function selectMatch() {
+            const matchId = document.getElementById('match-select').value;
+            if (matchId) {
+                document.getElementById('start-match-btn').disabled = false;
+            }
+        }
+
+        function startMatch() {
+            const matchId = parseInt(document.getElementById('match-select').value);
+            const match = ZGCL.matches.find(m => m.id === matchId);
+            
+            if (!match) return;
+
+            // Check if teams are set
+            if (match.team1Id === 0 || match.team2Id === 0) {
+                alert('Please set the teams for this match first (Edit in Data Manager)');
+                return;
+            }
+
+            match.status = 'live';
+            ZGCL.currentMatch = match;
+            ZGCL.currentInnings = match.currentInnings;
+
+            saveToLocalStorage('zgcl_matches', ZGCL.matches);
+            
+            document.getElementById('live-score-area').style.display = 'block';
+            updateScoreDisplay();
+            updateCommentary();
+        }
+
+        function updateScoreDisplay() {
+            const match = ZGCL.currentMatch;
+            if (!match) return;
+
+            const team1 = ZGCL.teams.find(t => t.id === match.team1Id);
+            const team2 = ZGCL.teams.find(t => t.id === match.team2Id);
+            
+            const battingTeam = ZGCL.currentInnings === 1 ? team1.name : team2.name;
+            const score = ZGCL.currentInnings === 1 ? match.team1Score : match.team2Score;
+            const wickets = ZGCL.currentInnings === 1 ? match.team1Wickets : match.team2Wickets;
+            const overs = ZGCL.currentInnings === 1 ? match.team1Overs : match.team2Overs;
+            
+            const balls = Math.floor(overs * 6);
+            const runRate = balls > 0 ? ((score / balls) * 6).toFixed(2) : '0.00';
+            
+            let target = '-';
+            if (ZGCL.currentInnings === 2) {
+                target = match.team1Score + 1;
+            }
+
+            document.getElementById('match-title').textContent = 
+                `${team1.name} vs ${team2.name} - ${match.type}`;
+            document.getElementById('batting-team').textContent = battingTeam;
+            document.getElementById('current-score').textContent = `${score}/${wickets}`;
+            document.getElementById('current-overs').textContent = `(${overs.toFixed(1)} overs)`;
+            document.getElementById('target').textContent = target;
+            document.getElementById('run-rate').textContent = runRate;
+
+            // Update current over display
+            const currentOverBalls = match.ballByBall.filter(b => 
+                b.innings === ZGCL.currentInnings && 
+                b.over === Math.floor(overs)
+            );
+            
+            const overDisplay = document.getElementById('current-over');
+            overDisplay.innerHTML = currentOverBalls.map(ball => {
+                let ballClass = 'ball';
+                let ballText = '';
+                
+                if (ball.type === 'wicket') {
+                    ballClass += ' wicket';
+                    ballText = 'W';
+                } else if (ball.type === 'wide' || ball.type === 'no-ball') {
+                    ballClass += ' ' + ball.type;
+                    ballText = ball.type === 'wide' ? 'Wd' : 'Nb';
+                } else if (ball.runs === 4) {
+                    ballClass += ' run-4';
+                    ballText = '4';
+                } else if (ball.runs === 6) {
+                    ballClass += ' run-6';
+                    ballText = '6';
+                } else if (ball.runs === 0) {
+                    ballClass += ' run-0';
+                    ballText = '•';
+                } else {
+                    ballClass += ' run-' + ball.runs;
+                    ballText = ball.runs;
+                }
+                
+                return `<div class="${ballClass}">${ballText}</div>`;
+            }).join('');
+
+            // Check if over is complete
+            const legalBalls = currentOverBalls.filter(b => b.type !== 'wide' && b.type !== 'no-ball').length;
+            if (legalBalls === 6) {
+                setTimeout(() => {
+                    if (ZGCL.currentInnings === 1) {
+                        match.team1Overs = Math.floor(match.team1Overs) + 1;
+                    } else {
+                        match.team2Overs = Math.floor(match.team2Overs) + 1;
+                    }
+                    
+                    const overs = ZGCL.currentInnings === 1 ? match.team1Overs : match.team2Overs;
+                    if (overs >= 7) {
+                        endInnings();
+                    } else {
+                        saveToLocalStorage('zgcl_matches', ZGCL.matches);
+                        updateScoreDisplay();
+                    }
+                }, 1000);
+            }
+        }
+
+        function recordBall(runs, type) {
+            const match = ZGCL.currentMatch;
+            if (!match) return;
+
+            const overs = ZGCL.currentInnings === 1 ? match.team1Overs : match.team2Overs;
+            const currentOver = Math.floor(overs);
+            
+            const ball = {
+                innings: ZGCL.currentInnings,
+                over: currentOver,
+                ball: match.ballByBall.filter(b => 
+                    b.innings === ZGCL.currentInnings && 
+                    b.over === currentOver &&
+                    b.type !== 'wide' &&
+                    b.type !== 'no-ball'
+                ).length + 1,
+                runs: runs,
+                type: type,
+                timestamp: new Date().toISOString()
+            };
+
+            match.ballByBall.push(ball);
+
+            // Update scores
+            if (ZGCL.currentInnings === 1) {
+                match.team1Score += runs;
+                if (type === 'wicket') match.team1Wickets++;
+                
+                if (type !== 'wide' && type !== 'no-ball') {
+                    const legalBalls = match.ballByBall.filter(b => 
+                        b.innings === 1 && 
+                        b.type !== 'wide' && 
+                        b.type !== 'no-ball'
+                    ).length;
+                    match.team1Overs = Math.floor(legalBalls / 6) + ((legalBalls % 6) / 10);
+                }
+            } else {
+                match.team2Score += runs;
+                if (type === 'wicket') match.team2Wickets++;
+                
+                if (type !== 'wide' && type !== 'no-ball') {
+                    const legalBalls = match.ballByBall.filter(b => 
+                        b.innings === 2 && 
+                        b.type !== 'wide' && 
+                        b.type !== 'no-ball'
+                    ).length;
+                    match.team2Overs = Math.floor(legalBalls / 6) + ((legalBalls % 6) / 10);
+                }
+
+                if (match.team2Score > match.team1Score) {
+                    endMatch();
+                    return;
+                } else if (match.team2Wickets >= 10) {
+                    endMatch();
+                    return;
+                }
+            }
+
+            const wickets = ZGCL.currentInnings === 1 ? match.team1Wickets : match.team2Wickets;
+            if (wickets >= 10) {
+                endInnings();
+                return;
+            }
+
+            saveToLocalStorage('zgcl_matches', ZGCL.matches);
+            updateScoreDisplay();
+            updateCommentary();
+        }
+
+        function undoLastBall() {
+            const match = ZGCL.currentMatch;
+            if (!match || !match.ballByBall.length) return;
+
+            const lastBall = match.ballByBall.pop();
+            
+            if (lastBall.innings === 1) {
+                match.team1Score -= lastBall.runs;
+                if (lastBall.type === 'wicket') match.team1Wickets--;
+            } else {
+                match.team2Score -= lastBall.runs;
+                if (lastBall.type === 'wicket') match.team2Wickets--;
+            }
+
+            if (lastBall.innings === 1) {
+                const legalBalls = match.ballByBall.filter(b => 
+                    b.innings === 1 && 
+                    b.type !== 'wide' && 
+                    b.type !== 'no-ball'
+                ).length;
+                match.team1Overs = Math.floor(legalBalls / 6) + ((legalBalls % 6) / 10);
+            } else {
+                const legalBalls = match.ballByBall.filter(b => 
+                    b.innings === 2 && 
+                    b.type !== 'wide' && 
+                    b.type !== 'no-ball'
+                ).length;
+                match.team2Overs = Math.floor(legalBalls / 6) + ((legalBalls % 6) / 10);
+            }
+
+            saveToLocalStorage('zgcl_matches', ZGCL.matches);
+            updateScoreDisplay();
+            updateCommentary();
+        }
+
+        function endInnings() {
+            const match = ZGCL.currentMatch;
+            if (!match) return;
+
+            if (ZGCL.currentInnings === 1) {
+                ZGCL.currentInnings = 2;
+                match.currentInnings = 2;
+                
+                addCommentary(`End of 1st Innings. Target: ${match.team1Score + 1} runs`);
+                
+                document.getElementById('end-innings-btn').style.display = 'none';
+                
+                saveToLocalStorage('zgcl_matches', ZGCL.matches);
+                updateScoreDisplay();
+            } else {
+                endMatch();
+            }
+        }
+
+        function endMatch() {
+            const match = ZGCL.currentMatch;
+            if (!match) return;
+
+            match.status = 'completed';
+            
+            const team1 = ZGCL.teams.find(t => t.id === match.team1Id);
+            const team2 = ZGCL.teams.find(t => t.id === match.team2Id);
+
+            if (match.team1Score > match.team2Score) {
+                match.result = `${team1.name} won by ${match.team1Score - match.team2Score} runs`;
+            } else if (match.team2Score > match.team1Score) {
+                const wicketsRemaining = 10 - match.team2Wickets;
+                match.result = `${team2.name} won by ${wicketsRemaining} wickets`;
+            } else {
+                match.result = 'Match tied';
+            }
+
+            saveToLocalStorage('zgcl_matches', ZGCL.matches);
+            
+            alert(`Match completed! ${match.result}`);
+            
+            ZGCL.currentMatch = null;
+            document.getElementById('live-score-area').style.display = 'none';
+            renderFixtures();
+            renderDashboard();
+        }
+
+        function updateCommentary() {
+            const match = ZGCL.currentMatch;
+            if (!match) return;
+
+            const commentary = document.getElementById('commentary');
+            commentary.innerHTML = '';
+
+            const recentBalls = match.ballByBall.slice(-20).reverse();
+            
+            recentBalls.forEach(ball => {
+                let commentaryText = `${ball.over}.${ball.ball}: `;
+                let commentaryClass = 'commentary-item';
+                
+                if (ball.type === 'wicket') {
+                    commentaryText += `WICKET! `;
+                    commentaryClass += ' wicket';
+                } else if (ball.type === 'wide') {
+                    commentaryText += `Wide! `;
+                } else if (ball.type === 'no-ball') {
+                    commentaryText += `No ball! `;
+                } else if (ball.runs === 6) {
+                    commentaryText += `SIX! `;
+                    commentaryClass += ' boundary';
+                } else if (ball.runs === 4) {
+                    commentaryText += `FOUR! `;
+                    commentaryClass += ' boundary';
+                } else if (ball.runs === 0) {
+                    commentaryText += `Dot ball`;
+                } else {
+                    commentaryText += `${ball.runs} run${ball.runs > 1 ? 's' : ''}`;
+                }
+                
+                const commentaryDiv = document.createElement('div');
+                commentaryDiv.className = commentaryClass;
+                commentaryDiv.textContent = commentaryText;
+                commentary.appendChild(commentaryDiv);
+            });
+        }
+
+        function addCommentary(text) {
+            const commentary = document.getElementById('commentary');
+            const item = document.createElement('div');
+            item.className = 'commentary-item';
+            item.textContent = text;
+            commentary.insertBefore(item, commentary.firstChild);
+        }
+
+        // Modal functions
+        function showAddMatchModal() {
+            populateTeamSelects();
+            document.getElementById('addMatchModal').style.display = 'block';
+        }
+
+        function closeAddMatchModal() {
+            document.getElementById('addMatchModal').style.display = 'none';
+        }
+
+        function populateTeamSelects() {
+            const team1Select = document.getElementById('new-match-team1');
+            const team2Select = document.getElementById('new-match-team2');
+            
+            const options = ZGCL.teams.map(t => 
+                `<option value="${t.id}">${t.name}</option>`
+            ).join('');
+            
+            team1Select.innerHTML = '<option value="">Select Team 1</option>' + options;
+            team2Select.innerHTML = '<option value="">Select Team 2</option>' + options;
+        }
+
+        function addNewMatch(event) {
+            event.preventDefault();
+            
+            const team1Id = parseInt(document.getElementById('new-match-team1').value);
+            const team2Id = parseInt(document.getElementById('new-match-team2').value);
+            const type = document.getElementById('new-match-type').value;
+            const datetime = document.getElementById('new-match-datetime').value;
+            
+            if (team1Id === team2Id) {
+                alert('Please select different teams!');
+                return;
+            }
+            
+            const newMatch = {
+                id: Math.max(...ZGCL.matches.map(m => m.id)) + 1,
+                team1Id,
+                team2Id,
+                type,
+                datetime,
+                status: 'upcoming',
+                team1Score: 0,
+                team1Wickets: 0,
+                team1Overs: 0,
+                team2Score: 0,
+                team2Wickets: 0,
+                team2Overs: 0,
+                currentInnings: 1,
+                ballByBall: []
+            };
+            
+            ZGCL.matches.push(newMatch);
+            saveToLocalStorage('zgcl_matches', ZGCL.matches);
+            
+            closeAddMatchModal();
+            renderFixtures();
+            alert('Match added successfully!');
+        }
+
+        // Data Export/Import
+        function exportAllData() {
+            const data = {
+                teams: ZGCL.teams,
+                matches: ZGCL.matches,
+                exportDate: new Date().toISOString()
+            };
+            
+            downloadJSON(data, `zgcl-data-${Date.now()}.json`);
+        }
+
+        function exportMatches() {
+            downloadJSON(ZGCL.matches, `zgcl-matches-${Date.now()}.json`);
+        }
+
+        function exportTeams() {
+            downloadJSON(ZGCL.teams, `zgcl-teams-${Date.now()}.json`);
+        }
+
+        function downloadJSON(data, filename) {
+            const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+
+        function importData() {
+            const file = document.getElementById('import-file').files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const data = JSON.parse(e.target.result);
+                    
+                    if (data.teams) {
+                        ZGCL.teams = data.teams;
+                        saveToLocalStorage('zgcl_teams', ZGCL.teams);
+                    }
+                    
+                    if (data.matches) {
+                        ZGCL.matches = data.matches;
+                        saveToLocalStorage('zgcl_matches', ZGCL.matches);
+                    }
+                    
+                    showImportStatus('Data imported successfully!', 'success');
+                    renderDashboard();
+                    renderTeams();
+                    renderFixtures();
+                } catch (error) {
+                    showImportStatus('Error importing data: ' + error.message, 'error');
+                }
+            };
+            reader.readAsText(file);
+        }
+
+        function showImportStatus(message, type) {
+            const status = document.getElementById('import-status');
+            status.textContent = message;
+            status.className = 'status-message ' + type;
+            
+            setTimeout(() => {
+                status.className = 'status-message';
+            }, 3000);
+        }
+
+        function resetAllData() {
+            if (!confirm('Are you sure you want to delete all data? This will reload the default schedule!')) {
+                return;
+            }
+            
+            if (!confirm('This will delete ALL teams, matches, and scores. Are you REALLY sure?')) {
+                return;
+            }
+            
+            localStorage.clear();
+            ZGCL.teams = [];
+            ZGCL.matches = [];
+            ZGCL.currentMatch = null;
+            
+            initializeDefaultData();
+            renderDashboard();
+            renderTeams();
+            renderFixtures();
+            
+            alert('All data has been reset with default schedule!');
+        }
+
+        // Initialize on load
+        window.onload = function() {
+            initializeDefaultData();
+            renderDashboard();
+            renderTeams();
+            renderFixtures();
+        };
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('addMatchModal');
+            if (event.target === modal) {
+                closeAddMatchModal();
+            }
+        };
+    </script>
+</body>
+</html>
