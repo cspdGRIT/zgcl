@@ -691,7 +691,15 @@
                     <select id="match-select" onchange="selectMatch()">
                         <option value="">Choose a match...</option>
                     </select>
-                    <button class="btn btn-success" onclick="startMatch()" id="start-match-btn">Start Match</button>
+                </div>
+
+                <div id="toss-selector" style="display: none; margin-top: 20px; padding: 20px; background: #f0f0f0; border-radius: 10px;">
+                    <h3 style="color: var(--secondary); margin-bottom: 15px;">🪙 Toss - Who Bats First?</h3>
+                    <div style="display: flex; gap: 15px; flex-wrap: wrap; margin-bottom: 15px;">
+                        <button class="btn btn-secondary" onclick="selectBattingFirst(1)" id="toss-team1-btn">Team 1</button>
+                        <button class="btn btn-secondary" onclick="selectBattingFirst(2)" id="toss-team2-btn">Team 2</button>
+                    </div>
+                    <button class="btn btn-success" onclick="startMatch()" id="start-match-btn" disabled>Start Match</button>
                 </div>
 
                 <div id="live-score-area" style="display: none;">
@@ -897,7 +905,9 @@
             teams: [],
             matches: [],
             currentMatch: null,
-            currentInnings: 1
+            currentInnings: 1,
+            selectedMatchId: null,
+            battingFirstTeamId: null
         };
 
         // Initialize default data
@@ -1254,14 +1264,71 @@
         }
 
         function selectMatch() {
-            const matchId = document.getElementById('match-select').value;
+            const matchId = parseInt(document.getElementById('match-select').value);
+            ZGCL.selectedMatchId = matchId;
+            ZGCL.battingFirstTeamId = null;
+            
             if (matchId) {
-                document.getElementById('start-match-btn').disabled = false;
+                const match = ZGCL.matches.find(m => m.id === matchId);
+                if (match && match.team1Id !== 0 && match.team2Id !== 0) {
+                    const team1 = ZGCL.teams.find(t => t.id === match.team1Id);
+                    const team2 = ZGCL.teams.find(t => t.id === match.team2Id);
+                    
+                    // Show toss selector
+                    document.getElementById('toss-selector').style.display = 'block';
+                    
+                    // Update button labels with team names
+                    document.getElementById('toss-team1-btn').textContent = team1.name;
+                    document.getElementById('toss-team1-btn').setAttribute('data-team-id', team1.id);
+                    document.getElementById('toss-team2-btn').textContent = team2.name;
+                    document.getElementById('toss-team2-btn').setAttribute('data-team-id', team2.id);
+                    
+                    // Reset button styles
+                    document.getElementById('toss-team1-btn').classList.remove('btn-success');
+                    document.getElementById('toss-team1-btn').classList.add('btn-secondary');
+                    document.getElementById('toss-team2-btn').classList.remove('btn-success');
+                    document.getElementById('toss-team2-btn').classList.add('btn-secondary');
+                    
+                    // Disable start button until toss is selected
+                    document.getElementById('start-match-btn').disabled = true;
+                } else {
+                    alert('Please set teams for this match first');
+                    document.getElementById('toss-selector').style.display = 'none';
+                }
+            } else {
+                document.getElementById('toss-selector').style.display = 'none';
             }
         }
 
+        function selectBattingFirst(teamNum) {
+            const match = ZGCL.matches.find(m => m.id === ZGCL.selectedMatchId);
+            if (!match) return;
+            
+            // Store which team bats first
+            ZGCL.battingFirstTeamId = teamNum === 1 ? match.team1Id : match.team2Id;
+            
+            // Update button styles
+            const btn1 = document.getElementById('toss-team1-btn');
+            const btn2 = document.getElementById('toss-team2-btn');
+            
+            if (teamNum === 1) {
+                btn1.classList.remove('btn-secondary');
+                btn1.classList.add('btn-success');
+                btn2.classList.remove('btn-success');
+                btn2.classList.add('btn-secondary');
+            } else {
+                btn2.classList.remove('btn-secondary');
+                btn2.classList.add('btn-success');
+                btn1.classList.remove('btn-success');
+                btn1.classList.add('btn-secondary');
+            }
+            
+            // Enable start button
+            document.getElementById('start-match-btn').disabled = false;
+        }
+
         function startMatch() {
-            const matchId = parseInt(document.getElementById('match-select').value);
+            const matchId = ZGCL.selectedMatchId;
             const match = ZGCL.matches.find(m => m.id === matchId);
             
             if (!match) return;
@@ -1272,13 +1339,25 @@
                 return;
             }
 
+            // Check if toss is selected
+            if (!ZGCL.battingFirstTeamId) {
+                alert('Please select which team bats first!');
+                return;
+            }
+
+            // Store which team bats first in the match object
+            match.battingFirstTeamId = ZGCL.battingFirstTeamId;
+
             match.status = 'live';
             ZGCL.currentMatch = match;
             ZGCL.currentInnings = match.currentInnings;
 
             saveToLocalStorage('zgcl_matches', ZGCL.matches);
             
+            // Hide toss selector
+            document.getElementById('toss-selector').style.display = 'none';
             document.getElementById('live-score-area').style.display = 'block';
+            
             updateScoreDisplay();
             updateCommentary();
         }
@@ -1290,31 +1369,60 @@
             const team1 = ZGCL.teams.find(t => t.id === match.team1Id);
             const team2 = ZGCL.teams.find(t => t.id === match.team2Id);
             
-            const battingTeam = ZGCL.currentInnings === 1 ? team1.name : team2.name;
-            const score = ZGCL.currentInnings === 1 ? match.team1Score : match.team2Score;
-            const wickets = ZGCL.currentInnings === 1 ? match.team1Wickets : match.team2Wickets;
-            const overs = ZGCL.currentInnings === 1 ? match.team1Overs : match.team2Overs;
+            // Determine which team is batting based on innings and toss
+            let battingTeam, battingTeamId, battingScore, battingWickets, battingOvers;
+            let targetScore;
             
-            const balls = Math.floor(overs * 6);
-            const runRate = balls > 0 ? ((score / balls) * 6).toFixed(2) : '0.00';
-            
-            let target = '-';
-            if (ZGCL.currentInnings === 2) {
-                target = match.team1Score + 1;
+            if (ZGCL.currentInnings === 1) {
+                // First innings - team that won toss and elected to bat
+                if (match.battingFirstTeamId === match.team1Id) {
+                    battingTeam = team1.name;
+                    battingTeamId = match.team1Id;
+                    battingScore = match.team1Score;
+                    battingWickets = match.team1Wickets;
+                    battingOvers = match.team1Overs;
+                } else {
+                    battingTeam = team2.name;
+                    battingTeamId = match.team2Id;
+                    battingScore = match.team2Score;
+                    battingWickets = match.team2Wickets;
+                    battingOvers = match.team2Overs;
+                }
+                targetScore = '-';
+            } else {
+                // Second innings - the other team
+                if (match.battingFirstTeamId === match.team1Id) {
+                    battingTeam = team2.name;
+                    battingTeamId = match.team2Id;
+                    battingScore = match.team2Score;
+                    battingWickets = match.team2Wickets;
+                    battingOvers = match.team2Overs;
+                    targetScore = match.team1Score + 1;
+                } else {
+                    battingTeam = team1.name;
+                    battingTeamId = match.team1Id;
+                    battingScore = match.team1Score;
+                    battingWickets = match.team1Wickets;
+                    battingOvers = match.team1Overs;
+                    targetScore = match.team2Score + 1;
+                }
             }
+            
+            const balls = Math.floor(battingOvers * 6);
+            const runRate = balls > 0 ? ((battingScore / balls) * 6).toFixed(2) : '0.00';
 
             document.getElementById('match-title').textContent = 
                 `${team1.name} vs ${team2.name} - ${match.type}`;
             document.getElementById('batting-team').textContent = battingTeam;
-            document.getElementById('current-score').textContent = `${score}/${wickets}`;
-            document.getElementById('current-overs').textContent = `(${overs.toFixed(1)} overs)`;
-            document.getElementById('target').textContent = target;
+            document.getElementById('current-score').textContent = `${battingScore}/${battingWickets}`;
+            document.getElementById('current-overs').textContent = `(${battingOvers.toFixed(1)} overs)`;
+            document.getElementById('target').textContent = targetScore;
             document.getElementById('run-rate').textContent = runRate;
 
             // Update current over display
             const currentOverBalls = match.ballByBall.filter(b => 
                 b.innings === ZGCL.currentInnings && 
-                b.over === Math.floor(overs)
+                b.over === Math.floor(battingOvers)
             );
             
             const overDisplay = document.getElementById('current-over');
@@ -1349,14 +1457,19 @@
             const legalBalls = currentOverBalls.filter(b => b.type !== 'wide' && b.type !== 'no-ball').length;
             if (legalBalls === 6) {
                 setTimeout(() => {
-                    if (ZGCL.currentInnings === 1) {
+                    // Increment overs for the batting team
+                    if ((ZGCL.currentInnings === 1 && match.battingFirstTeamId === match.team1Id) ||
+                        (ZGCL.currentInnings === 2 && match.battingFirstTeamId === match.team2Id)) {
                         match.team1Overs = Math.floor(match.team1Overs) + 1;
                     } else {
                         match.team2Overs = Math.floor(match.team2Overs) + 1;
                     }
                     
-                    const overs = ZGCL.currentInnings === 1 ? match.team1Overs : match.team2Overs;
-                    if (overs >= 7) {
+                    const currentBattingOvers = (ZGCL.currentInnings === 1 && match.battingFirstTeamId === match.team1Id) ||
+                                                 (ZGCL.currentInnings === 2 && match.battingFirstTeamId === match.team2Id)
+                                                 ? match.team1Overs : match.team2Overs;
+                    
+                    if (currentBattingOvers >= 7) {
                         endInnings();
                     } else {
                         saveToLocalStorage('zgcl_matches', ZGCL.matches);
@@ -1370,7 +1483,11 @@
             const match = ZGCL.currentMatch;
             if (!match) return;
 
-            const overs = ZGCL.currentInnings === 1 ? match.team1Overs : match.team2Overs;
+            // Determine which team is batting
+            let isBattingTeam1 = (ZGCL.currentInnings === 1 && match.battingFirstTeamId === match.team1Id) ||
+                                 (ZGCL.currentInnings === 2 && match.battingFirstTeamId === match.team2Id);
+
+            const overs = isBattingTeam1 ? match.team1Overs : match.team2Overs;
             const currentOver = Math.floor(overs);
             
             const ball = {
@@ -1389,14 +1506,14 @@
 
             match.ballByBall.push(ball);
 
-            // Update scores
-            if (ZGCL.currentInnings === 1) {
+            // Update scores for the correct batting team
+            if (isBattingTeam1) {
                 match.team1Score += runs;
                 if (type === 'wicket') match.team1Wickets++;
                 
                 if (type !== 'wide' && type !== 'no-ball') {
                     const legalBalls = match.ballByBall.filter(b => 
-                        b.innings === 1 && 
+                        b.innings === ZGCL.currentInnings && 
                         b.type !== 'wide' && 
                         b.type !== 'no-ball'
                     ).length;
@@ -1408,26 +1525,36 @@
                 
                 if (type !== 'wide' && type !== 'no-ball') {
                     const legalBalls = match.ballByBall.filter(b => 
-                        b.innings === 2 && 
+                        b.innings === ZGCL.currentInnings && 
                         b.type !== 'wide' && 
                         b.type !== 'no-ball'
                     ).length;
                     match.team2Overs = Math.floor(legalBalls / 6) + ((legalBalls % 6) / 10);
                 }
+            }
 
-                if (match.team2Score > match.team1Score) {
+            // Check if chasing team has won or lost
+            if (ZGCL.currentInnings === 2) {
+                const chasingScore = isBattingTeam1 ? match.team1Score : match.team2Score;
+                const targetScore = isBattingTeam1 ? match.team2Score : match.team1Score;
+                const chasingWickets = isBattingTeam1 ? match.team1Wickets : match.team2Wickets;
+                
+                if (chasingScore > targetScore) {
                     endMatch();
                     return;
-                } else if (match.team2Wickets >= 10) {
+                } else if (chasingWickets >= 10) {
                     endMatch();
                     return;
                 }
             }
 
-            const wickets = ZGCL.currentInnings === 1 ? match.team1Wickets : match.team2Wickets;
-            if (wickets >= 10) {
-                endInnings();
-                return;
+            // Check if all out in first innings
+            if (ZGCL.currentInnings === 1) {
+                const wickets = isBattingTeam1 ? match.team1Wickets : match.team2Wickets;
+                if (wickets >= 10) {
+                    endInnings();
+                    return;
+                }
             }
 
             saveToLocalStorage('zgcl_matches', ZGCL.matches);
@@ -1441,24 +1568,26 @@
 
             const lastBall = match.ballByBall.pop();
             
-            if (lastBall.innings === 1) {
+            // Determine which team was batting for this ball's innings
+            let wasBattingTeam1 = (lastBall.innings === 1 && match.battingFirstTeamId === match.team1Id) ||
+                                  (lastBall.innings === 2 && match.battingFirstTeamId === match.team2Id);
+            
+            if (wasBattingTeam1) {
                 match.team1Score -= lastBall.runs;
                 if (lastBall.type === 'wicket') match.team1Wickets--;
-            } else {
-                match.team2Score -= lastBall.runs;
-                if (lastBall.type === 'wicket') match.team2Wickets--;
-            }
-
-            if (lastBall.innings === 1) {
+                
                 const legalBalls = match.ballByBall.filter(b => 
-                    b.innings === 1 && 
+                    b.innings === lastBall.innings && 
                     b.type !== 'wide' && 
                     b.type !== 'no-ball'
                 ).length;
                 match.team1Overs = Math.floor(legalBalls / 6) + ((legalBalls % 6) / 10);
             } else {
+                match.team2Score -= lastBall.runs;
+                if (lastBall.type === 'wicket') match.team2Wickets--;
+                
                 const legalBalls = match.ballByBall.filter(b => 
-                    b.innings === 2 && 
+                    b.innings === lastBall.innings && 
                     b.type !== 'wide' && 
                     b.type !== 'no-ball'
                 ).length;
@@ -1478,7 +1607,8 @@
                 ZGCL.currentInnings = 2;
                 match.currentInnings = 2;
                 
-                addCommentary(`End of 1st Innings. Target: ${match.team1Score + 1} runs`);
+                const firstInningsScore = match.battingFirstTeamId === match.team1Id ? match.team1Score : match.team2Score;
+                addCommentary(`End of 1st Innings. Target: ${firstInningsScore + 1} runs`);
                 
                 document.getElementById('end-innings-btn').style.display = 'none';
                 
@@ -1498,11 +1628,18 @@
             const team1 = ZGCL.teams.find(t => t.id === match.team1Id);
             const team2 = ZGCL.teams.find(t => t.id === match.team2Id);
 
-            if (match.team1Score > match.team2Score) {
-                match.result = `${team1.name} won by ${match.team1Score - match.team2Score} runs`;
-            } else if (match.team2Score > match.team1Score) {
-                const wicketsRemaining = 10 - match.team2Wickets;
-                match.result = `${team2.name} won by ${wicketsRemaining} wickets`;
+            // Determine which team batted first and second
+            const firstBattingTeam = match.battingFirstTeamId === match.team1Id ? team1 : team2;
+            const secondBattingTeam = match.battingFirstTeamId === match.team1Id ? team2 : team1;
+            const firstInningsScore = match.battingFirstTeamId === match.team1Id ? match.team1Score : match.team2Score;
+            const secondInningsScore = match.battingFirstTeamId === match.team1Id ? match.team2Score : match.team1Score;
+            const secondInningsWickets = match.battingFirstTeamId === match.team1Id ? match.team2Wickets : match.team1Wickets;
+
+            if (secondInningsScore > firstInningsScore) {
+                const wicketsRemaining = 10 - secondInningsWickets;
+                match.result = `${secondBattingTeam.name} won by ${wicketsRemaining} wickets`;
+            } else if (firstInningsScore > secondInningsScore) {
+                match.result = `${firstBattingTeam.name} won by ${firstInningsScore - secondInningsScore} runs`;
             } else {
                 match.result = 'Match tied';
             }
